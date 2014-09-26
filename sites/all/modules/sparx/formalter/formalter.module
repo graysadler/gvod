@@ -1,0 +1,19 @@
+<?php
+
+function formalter_form_alter(&$form, $form_state, $form_id) {
+    global $user;
+    if ($form_id == "contact_site_form") {
+        //   dsm($form);
+        $form['name']['#title'] = '';
+        $form['mail']['#title'] = '';
+        $form['subject']['#title'] = '';
+        $form['message']['#title'] = '';
+        $form['name']['#attributes']['placeholder'] = array("Name");
+        $form['mail']['#attributes']['placeholder'] = array("Email");
+        $form['subject']['#attributes']['placeholder'] = array("Subject");
+        $form['message']['#attributes']['placeholder'] = array("Message");
+        $form['subject']['#access'] = FALSE;
+        $form['copy']['#access'] = FALSE;
+        $form['actions']['submit']['#value'] = t('Submit');
+    }
+}

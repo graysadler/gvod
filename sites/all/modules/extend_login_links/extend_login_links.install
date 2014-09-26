@@ -1,0 +1,14 @@
+<?php 
+
+function extend_login_links_install() {
+   // echo 'test';exit;
+   db_add_field('users', 'register_info', array(
+    'type' => 'text', 
+    'default' => null,
+   ));
+}
+function extend_login_links_uninstall(){
+   // echo 'test1';exit;
+    db_drop_field('users','register_info');
+}
+?>

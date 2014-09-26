@@ -1,0 +1,5 @@
+name = formalter
+description = This module will responsible to alter core forms and customize some changes as per need.
+core = 7.x
+package = Custom
+

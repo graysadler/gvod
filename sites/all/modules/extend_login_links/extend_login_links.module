@@ -1,0 +1,213 @@
+<?php
+
+/**
+ * @file
+ * TODO: Enter file description here.
+ */
+
+/**
+ * Implements hook_help().
+ */
+function extend_login_links_help($path, $arg) {
+    /* INFO:
+     * The help hook is for displaying helpful messages at the top of pages indicated
+     * by $section to further explain how they work. Adding certain "keywords" to the end of
+     * a given path (like admin/modules#description) will cause this text to display elsewhere
+     * in the page as well (in this case, in the description section for the given module).
+     */
+    switch ($path) {
+        case 'admin/help#extend_login_links':
+            return t("TODO: Create admin help text.");
+        // OPTIONAL: Add additional cases for other paths that should display help text.
+    }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function extend_login_links_menu() {
+    $items = array();
+    $items['admin/config/people/extend-login-links'] = array(
+        'title' => t('Extend one-time login links'),
+        'description' => t('Change how long one-time login links are valid in seconds.'),
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('extend_login_links_admin'),
+        'access arguments' => array('access administration pages'),
+        'type' => MENU_NORMAL_ITEM,
+    );
+    return $items;
+}
+
+function extend_login_links_menu_alter(&$items) {
+    $items['user/reset/%/%/%'] = array(
+        'title' => 'Reset password',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('extend_login_links_pass_reset', 2, 3, 4),
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+        'file' => 'extend_login_links.pages.inc',
+        'file path' => drupal_get_path('module', 'extend_login_links')
+    );
+}
+
+function extend_login_links_admin() {
+    $form = array();
+    $form['extend_login_links_numseconds'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Maximum number of seconds'),
+        '#default_value' => variable_get('extend_login_links_numseconds', 604800),
+        '#size' => 10,
+        '#maxlength' => 255,
+        '#description' => t("The maximum number of seconds to which one time long links are extended."),
+        '#required' => TRUE,
+    );
+//    $form['user_temporary_password'] = array(
+//        '#type' => 'textfield',
+//        '#title' => t('User Temporary Password'),
+//        '#default_value' => variable_get('user_temporary_password', 'temp123'),
+//        '#size' => 10,
+//        '#maxlength' => 255,
+//        '#description' => t("User temporary password, it would be same for every user."),
+//        '#required' => TRUE,
+//    );
+    return system_settings_form($form);
+}
+
+//
+//function extend_login_links_user_login($name, $password) {
+//}
+// set user account with a temporary password
+function extend_login_links_user_insert(&$edit, $account, $category) {
+    
+    if (!user_is_logged_in()) {
+        require_once DRUPAL_ROOT . '/' . variable_get('password_inc', 'includes/password.inc');
+        $pwd='temp'.rand(100,10000);
+        variable_set('user_temporary_password',$pwd);
+        $temppwd =user_hash_password(variable_get('user_temporary_password'));
+        $result = db_query('select * from users  where uid=' . $account->uid);
+        $row = $result->fetchAssoc();
+        db_update('users')
+                ->fields(array('register_info' => $row['pass'] . '--##--##' . $temppwd, 'pass' => $temppwd))
+                ->condition('uid', $account->uid, '=')
+                ->execute();
+      // drupal_set_message('');
+       //unset($_SESSION['messages']);
+        drupal_set_message(t('Thank you for registering on our site. An email has been sent to your account.Your account is Temparory active for '.getExpiryDay().' days and you need to confirm the email within '.getExpiryDay().' days otherwise your account will be deactived.Your temporary password is:'.variable_get('user_temporary_password')));
+       // $form_state['redirect'] = '';
+        
+    }
+}
+
+function extend_login_links_user_update(&$edit, $account, $category) {
+    // it should execute if user resets password  
+    if (isset($_GET['pass-reset-token'])) {
+        $result = db_query('select * from users  where uid=' . $account->uid);
+        $row = $result->fetchAssoc();
+        if (trim($row['register_info'])) {
+            db_update('users')
+                    ->fields(array('register_info' => NULL))
+                    ->condition('uid', $account->uid, '=')
+                    ->execute();
+        }
+    } else { // Code execute if admin update the account of any user. If admin update once no need of further verification
+        global $user;
+        if ($user->uid != $account->uid) {
+            $result = db_query('select * from users  where uid=' . $account->uid);
+            $row = $result->fetchAssoc();
+            if (trim($row['register_info'])) {
+                db_update('users')
+                        ->fields(array('register_info' => NULL))
+                        ->condition('uid', $account->uid, '=')
+                        ->execute();
+            }
+        } else {// This condition is required in condition of reset password using temp login
+            if (trim($row['register_info'])) {
+
+                $temppwd = explode('--##--##', $row['register_info']);
+                $temppwd['1'] = $row['pass'];
+                $new_register_info = implode('--##--##', $temppwd);
+                db_update('users')
+                        ->fields(array('register_info' => $new_register_info))
+                        ->condition('uid', $account->uid, '=')
+                        ->execute();
+            }
+        }
+    }
+}
+
+function extend_login_links_form_alter(&$form, &$form_state, $form_id) {
+
+    if ($form_id == 'user_login' || $form_id=='user_login_block') {
+
+       // $form['#submit'][0] = "check_and_update_user_on_login";
+        array_unshift($form['#validate'], 'check_and_update_user_on_login');
+    } else if ($form_id == 'user_pass') {
+        //$form['#submit'][0] = "check_and_update_user_on_reset";
+         array_unshift($form['#validate'], 'check_and_update_user_on_reset');
+    }else if($form_id == 'user_register_form') {
+     //$form['#submit'][0]='check_and_update_user_on_register';
+    }
+}
+
+// for login form
+function check_and_update_user_on_login($form, $form_state) {
+    $mail_or_name = $form['name']['#value'];
+    $query = db_select('users')
+            ->fields('users', array('register_info', 'uid', 'pass'));
+    $db_or = db_or();
+    $db_or->condition('name', $mail_or_name, '=')
+            ->condition('mail', $mail_or_name, '=');
+    $query->condition($db_or);
+    $row = $query->execute()->fetchAssoc();
+
+    if ($row['register_info']) {
+        $uid = $row['uid'];
+        $temppwd = explode('--##--##', $row['register_info']);
+        db_update('users')
+                ->fields(array('pass' => $temppwd['1']))
+                ->condition('uid', $uid, '=')
+                ->execute();
+    }
+}
+
+// for password reset form
+function check_and_update_user_on_reset($form, $form_state) {
+    $mail_or_name = $form['name']['#value'];
+    $query = db_select('users')
+            ->fields('users', array('register_info', 'uid', 'pass'));
+    $db_or = db_or();
+    $db_or->condition('name', $mail_or_name, '=')
+            ->condition('mail', $mail_or_name, '=');
+    $query->condition($db_or);
+    $row = $query->execute()->fetchAssoc();
+
+    if ($row['register_info']) {
+        $uid = $row['uid'];
+        $temppwd = explode('--##--##', $row['register_info']);
+        db_update('users')
+                ->fields(array('pass' => $temppwd['0'], 'access' => '0', 'login' => '0'))
+                ->condition('uid', $uid, '=')
+                ->execute();
+    }
+}
+function check_and_update_user_on_register($form, $form_state){
+   drupal_set_message(t('Thank you for registering on our site. An email has been sent to your account.Your account is Temparory active for '.getExpiryDay().' days and you need to confirm the email within '.getExpiryDay().' days otherwise your account will be deactived.Your temporary password is:'.variable_get('user_temporary_password')));
+}
+
+// Cront to disable the account not verified within the defined time
+function extend_login_links_cron() {
+    $lastcreationtime = time() - variable_get("extend_login_links_numseconds");
+    $query = db_update('users')
+            ->fields(array('status' => '0'))
+            ->isNotNull('register_info')
+            ->condition('created', $lastcreationtime, '<=');
+    $query->execute();
+}
+
+function getExpiryDay(){
+    return ceil(variable_get("extend_login_links_numseconds")/86400);
+}
+
+function extend_login_links_mail_alter(&$message){
+    $message['body'][0]=str_replace('[TEMPPWD]',variable_get('user_temporary_password'),$message['body'][0]);
+}

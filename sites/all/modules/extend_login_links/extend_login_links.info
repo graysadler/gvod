@@ -1,0 +1,5 @@
+name = Extend Login Links
+description = Extends the login links to a specified time.
+core = 7.x
+configure = admin/config/people/extend-login-links
+files[] = extend_login_links.module
