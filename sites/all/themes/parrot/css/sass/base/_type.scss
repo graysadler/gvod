@@ -7,8 +7,17 @@
 // -------------------------
 
 p {
-  margin: 0 0 $baseLineHeight / 2;
-  @include paragraph-style;
+  //margin: 0 0 $baseLineHeight / 2;
+  //@include paragraph-style;
+  font-size: 1.25em;
+  line-height: 1.75em;
+  margin: 0 0 1.75em;
+  
+  @include at-breakpoint($computer) {
+    font-size: 1em;
+    line-height:1.5em;
+    margin: 0 0 1.5em;
+  }
 }
 .lead {
   margin-bottom: $baseLineHeight;
@@ -56,7 +65,8 @@ cite {
 // -------------------------
 
 h1, h2, h3, h4, h5, h6 {
-  margin: ($baseLineHeight / 2) 0;
+  //margin: ($baseLineHeight / 2) 0;
+  margin: 1em 0;
   font-family: $headingsFontFamily;
   font-weight: $headingsFontWeight;
   line-height: 1;
@@ -64,13 +74,29 @@ h1, h2, h3, h4, h5, h6 {
   text-rendering: optimizelegibility; // Fix the character spacing for headings.
   small {
     font-weight: normal;
-    line-height: 1;
+    line-height: 100%;
     color: $grayLight;
   }
 }
 h1 { font-size: $h1-font-size; line-height: 40px; }
-h2 { font-size: $h2-font-size; line-height: 24px; }
-h3 { font-size: $h3-font-size; line-height: 20px; }
+h2 { 
+  font-size: 15pt; 
+  font-weight:800;
+  span{
+    font-weight:600;
+  }
+
+  @include at-breakpoint($computer) {
+    font-size: 37pt;
+  }
+}
+h3 { 
+  font-size: 13pt; 
+  font-weight: normal;
+  @include at-breakpoint($computer) {
+    font-size: 25pt;
+  }
+}
 h4 { font-size: $h4-font-size; line-height: 20px; }
 h5 { font-size: $h5-font-size; line-height: 20px; }
 h6 { font-size: $h6-font-size; line-height: 20px; }

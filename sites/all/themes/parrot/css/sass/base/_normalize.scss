@@ -5,8 +5,8 @@
 // =============================================================================
 // Variables and Imports
 @import "variables";
-@import "mixins";
-@import "code";
+//@import "mixins";
+//@import "code";
 //@import "forms";
 // @import "type";
 // @import "tables";
@@ -41,9 +41,9 @@ $base-font-family: 'Open Sans', sans-serif !default;
 $indent-amount: 40px !default;
 
 // After the default variables are set, import the required Compass partials.
-// @import "compass/support";
-// @import "compass/css3/box-sizing";
-// @import "compass/typography/vertical_rhythm";
+@import "compass/support";
+@import "compass/css3/box-sizing";
+@import "compass/typography/vertical_rhythm";
 
 
 /* ==========================================================================

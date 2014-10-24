@@ -12,7 +12,7 @@ require 'susy'
 #require 'toolkit'
 # https://github.com/Team-Sass/toolkit/
 
-# require 'breakpoint'
+#require 'breakpoint'
 # https://github.com/canarymason/breakpoint
 
 # Set this to the root of your project when deployed:
@@ -29,7 +29,7 @@ relative_assets=true
 output_style = :nested
 
 # To disable debugging comments that display the original location of your selectors. Uncomment:
-line_comments = false
+line_comments = true
 color_output = false
 
 preferred_syntax = :sass
