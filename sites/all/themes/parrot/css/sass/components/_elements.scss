@@ -1186,12 +1186,12 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
         .Gallery {
             .panels-flexible-row-6-1-inside {
                 @include at-breakpoint($computer) {
-                    padding: 78px 64px 56px;
+                    //padding: 78px 64px 56px;
                 }
             }
             .Gallery1 {
                 background: none;
-                margin-bottom: 10em;
+                margin-bottom: 6em;
                 .term-slide-home {
                     margin-bottom: 18px;
                     .term-name {
@@ -1323,7 +1323,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                     @include bleed(0);
                 }
                 @include at-breakpoint($wide) {
-                    height: 700px;
+                    height: 900px;
                 }
                 .inner-signup {
                     overflow: hidden;
@@ -1335,7 +1335,10 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                     text-align: center;
                     //padding-top: 1.75em;
                     @include at-breakpoint($computer) {
-                        bottom: 0;
+                        bottom: 15%;
+                        .inner-signup-container {
+                          height: 400px;
+                        }
                     }
                     .mobile {
                       padding: 2em;
@@ -1350,6 +1353,9 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                             background-color: $Active-bagColor;
                             cursor: pointer;
                         }
+                    }
+                    .item {
+                      //height: 400px;
                     }
                     .inner-signup-first {
                         float: left;
@@ -1431,7 +1437,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                 @include container;
                 .panels-flexible-region-first {
                     width: 41%;
-                    padding: 63px 5.3% 63px 4%;
+                    //padding: 63px 5.3% 63px 4%;
                 }
                 .panels-flexible-region-last {
                     width: 56.5%;
@@ -1457,7 +1463,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                         font-size: 6 + $baseFontSize;
                         line-height: 30px;
                         //font-weight: 600;
-                        margin-bottom: 37px;
+                        margin-bottom: 1.5em;
                         padding-left: 26px;
                         background: url(../img/lirept.png) left 13px no-repeat;
                         color: $SRblue-Dark;
@@ -1491,9 +1497,12 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                 min-height: 900px;
             }
             .staff-home-view {
-                @include container;
+                //@include container;
                 @include at-breakpoint($computer) {
-                    background: url(../images/TeamBG2.jpg) no-repeat top left;
+                    background-image: url(../images/TeamBG2.jpg);
+                    background-repeat: no-repeat;
+                    background-position: center center;
+                    background-size: cover;
                 }
                 .pane-content {
                     @include at-breakpoint($computer) {
@@ -1599,7 +1608,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                 }
                 .view-header {
                     @include at-breakpoint($computer) {
-                        margin-bottom: 73px;
+                        margin-bottom: 4em;
                     }
                     h2 {
                         color: $home-page-text;
@@ -1625,7 +1634,9 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                 background-size: cover;
             }
             @include at-breakpoint($computer) {
-                background-image: url(../images/SR_Mascot.png);
+              padding: 0;
+              margin: 0;
+              background-image: url(../images/Desktop_SR_Mascot.jpg);
             }
             .stream-wanna {
                 left: 0;
@@ -1635,6 +1646,11 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                 text-align: center;
                 margin-top:10%;
                 margin-bottom:10%;
+                
+                @include at-breakpoint($computer) {
+                  margin-top: 5%;
+                  width: 500px;
+                }
                 h3 {
                   font-weight: bold;
                   color: $white;
@@ -1706,6 +1722,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                                 right: 0;
                                 top: 0;
                                 width: 100%;
+                                height: 100%;
                                 display: none;
                                 .icon-text-blog {
                                     height: 75px;
@@ -2471,6 +2488,7 @@ a.contextual-links-trigger {
     right: 0;
     top: 0;
     width: 100%;
+    height: 100%;
     background-color: rgba(7,157,217,0.2);
 }
 #main-content .sidebar-second div .blog-image-link .icon-text-blog {
@@ -2549,13 +2567,15 @@ p a {
     right: 0;
     top: 0;
     width: 100%;
+    height: 100%;
 }
 .blog-image-link .icon-text-blog {
     background-position: -2px -1344px;
     display: block;
     height: 75px;
-    margin: 54px auto 70px;
+    //margin: 54px auto 70px;
     width: 75px;
+    vertical-align: middle;
 }
 .streamriots-inner {
     position: relative;
