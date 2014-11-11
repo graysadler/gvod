@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the SR Core feature.
+ */
+
+include_once 'sr_core.features.inc';
