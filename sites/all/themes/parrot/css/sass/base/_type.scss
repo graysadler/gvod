@@ -11,7 +11,7 @@ p {
   //@include paragraph-style;
   font-size: 1.25em;
   line-height: 1.75em;
-  margin: 0 0 1.75em;
+  margin: 0 0 1em;
   
   @include at-breakpoint($computer) {
     font-size: 1em;
@@ -66,7 +66,7 @@ cite {
 
 h1, h2, h3, h4, h5, h6 {
   //margin: ($baseLineHeight / 2) 0;
-  margin: 1em 0;
+  margin: .75em 0;
   font-family: $headingsFontFamily;
   font-weight: $headingsFontWeight;
   line-height: 1;
@@ -92,9 +92,10 @@ h2 {
 }
 h3 { 
   font-size: 13pt; 
-  font-weight: normal;
+  font-weight: lighter;
+  line-height: 1.5em;
   @include at-breakpoint($computer) {
-    font-size: 25pt;
+    font-size: 20pt;
   }
 }
 h4 { font-size: $h4-font-size; line-height: 20px; }

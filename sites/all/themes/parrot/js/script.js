@@ -91,12 +91,12 @@
 
        $('.sidebar-first').addClass('active-sidebar');
 
-          fixedSidebar();
+          //fixedSidebar();
   
     });
     
     $(window).scroll(function(){
-    	fixedSidebar();
+    	//fixedSidebar();
     });
     
     
