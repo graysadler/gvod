@@ -1337,7 +1337,11 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                     @include at-breakpoint($computer) {
                         bottom: 15%;
                         .inner-signup-container {
-                          height: 400px;
+                          //height: 450px;
+                          .item {
+                            height: 400px;
+                            padding: 50px 1em 0!important;
+                          }                          
                         }
                     }
                     .mobile {
@@ -1354,9 +1358,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                             cursor: pointer;
                         }
                     }
-                    .item {
-                      //height: 400px;
-                    }
+
                     .inner-signup-first {
                         float: left;
                         width: 23.6%;
@@ -1947,7 +1949,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
     width: 100%;
 }
 .panels-flexible-12 .panels-flexible-region-inside, .panels-flexible-6 .panels-flexible-region-inside-last {
-    padding-left: 0;
+    //padding-left: 0;
 }
 .panels-flexible-13 .panels-flexible-region-inside {
     padding: 0;
@@ -1959,7 +1961,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
     width: 56.6%;
 }
 .panels-flexible-6 .panels-flexible-region-inside-first {
-    padding-right: 0;
+    //padding-right: 0;
 }
 .panels-flexible-region-6-signup {
     width: 100%;
