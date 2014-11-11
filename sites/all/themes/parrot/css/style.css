@@ -8296,4 +8296,25 @@ p a {
   .mobile {
     display: none; } }
 
+/* line 2641, sass/components/_elements.scss */
+.front .panels-flexible-region {
+  width: 100%; }
+/* line 2645, sass/components/_elements.scss */
+.front .panels-flexible-region-new-multistream_player1,
+.front .panels-flexible-region-new-multistream_player {
+  width: 45%; }
+/* line 2650, sass/components/_elements.scss */
+.front .panels-flexible-region-new-gallery_item1_,
+.front .panels-flexible-region-new-gallery_item2 {
+  width: 25%; }
+/* line 2655, sass/components/_elements.scss */
+.front .panels-flexible-region-new-gallery_item1 {
+  width: 50%; }
+
+/* line 2660, sass/components/_elements.scss */
+.stream-player {
+  padding: 0 3em;
+  width: 75%;
+  float: right; }
+
 /* ---------------------------------------------------------------------------------------- */

@@ -2636,3 +2636,29 @@ p a {
         display: none;
     }
 }
+
+.front {
+  .panels-flexible-region {
+    width: 100%;
+  }
+  
+  .panels-flexible-region-new-multistream_player1,
+  .panels-flexible-region-new-multistream_player {
+    width: 45%;
+  }
+  
+  .panels-flexible-region-new-gallery_item1_,
+  .panels-flexible-region-new-gallery_item2 {
+    width: 25%;
+  }
+  
+  .panels-flexible-region-new-gallery_item1 {
+    width: 50%;
+  }  
+}
+
+.stream-player {
+    padding: 0 3em;
+    width: 75%;
+    float: right;
+}
