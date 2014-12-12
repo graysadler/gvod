@@ -13,7 +13,7 @@
 }
 #header-wrapper {
     background-color: #079dd9;
-    padding: 9px 0px 0;
+    
     box-shadow: 0 0 10px #000000;
     z-index: 10;
     width: 100%;
@@ -22,13 +22,23 @@
     right: 0;
     z-index: 100;
     .siteinfo {
-        width: 100%;
+        width: 50%;
+        margin: auto;
         text-align: center;
+        
+        .logo {
+          
+          
+          @include at-breakpoint($computer) {
+            
+          }
+        }
     }
     .header-region {
         display: none;
     }
     @include at-breakpoint($computer) {
+      padding: 9px 0px 0;
         position: fixed;
         .siteinfo {
             float: left;
@@ -77,7 +87,7 @@
         strong {
             display: block;
             color: $white;
-            text-transform: uppercase;
+            //text-transform: uppercase;
             //font-weight: 800;
             line-height: 1.2;
             @include container;
@@ -643,8 +653,9 @@ li {
 }
 #main-content {
     padding-top: 54px;
-    @include container;
-  
+    //@include container;
+    //@include bleed();
+    
         .sidebar-first {
             background-color: $left-sideBar;
             float: left;
@@ -1104,7 +1115,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
     a {
         display: block;
         img {
-            width: 100%;
+            //width: 100%;
         }
     }
 }
@@ -1149,6 +1160,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
 }
 .front {
     .Gallery {
+
     }
     .image-riotplayer {
         @include bleed(1.5em);
@@ -1184,6 +1196,9 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
             }
         }
         .Gallery {
+          @include at-breakpoint($computer) {
+            margin-top: 6em;
+          }
             .panels-flexible-row-6-1-inside {
                 @include at-breakpoint($computer) {
                     //padding: 78px 64px 56px;
@@ -1191,9 +1206,30 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
             }
             .Gallery1 {
                 background: none;
-                margin-bottom: 6em;
+                margin: auto;
+                
+                width: 80%;
+                display: none;
+      
+                @include at-breakpoint($computer) {
+                  display: block;
+                }
+                @include at-breakpoint($wide) {
+                  margin-bottom: 6em;
+                }
+                .panels-flexible-region-first,
+                .panels-flexible-region-last .term-slide-home {
+                  float: left;
+                }
+                .panels-flexible-region-last,
+                .panels-flexible-region-last .term-slide-home {
+                  float: right;
+                }
                 .term-slide-home {
                     margin-bottom: 18px;
+                    max-width: 300px;
+                    width: 100%;
+
                     .term-name {
                         text-align: right;
                         a {
@@ -1223,9 +1259,11 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                 .flexslider {
                     border: none;
                     margin-bottom: 0;
-                    padding: 0 34px;
+                    //padding: 0 34px;
                     background: none;
                     box-shadow: none;
+                    max-width: 701px;
+                    margin: 0 auto;
                     .views-field-title {
                         background-color: $inActive-bagColor;
                         h3 {
@@ -1466,6 +1504,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                         line-height: 30px;
                         //font-weight: 600;
                         margin-bottom: 1.5em;
+                        margin-left: 2em;
                         padding-left: 26px;
                         background: url(../img/lirept.png) left 13px no-repeat;
                         color: $SRblue-Dark;
@@ -1473,7 +1512,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                 }
                 .stram-button {
                     display: inline-block;
-                    padding: 17px 24px;
+                    padding: 17px 14px;
                     background-color: $inActive-bagColor;
                     font-size: 1.334 * $baseFontSize;
                     color: $white;
@@ -1481,6 +1520,10 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                     margin-left: 2px;
                     min-width: 39%;
                     text-align: center;
+                    
+                    @include at-breakpoint($wide) {
+                      padding: 17px 24px;
+                    }
                     &:hover, &:focus, &:active {
                         background-color: $hover-color;
                         //font-weight: 800;
@@ -1495,6 +1538,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
         .team {
             position: relative;
             text-align: center;
+            padding-bottom: 0;
             .staff-images {
                 min-height: 900px;
             }
@@ -1513,16 +1557,21 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                     }
                 }
                 .staff-onhome {
-                    float: left;
-                    margin-right: 6.1%;
+                    margin: auto;
+                    width: 60%;
+                    
                     margin-bottom: 3em;
                     @include at-breakpoint($narrow) {
+                      float: left;
                         width: 29.23%;
                         margin-bottom: 0px;
-                    }
-                    &:last-child {
+                        margin-right: 6.1%;
+                        
+                        &:last-child {
                         margin-right: 0px;
                     }
+                    }
+                    
                     .twittes-hover {
                         display: none;
                         text-transform: capitalize;
@@ -1631,7 +1680,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
             background-position: center;
             @include bleed();
             @include at-breakpoint($tablet) {
-                height: 400px;
+                height: 355px;
                 background-image: url(../images/Tablet_SR_Mascot.jpg);
                 background-size: cover;
             }
@@ -1666,6 +1715,10 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                     min-width: 193px;
                     &:hover, &:focus {
                         //font-weight: 800;
+                    }
+                    
+                    @include at-breakpoint($computer) {
+                      margin-top: 1em;  
                     }
                 }
             }
@@ -2659,6 +2712,6 @@ p a {
 
 .stream-player {
     padding: 0 3em;
-    width: 75%;
+    width: 100%;
     float: right;
 }
