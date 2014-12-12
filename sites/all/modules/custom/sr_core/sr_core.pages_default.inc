@@ -1049,55 +1049,25 @@ echo "<img src=\'".$base_url."/sites/default/files/z2.jpg\' />";
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-99e033e9-4a3e-4b0c-be4d-18f343df58d2';
+    $pane->pid = 'new-0cad5ba7-bc8e-441f-8ea5-68c7e9d9ffa7';
     $pane->panel = 'advertizement_on_home';
-    $pane->type = 'custom';
-    $pane->subtype = 'custom';
+    $pane->type = 'block';
+    $pane->subtype = 'views-tweets_home-block_1';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'admin_title' => 'GRay blue',
-      'title' => '<none>',
-      'body' => '<div class="twitter-home">
-    <?php
-    global $base_url;
-    echo "<img  class=\'backgroung-image\' src=\'" . $base_url . "/sites/default/files/bagimage.jpg\' />";
-    ?>
-<div class="inner-twitter">
-    <div class="container">
-        <div class="inner-twitter-first">
-            <?php echo "<a href= \'" . $base_url . "/\'><img  class=\'watch\' src=\'" . $base_url . "/sites/default/files/twitter.png\' /></a>"; ?>
-            <div class="sign-desc"><ul><li><a href="https://twitter.com/StreamRiot">@StreamRiot</a></li><li><a href="https://twitter.com/StreamRiot">#StreamRiot</a></li></ul></div>
-        </div>
-        <div class="inner-twitter-second">
-            <div class="sign-title"><a href="#">Marcus DJ Wheat Graham</a></div>
-            <p class="sign-desc">OneMoreGameTV is going Premium with the new @StreamRiot! It’s increadible! Go check it out guys<a href="<?php echo $base_url; ?>/"><span class="already-sign">www.StreamRiot.com</span></a></p>
-        </div>
-        <div class="inner-twitter-third">
-            <div class="sign-title"><a href="#">GrayBlue</a></div>
-            <p class="sign-desc">StreamRiot just worked out a new deal with @ComplexityGaming. We’ve got some big this ahead for <a href="<?php echo $base_url; ?>/"><span class="already-sign">www.StreamRiot.com</span></a></p>
-        </div>
-        <div class="inner-twitter-last">
-            <div class="sign-title"><a href="#">JuneParent</a></div>
-            <p class="sign-desc">AHHH! I’m happy to announce we’ve just landed a huge partnership with @MLG to showcase their 2015 tourneys through our multi-stream player!</p>
-        </div>
-    </div>
-</div>
-</div>',
-      'format' => 'php_code',
-      'substitute' => TRUE,
+      'override_title' => 1,
+      'override_title_text' => '',
     );
     $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
+    $pane->style = array();
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = '99e033e9-4a3e-4b0c-be4d-18f343df58d2';
-    $display->content['new-99e033e9-4a3e-4b0c-be4d-18f343df58d2'] = $pane;
-    $display->panels['advertizement_on_home'][0] = 'new-99e033e9-4a3e-4b0c-be4d-18f343df58d2';
+    $pane->uuid = '0cad5ba7-bc8e-441f-8ea5-68c7e9d9ffa7';
+    $display->content['new-0cad5ba7-bc8e-441f-8ea5-68c7e9d9ffa7'] = $pane;
+    $display->panels['advertizement_on_home'][0] = 'new-0cad5ba7-bc8e-441f-8ea5-68c7e9d9ffa7';
     $pane = new stdClass();
     $pane->pid = 'new-226b1412-a803-48bc-9399-ad825303fc26';
     $pane->panel = 'center';

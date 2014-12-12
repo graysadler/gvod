@@ -399,6 +399,46 @@ function sr_core_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-tweet-field_tweet_user_name'
+  $field_instances['node-tweet-field_tweet_user_name'] = array(
+    'bundle' => 'tweet',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 5,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_tweet_user_name',
+    'label' => 'Twitter Name',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 41,
+    ),
+  );
+
   // Exported field_instance: 'taxonomy_term-game_category-field_game_image'
   $field_instances['taxonomy_term-game_category-field_game_image'] = array(
     'bundle' => 'game_category',
@@ -455,6 +495,7 @@ function sr_core_field_default_field_instances() {
   t('Question');
   t('Stream image');
   t('Twitter Id');
+  t('Twitter Name');
 
   return $field_instances;
 }

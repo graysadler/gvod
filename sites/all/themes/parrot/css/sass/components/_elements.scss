@@ -1473,7 +1473,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
             @include at-breakpoint($computer) {
                 display: block;
             }
-            .panels-flexible-row-6-6-inside {
+            //.panels-flexible-row-6-6-inside {
                 @include container;
                 .panels-flexible-region-first {
                     width: 41%;
@@ -1483,7 +1483,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                     width: 56.5%;
                     text-align: center;
                 }
-            }
+            //}
             .stream-player {
                 p {
                     font-size: 29 + $baseFontSize;
@@ -1945,6 +1945,12 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                             }
                         }
                     }
+                    .tweet {
+                        float: left;
+                        width: 17.4%;
+                        margin-right: 5%;
+                        padding-top: 10%;
+                    }
                     .inner-twitter-second {
                         float: left;
                         width: 17.4%;
@@ -1963,25 +1969,34 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                         margin-right: 0px;
                         padding-top: 101px;
                     }
-                    .sign-title {
-                        margin-bottom: 26px;
-                        a {
-                            font-size: 1.667 * $baseFontSize;
-                            line-height: 20px;
+                    .sign-title,
+                    .views-field-field-tweet-user-name,
+                    .views-field-field-tweet-user {
+                        font-size: 1.667 * $baseFontSize;
+                            line-height: 1.5em;
                             color: $white;
+                        a {
+                        margin-bottom: 26px;
+                            
                             //font-weight: 700;
                         }
                     }
-                    .sign-desc {
+                    .sign-desc,
+                    .views-field-body {
                         font-size: 1.167 * $baseFontSize;
                         line-height: 23px;
                         color: $white;
                         a {
-                            display: block;
+                            display: inline;
                             color: $hover-color;
                             font-size: 1.167 * $baseFontSize;
                             margin-top: 2px;
                         }
+                    }
+                    .view-footer {
+                      position: absolute;
+                      bottom: 1em;
+                      right: 1em;
                     }
                 }
             }
@@ -2550,7 +2565,7 @@ a.contextual-links-trigger {
     background-position: -2px -1344px;
     display: block;
     height: 75px;
-    margin: 54px auto 70px;
+    margin: 20% auto 70px;
     width: 75px;
 }
 #main-content .sidebar-second div > div:hover .blog-image-link {
@@ -2700,13 +2715,23 @@ p a {
     width: 45%;
   }
   
-  .panels-flexible-region-new-gallery_item1_,
-  .panels-flexible-region-new-gallery_item2 {
-    width: 25%;
+  .Gallery1 {
+    .panels-flexible-region-first,
+    .panels-flexible-region-last {
+      width: 25%;
+    }
+    
+    .panels-flexible-region:nth-child(2) {
+      width: 50%;
+    }
+  }
+  .panels-flexible-region-new-gallery_item2,
+  .panels-flexible-region-13-gallery_item1_ {
+    //width: 25%;
   }
   
   .panels-flexible-region-new-gallery_item1 {
-    width: 50%;
+    //width: 50%;
   }  
 }
 
