@@ -40,20 +40,20 @@ function sr_core_image_default_styles() {
     'name' => 'about-us_staff',
     'label' => 'about-us staff',
     'effects' => array(
-      8 => array(
-        'label' => 'Resize',
-        'help' => 'Resizing will make images an exact set of dimensions. This may cause images to be stretched or shrunk disproportionately.',
-        'effect callback' => 'image_resize_effect',
+      12 => array(
+        'label' => 'Scale and crop',
+        'help' => 'Scale and crop will maintain the aspect-ratio of the original image, then crop the larger dimension. This is most useful for creating perfectly square thumbnails without stretching the image.',
+        'effect callback' => 'image_scale_and_crop_effect',
         'dimensions callback' => 'image_resize_dimensions',
         'form callback' => 'image_resize_form',
         'summary theme' => 'image_resize_summary',
         'module' => 'image',
-        'name' => 'image_resize',
+        'name' => 'image_scale_and_crop',
         'data' => array(
           'width' => 280,
           'height' => 200,
         ),
-        'weight' => 1,
+        'weight' => -10,
       ),
     ),
   );
@@ -121,6 +121,29 @@ function sr_core_image_default_styles() {
         'data' => array(
           'width' => 300,
           'height' => 200,
+        ),
+        'weight' => 1,
+      ),
+    ),
+  );
+
+  // Exported image style: featured_blog.
+  $styles['featured_blog'] = array(
+    'name' => 'featured_blog',
+    'label' => 'Featured Blog (278x158)',
+    'effects' => array(
+      10 => array(
+        'label' => 'Scale and crop',
+        'help' => 'Scale and crop will maintain the aspect-ratio of the original image, then crop the larger dimension. This is most useful for creating perfectly square thumbnails without stretching the image.',
+        'effect callback' => 'image_scale_and_crop_effect',
+        'dimensions callback' => 'image_resize_dimensions',
+        'form callback' => 'image_resize_form',
+        'summary theme' => 'image_resize_summary',
+        'module' => 'image',
+        'name' => 'image_scale_and_crop',
+        'data' => array(
+          'width' => 278,
+          'height' => 158,
         ),
         'weight' => 1,
       ),

@@ -20,7 +20,7 @@ function sr_core_panelizer_defaults() {
   $panelizer->no_blocks = FALSE;
   $panelizer->css_id = '';
   $panelizer->css = '';
-  $panelizer->pipeline = 'standard';
+  $panelizer->pipeline = 'ipe';
   $panelizer->contexts = array();
   $panelizer->relationships = array();
   $panelizer->access = array();
@@ -30,7 +30,7 @@ function sr_core_panelizer_defaults() {
   $panelizer->link_to_entity = TRUE;
   $panelizer->extra = array();
   $display = new panels_display();
-  $display->layout = 'flexible';
+  $display->layout = 'three_25_50_25';
   $display->layout_settings = array(
     'items' => array(
       'canvas' => array(
@@ -92,6 +92,11 @@ function sr_core_panelizer_defaults() {
       'center' => NULL,
       'sidebar_first' => NULL,
       'sidebar_second' => NULL,
+      'three_25_50_25_top' => NULL,
+      'three_25_50_25_first' => NULL,
+      'three_25_50_25_second' => NULL,
+      'three_25_50_25_third' => NULL,
+      'three_25_50_25_bottom' => NULL,
     ),
   );
   $display->cache = array();
@@ -100,17 +105,40 @@ function sr_core_panelizer_defaults() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-e2dbf6c0-7fcc-4205-ad62-93659837e8bb';
-    $pane->panel = 'center';
-    $pane->type = 'page_tabs';
-    $pane->subtype = 'page_tabs';
+    $pane->pid = 'new-b93750f2-22a9-46c0-a29a-d48f9c20825a';
+    $pane->panel = 'three_25_50_25_first';
+    $pane->type = 'block';
+    $pane->subtype = 'views-blog_listing-blogs_featured';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'type' => 'both',
-      'id' => 'tabs',
       'override_title' => 1,
-      'override_title_text' => '<none>',
+      'override_title_text' => 'Hi! We\'re StreamRiot :)',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array(
+      'css_id' => '',
+      'css_class' => 'featured-blogs',
+    );
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = 'b93750f2-22a9-46c0-a29a-d48f9c20825a';
+    $display->content['new-b93750f2-22a9-46c0-a29a-d48f9c20825a'] = $pane;
+    $display->panels['three_25_50_25_first'][0] = 'new-b93750f2-22a9-46c0-a29a-d48f9c20825a';
+    $pane = new stdClass();
+    $pane->pid = 'new-a8749e2e-f17e-407d-83ec-9c6cb3a90db0';
+    $pane->panel = 'three_25_50_25_first';
+    $pane->type = 'block';
+    $pane->subtype = 'block-8';
+    $pane->shown = FALSE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => 'Hi! We’re StreamRiot :)',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -118,14 +146,114 @@ function sr_core_panelizer_defaults() {
     );
     $pane->css = array();
     $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = 'a8749e2e-f17e-407d-83ec-9c6cb3a90db0';
+    $display->content['new-a8749e2e-f17e-407d-83ec-9c6cb3a90db0'] = $pane;
+    $display->panels['three_25_50_25_first'][1] = 'new-a8749e2e-f17e-407d-83ec-9c6cb3a90db0';
+    $pane = new stdClass();
+    $pane->pid = 'new-f47901da-8cda-4492-b9fc-4fb10fb0b9bc';
+    $pane->panel = 'three_25_50_25_first';
+    $pane->type = 'block';
+    $pane->subtype = 'block-5';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => 'Welcome to our blog!',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 2;
+    $pane->locks = array();
+    $pane->uuid = 'f47901da-8cda-4492-b9fc-4fb10fb0b9bc';
+    $display->content['new-f47901da-8cda-4492-b9fc-4fb10fb0b9bc'] = $pane;
+    $display->panels['three_25_50_25_first'][2] = 'new-f47901da-8cda-4492-b9fc-4fb10fb0b9bc';
+    $pane = new stdClass();
+    $pane->pid = 'new-27b5cac6-21c9-4492-b3cc-483bddbd424c';
+    $pane->panel = 'three_25_50_25_first';
+    $pane->type = 'block';
+    $pane->subtype = 'views-social_feed-social_feed';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 3;
+    $pane->locks = array();
+    $pane->uuid = '27b5cac6-21c9-4492-b3cc-483bddbd424c';
+    $display->content['new-27b5cac6-21c9-4492-b3cc-483bddbd424c'] = $pane;
+    $display->panels['three_25_50_25_first'][3] = 'new-27b5cac6-21c9-4492-b3cc-483bddbd424c';
+    $pane = new stdClass();
+    $pane->pid = 'new-f4199c1a-ff7b-4e7b-956c-9102fdb66ce1';
+    $pane->panel = 'three_25_50_25_first';
+    $pane->type = 'block';
+    $pane->subtype = 'views-tweets-block_1';
+    $pane->shown = FALSE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 4;
+    $pane->locks = array();
+    $pane->uuid = 'f4199c1a-ff7b-4e7b-956c-9102fdb66ce1';
+    $display->content['new-f4199c1a-ff7b-4e7b-956c-9102fdb66ce1'] = $pane;
+    $display->panels['three_25_50_25_first'][4] = 'new-f4199c1a-ff7b-4e7b-956c-9102fdb66ce1';
+    $pane = new stdClass();
+    $pane->pid = 'new-a3497512-234b-412c-af40-901e2e1bcb16';
+    $pane->panel = 'three_25_50_25_second';
+    $pane->type = 'entity_field';
+    $pane->subtype = 'node:field_image';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'label' => 'hidden',
+      'formatter' => 'file_rendered',
+      'delta_limit' => 0,
+      'delta_offset' => '0',
+      'delta_reversed' => FALSE,
+      'formatter_settings' => array(
+        'file_view_mode' => 'media_original',
+      ),
+      'context' => 'panelizer',
+      'override_title' => 1,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array(
+      'css_id' => '',
+      'css_class' => 'banner-image',
+    );
+    $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = 'e2dbf6c0-7fcc-4205-ad62-93659837e8bb';
-    $display->content['new-e2dbf6c0-7fcc-4205-ad62-93659837e8bb'] = $pane;
-    $display->panels['center'][0] = 'new-e2dbf6c0-7fcc-4205-ad62-93659837e8bb';
+    $pane->uuid = 'a3497512-234b-412c-af40-901e2e1bcb16';
+    $display->content['new-a3497512-234b-412c-af40-901e2e1bcb16'] = $pane;
+    $display->panels['three_25_50_25_second'][0] = 'new-a3497512-234b-412c-af40-901e2e1bcb16';
     $pane = new stdClass();
     $pane->pid = 'new-03ff30d6-146d-438e-b042-97c3f75e05ae';
-    $pane->panel = 'center';
+    $pane->panel = 'three_25_50_25_second';
     $pane->type = 'node_content';
     $pane->subtype = 'node_content';
     $pane->shown = TRUE;
@@ -151,76 +279,10 @@ function sr_core_panelizer_defaults() {
     $pane->locks = array();
     $pane->uuid = '03ff30d6-146d-438e-b042-97c3f75e05ae';
     $display->content['new-03ff30d6-146d-438e-b042-97c3f75e05ae'] = $pane;
-    $display->panels['center'][1] = 'new-03ff30d6-146d-438e-b042-97c3f75e05ae';
-    $pane = new stdClass();
-    $pane->pid = 'new-a8749e2e-f17e-407d-83ec-9c6cb3a90db0';
-    $pane->panel = 'sidebar_first';
-    $pane->type = 'block';
-    $pane->subtype = 'block-8';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'override_title' => 1,
-      'override_title_text' => 'Hi! We’re StreamRiot :)',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 0;
-    $pane->locks = array();
-    $pane->uuid = 'a8749e2e-f17e-407d-83ec-9c6cb3a90db0';
-    $display->content['new-a8749e2e-f17e-407d-83ec-9c6cb3a90db0'] = $pane;
-    $display->panels['sidebar_first'][0] = 'new-a8749e2e-f17e-407d-83ec-9c6cb3a90db0';
-    $pane = new stdClass();
-    $pane->pid = 'new-f47901da-8cda-4492-b9fc-4fb10fb0b9bc';
-    $pane->panel = 'sidebar_first';
-    $pane->type = 'block';
-    $pane->subtype = 'block-5';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'override_title' => 1,
-      'override_title_text' => 'Welcome to our blog!',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 1;
-    $pane->locks = array();
-    $pane->uuid = 'f47901da-8cda-4492-b9fc-4fb10fb0b9bc';
-    $display->content['new-f47901da-8cda-4492-b9fc-4fb10fb0b9bc'] = $pane;
-    $display->panels['sidebar_first'][1] = 'new-f47901da-8cda-4492-b9fc-4fb10fb0b9bc';
-    $pane = new stdClass();
-    $pane->pid = 'new-f4199c1a-ff7b-4e7b-956c-9102fdb66ce1';
-    $pane->panel = 'sidebar_first';
-    $pane->type = 'block';
-    $pane->subtype = 'views-tweets-block_1';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'override_title' => 0,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 2;
-    $pane->locks = array();
-    $pane->uuid = 'f4199c1a-ff7b-4e7b-956c-9102fdb66ce1';
-    $display->content['new-f4199c1a-ff7b-4e7b-956c-9102fdb66ce1'] = $pane;
-    $display->panels['sidebar_first'][2] = 'new-f4199c1a-ff7b-4e7b-956c-9102fdb66ce1';
+    $display->panels['three_25_50_25_second'][1] = 'new-03ff30d6-146d-438e-b042-97c3f75e05ae';
     $pane = new stdClass();
     $pane->pid = 'new-b855a04c-3c82-4e63-bd51-70f4deba705b';
-    $pane->panel = 'sidebar_second';
+    $pane->panel = 'three_25_50_25_third';
     $pane->type = 'block';
     $pane->subtype = 'block-4';
     $pane->shown = TRUE;
@@ -239,10 +301,10 @@ function sr_core_panelizer_defaults() {
     $pane->locks = array();
     $pane->uuid = 'b855a04c-3c82-4e63-bd51-70f4deba705b';
     $display->content['new-b855a04c-3c82-4e63-bd51-70f4deba705b'] = $pane;
-    $display->panels['sidebar_second'][0] = 'new-b855a04c-3c82-4e63-bd51-70f4deba705b';
+    $display->panels['three_25_50_25_third'][0] = 'new-b855a04c-3c82-4e63-bd51-70f4deba705b';
     $pane = new stdClass();
     $pane->pid = 'new-0464d8b2-94b4-4c31-bc09-7e28b12ace7d';
-    $pane->panel = 'sidebar_second';
+    $pane->panel = 'three_25_50_25_third';
     $pane->type = 'block';
     $pane->subtype = 'block-7';
     $pane->shown = TRUE;
@@ -261,13 +323,13 @@ function sr_core_panelizer_defaults() {
     $pane->locks = array();
     $pane->uuid = '0464d8b2-94b4-4c31-bc09-7e28b12ace7d';
     $display->content['new-0464d8b2-94b4-4c31-bc09-7e28b12ace7d'] = $pane;
-    $display->panels['sidebar_second'][1] = 'new-0464d8b2-94b4-4c31-bc09-7e28b12ace7d';
+    $display->panels['three_25_50_25_third'][1] = 'new-0464d8b2-94b4-4c31-bc09-7e28b12ace7d';
     $pane = new stdClass();
     $pane->pid = 'new-0849148c-0a97-44be-8104-5a598f09c698';
-    $pane->panel = 'sidebar_second';
+    $pane->panel = 'three_25_50_25_third';
     $pane->type = 'block';
     $pane->subtype = 'views-blog_right_side_block-block';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array(
       'override_title' => 1,
@@ -283,7 +345,53 @@ function sr_core_panelizer_defaults() {
     $pane->locks = array();
     $pane->uuid = '0849148c-0a97-44be-8104-5a598f09c698';
     $display->content['new-0849148c-0a97-44be-8104-5a598f09c698'] = $pane;
-    $display->panels['sidebar_second'][2] = 'new-0849148c-0a97-44be-8104-5a598f09c698';
+    $display->panels['three_25_50_25_third'][2] = 'new-0849148c-0a97-44be-8104-5a598f09c698';
+    $pane = new stdClass();
+    $pane->pid = 'new-5e34c095-b68b-4415-a3e0-03336c330114';
+    $pane->panel = 'three_25_50_25_third';
+    $pane->type = 'block';
+    $pane->subtype = 'views-blog_right_side_block-block_4';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 3;
+    $pane->locks = array();
+    $pane->uuid = '5e34c095-b68b-4415-a3e0-03336c330114';
+    $display->content['new-5e34c095-b68b-4415-a3e0-03336c330114'] = $pane;
+    $display->panels['three_25_50_25_third'][3] = 'new-5e34c095-b68b-4415-a3e0-03336c330114';
+    $pane = new stdClass();
+    $pane->pid = 'new-e2dbf6c0-7fcc-4205-ad62-93659837e8bb';
+    $pane->panel = 'three_25_50_25_top';
+    $pane->type = 'page_tabs';
+    $pane->subtype = 'page_tabs';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'type' => 'both',
+      'id' => 'tabs',
+      'override_title' => 1,
+      'override_title_text' => '<none>',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = 'e2dbf6c0-7fcc-4205-ad62-93659837e8bb';
+    $display->content['new-e2dbf6c0-7fcc-4205-ad62-93659837e8bb'] = $pane;
+    $display->panels['three_25_50_25_top'][0] = 'new-e2dbf6c0-7fcc-4205-ad62-93659837e8bb';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $panelizer->display = $display;

@@ -1079,10 +1079,7 @@ echo "<img src=\'".$base_url."/sites/default/files/z2.jpg\' />";
       'admin_title' => 'video player home page',
       'title' => '<none>',
       'body' => '<div class="home-video">
-<?php 
-global $base_url; 
-echo "<img src=\'".$base_url."/sites/default/files/videoimage.jpg\' />"; 
-?>
+<img src="/sites/default/files/videoimage.jpg" class="fullwidth" />
     <div class="home-video-inner">
         <strong class="strem-strong">StreamRiot</strong>
         <strong>The #1 Multi-Live Stream</strong>
