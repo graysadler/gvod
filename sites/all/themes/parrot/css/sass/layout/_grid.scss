@@ -554,6 +554,7 @@ $wide: 80em;
       @include at-breakpoint($computer){
         @include remove-omega;
         @include span-columns(3, 12);
+        padding: 2em 3em;
       }
       @include at-breakpoint($wide){
         @include remove-omega;
@@ -587,6 +588,7 @@ $wide: 80em;
       }
       @include at-breakpoint($computer){
         @include span-columns(3 omega, 12);
+        padding: 0 3em;
       }
       @include at-breakpoint($wide){
         @include span-columns(3 omega, 12);

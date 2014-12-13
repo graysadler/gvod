@@ -239,7 +239,6 @@ li {
     cursor: pointer;
     margin-bottom: 0;
     margin-top: 10px;
-    padding-bottom: 13px;
     outline: none;
 }
 .other i {
@@ -652,22 +651,22 @@ li {
     position: relative;
 }
 #main-content {
-    padding-top: 54px;
+    //padding-top: 54px;
     //@include container;
     //@include bleed();
     
-        .sidebar-first {
-            background-color: $left-sideBar;
-            float: left;
-            padding: 23px 1% 23px 1.8%;
-            margin: -50px 0 0 -35px;
-            width: 23%;
-            h2 {
+        //.sidebar-first {
+            //background-color: $left-sideBar;
+            //float: left;
+            //padding: 23px 1% 23px 1.8%;
+            //margin: -50px 0 0 -35px;
+            //width: 23%;
+            h2.pane-title {
                 font-size: 6 + $baseFontSize;
                 color: $hover-color;
                 //font-weight: 300;
-                text-transform: uppercase;
-                margin-bottom: 24px;
+                //text-transform: uppercase;
+                margin-bottom: 1.5em;
             }
             .social-share {
                 margin-bottom: 46px;
@@ -691,6 +690,9 @@ li {
                                 background-color: red;
                                 display: inline-block;
                                 margin-right: 26px;
+                            }
+                            span {
+                              display:inline-block;
                             }
                             .icon-twitter {
                                 background-position: 0 -34px;
@@ -740,7 +742,7 @@ li {
                         }
                     }
                 }
-            }
+            //}
             .view-header {
                 margin-bottom: 8px;
                 .social-connect {
@@ -1113,7 +1115,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
 }
 .field-content {
     a {
-        display: block;
+        //display: block;
         img {
             //width: 100%;
         }
@@ -1564,12 +1566,16 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                     @include at-breakpoint($narrow) {
                       float: left;
                         width: 29.23%;
+                        //max-width: 350px;
                         margin-bottom: 0px;
                         margin-right: 6.1%;
                         
+                        img {
+                          width: 100%;
+                        }
                         &:last-child {
-                        margin-right: 0px;
-                    }
+                          margin-right: 0px;
+                        }
                     }
                     
                     .twittes-hover {
@@ -1949,7 +1955,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                         float: left;
                         width: 17.4%;
                         margin-right: 5%;
-                        padding-top: 10%;
+                        padding-top: 60px;
                     }
                     .inner-twitter-second {
                         float: left;
@@ -2042,7 +2048,31 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
     float: none;
     width: 100%;
 }
-.sidebar-first {
+// Featured blogs
+.featured-blogs {
+  .views-field-title { 
+    display:block;
+    font-size: $baseFontSize;
+    color: $white; //
+    font-weight: 700;
+    text-align: right;
+    padding: 12px 23px;
+    background-color: $inActive-bagColor;
+    margin-bottom: 2em;
+    
+    h2 {
+      font-weight: normal;
+      font-size: inherit;
+      margin: 0;
+      text-transform: none;
+    }
+    
+    a {
+      color: white;
+      padding: 0.5em 0;
+    }
+  }
+}
     .streamriots-about {
         margin-bottom: 20px;
         .streamriots-inner {
@@ -2075,7 +2105,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
             }
         }
     }
-}
+//}
 h2.pane-title {
     //padding: 42px 7% 32px;
     //margin: 0;
@@ -2495,7 +2525,8 @@ a.contextual-links-trigger {
     overflow: hidden;
 }
 .admin-menu #header-wrapper {
-    margin-top: 34px;
+    //margin-top: 34px;
+    position: static;
 }
 .admin-menu .login-block {
     top: 56px;
@@ -2619,7 +2650,7 @@ p a {
     color: #079dd9;
 }
 .admin-menu #panel-wrapper {
-    padding-top: 61px;
+    padding-top: 0px;
 }
 .field-content p a {
     display: inline-block;
@@ -2739,4 +2770,157 @@ p a {
     padding: 0 3em;
     width: 100%;
     float: right;
+}
+
+.fullwidth {
+  width: 100%;
+  padding: 0;
+}
+
+#three-25-50-25-middle-wrapper {
+  .panel-pane {
+    margin-bottom: 3em;
+  }
+  
+  .three-25-50-25-first,
+  .three-25-50-25-second .region-inner {
+    background: white;
+  } 
+  
+  .three-25-50-25-second,
+  .three-25-50-25-third {
+    margin-top: 4em;
+  } 
+  
+  .three-25-50-25-first {
+
+    h2.pane-title {
+      font-weight: lighter;
+    }
+  }
+  
+  .three-25-50-25-second {
+    padding-left: 3em;
+    
+    .pane-title,
+    .panel-pane {
+      padding: 0 35px;
+      
+      .node {
+        padding: 0;
+      }
+    } 
+    
+
+  } 
+  
+  .banner-image .panel-pane {
+    padding: 0;
+  }   
+}
+
+.blogs {
+  
+  .blog {
+    margin-bottom: 4em;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    .views-field-body {
+      p {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.view-staff-watching {
+  .staff {
+    @include span-columns(4, 4);
+    
+    @include at-breakpoint($narrow) {
+      @include span-columns(2, 4);
+    }
+        
+    @include at-breakpoint($tablet) {
+      @include span-columns(4, 4);
+    }
+    
+    @include at-breakpoint($computer) {
+      @include span-columns(2, 4);
+    }    
+    &:last-child {
+      @include omega();
+    }
+    
+    .views-field-field-staff-image,
+    .views-field-title {
+      margin-bottom: 30px;
+    }
+    
+    .views-field-title  {
+      font-size: 1.5em;
+      font-weight: bolder;
+      
+    }
+    
+  }
+  
+}
+
+.view-blog-behind-scenes {
+  
+  
+  .blog {
+    background: white;
+    margin-bottom: 3em;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    .views-field-title {
+      h3 {
+        margin: 0;
+        font-size: 1.5em;
+        font-weight: lighter;
+        line-height: 1.5em;
+      }
+  
+      a {
+        
+        color: #3c4650;
+      }
+    }
+    
+    .views-field-title,
+    .views-field-body {
+      padding: 1.5em 1.5em 0 1.5em;
+    }
+    
+    .views-field-view-node {
+      margin-top: 1.5em;
+      background-color: $inActive-bagColor;
+      padding: 1em;
+      
+      a {
+        color: white;
+        text-align: right;
+      }
+    }  
+  }
+}
+
+.social-feed {
+  
+  .item {
+    border-bottom: solid 1px #e7e7e7;
+    padding: 1em 0 1em 3em;
+    
+    .views-field-title {
+      font-weight: bold;
+    }
+  }
 }
