@@ -81,7 +81,7 @@
   padding: 0px;
   background-color: #fff;
   border: 1px solid #ddd;
-  @include border-radius(15px);
+  //@include border-radius(15px);
   overflow: hidden;
 
   &.current{

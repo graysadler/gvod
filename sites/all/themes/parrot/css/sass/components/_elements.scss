@@ -983,40 +983,7 @@ li {
                 }
             }
         }
-        #quicktabs-tabpage-popular_blog-0, #quicktabs-tabpage-popular_blog-1 {
-            padding-bottom: 28px;
-            .views-field-field-blog-images {
-                float: left;
-                width: 68px;
-            }
-            .views-field-title {
-                float: left;
-                width: 73%;
-                padding: 0 0 0 15px;
-                background: none;
-                h3 {
-                    font-size: $baseFontSize;
-                    margin: 0;
-                    line-height: 15px;
-                    //font-weight: 700;
-                    color: $textColor;
-                }
-                .field-content {
-                    a {
-                        color: $textColor;
-                    }
-                }
-            }
-        }
-        #quicktabs-tabpage-popular_blog-0 > div:first-child, #quicktabs-tabpage-popular_blog-1 > div:first-child {
-            margin-top: 0px;
-        }
-        #quicktabs-tabpage-popular_blog-0 > div, #quicktabs-tabpage-popular_blog-1 > div {
-            overflow: hidden;
-            padding-bottom: 12px;
-            margin-top: 14px;
-            border-bottom: 2px solid #e8e8e8;
-        }
+
     
 }
 .tagclouds.level3, .tagclouds.level6, .tagclouds.level5 {
@@ -2819,6 +2786,140 @@ p a {
   }   
 }
 
+.page-blog {
+  #three-25-50-25-middle-wrapper {
+    .three-25-50-25-second {      
+      .region-inner {
+        background: none;
+      }
+      
+      .pane-title,
+      .panel-pane {
+         padding: 0;
+      }
+      
+      .blogs {
+        .views-field-title,
+        .views-field-body,
+        .views-field-nothing,
+        .views-field-view-node {
+          padding: 0 35px;
+        }
+        
+        p {
+          margin-bottom: 1.5em
+        }
+        .views-field-title {
+            padding: 42px 7% 30px;
+            background: $background-color;
+            h2 {
+                font-size: 2 * $baseFontSize;
+                a {
+                    color: $textColor;
+                }
+            }
+        }
+        .views-field-body {
+            padding: 0 7% 19px;
+            background: $background-color;
+            p {
+                line-height: 24px;
+                margin-bottom: 24px;
+            }
+        }
+        .views-field-view-node {
+            background: $inActive-bagColor;
+            margin-bottom: 43px;
+            padding: 12px 32px;
+            text-align: right;
+            a {
+                color: $white;
+                font-size: 1.167 * $baseFontSize;
+            }
+            &:hover {
+                background: $hover-color;
+                //font-weight: 700;
+            }
+        }
+        .views-field-nothing {
+            padding: 0 7% 42px;
+            background: $background-color;
+            .sharethis-wrapper {
+                float: left;
+                width: 56px;
+                .stButton {
+                    margin: 0;
+                    .st-sharethis-counter {
+                        background: url(../img/share.png) left top no-repeat !important;
+                        width: 57px !important;
+                        height: 29px !important;
+                    }
+                }
+            }
+            .created {
+                float: left;
+                margin: 0 15px 0 27px;
+                .icon-created {
+                    background-position: 0 -733px;
+                    height: 26px;
+                    width: 27px;
+                }
+            }
+            .name {
+                float: left;
+                margin: 0 15px 0;
+                .icon-name {
+                    background-position: 0 -765px;
+                    height: 27px;
+                    width: 32px;
+                }
+                .username {
+                    display: inline-block;
+                    color: $globalColor;
+                }
+            }
+            .tags {
+                float: left;
+                margin: 0 15px 0;
+                width: 80px;
+                position: relative;
+                cursor: pointer;
+                .icon-tags {
+                    background-position: 0 -797px;
+                    height: 27px;
+                    width: 26px;
+                }
+                .views-label-field-tags {
+                    display: inline-block;
+                }
+                .tag-content {
+                    position: absolute;
+                    left: 22px;
+                    top: 23px;
+                    width: 100px;
+                    background-color: $globalColor;
+                    text-transform: capitalize;
+                    a {
+                        color: $white;
+                        padding: 10px 15px;
+                        &:hover {
+                            background-color: $activeButtonColor;
+                        }
+                    }
+                }
+            }
+            i {
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 10px;
+            }
+        }        
+        
+      }       
+    }
+  }
+}
+
 .blogs {
   
   .blog {
@@ -2871,8 +2972,6 @@ p a {
 }
 
 .view-blog-behind-scenes {
-  
-  
   .blog {
     background: white;
     margin-bottom: 3em;
@@ -2923,4 +3022,65 @@ p a {
       font-weight: bold;
     }
   }
+}
+
+#quicktabs-popular_blog {
+    margin-bottom: 30px;
+    padding: 2em;
+    background-color: white;
+    .quicktabs_main {
+      padding: 1em 0;
+    }
+    .views-field-title {
+        background: none;
+    }
+    .quicktabs-tabs {
+      li {
+
+        a {
+          padding: .5em 1em;
+        }
+        
+        &.last a {
+          padding: 3px 18px 8px 44px;
+        }        
+      }
+    }
+    
+  .blog {
+    overflow: hidden;
+    padding-bottom: 12px;
+    margin-top: 14px;
+    border-bottom: 2px solid #e8e8e8;
+    margin-bottom: 0;
+  }  
+}
+#quicktabs-tabpage-popular_blog-0, #quicktabs-tabpage-popular_blog-1 {
+    //padding-bottom: 28px;
+    .views-field-field-blog-images {
+        float: left;
+        padding-right: 1em;
+        //width: 68px;
+    }
+    .views-field-title {
+        //float: left;
+        //width: 73%;
+        padding: 0 0 0 15px;
+        background: none;
+        h3 {
+            font-size: $baseFontSize;
+            margin: 0;
+            line-height: 15px;
+            //font-weight: 700;
+            color: $textColor;
+        }
+        .field-content {
+            a {
+                color: $textColor;
+            }
+        }
+    }
+}
+#quicktabs-tabpage-popular_blog-0 > div:first-child, #quicktabs-tabpage-popular_blog-1 > div:first-child {
+    margin-top: 0px;
 }
