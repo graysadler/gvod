@@ -52,8 +52,8 @@
 
         $(".contact-form").addClass("test2");
 
-        $(".panels-flexible-7 .tags .tag-content").hide();
-        $(".panels-flexible-7 .tags").live("click", function() {
+        $(".tags .tag-content").hide();
+        $(".tags").live("click", function() {
             // console.log($(this).parent());
             $(this).parent().find(".tag-content").slideToggle("fast");
         });
