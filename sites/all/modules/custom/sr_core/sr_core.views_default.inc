@@ -366,6 +366,8 @@ function sr_core_views_default_views() {
 
   /* Display: Featured Blogs */
   $handler = $view->new_display('block', 'Featured Blogs', 'blogs_featured');
+  $handler->display->display_options['defaults']['css_class'] = FALSE;
+  $handler->display->display_options['css_class'] = 'blogs featured';
   $handler->display->display_options['defaults']['pager'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['pager']['options']['items_per_page'] = '2';
@@ -376,6 +378,8 @@ function sr_core_views_default_views() {
   $handler->display->display_options['fields']['field_blog_images']['table'] = 'field_data_field_blog_images';
   $handler->display->display_options['fields']['field_blog_images']['field'] = 'field_blog_images';
   $handler->display->display_options['fields']['field_blog_images']['label'] = '';
+  $handler->display->display_options['fields']['field_blog_images']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_blog_images']['alter']['text'] = ' [field_blog_images] <div class="blog-image-link"><a href="#" class="icon-text-blog"></a></div>';
   $handler->display->display_options['fields']['field_blog_images']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_blog_images']['click_sort_column'] = 'fid';
   $handler->display->display_options['fields']['field_blog_images']['settings'] = array(
