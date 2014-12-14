@@ -22,13 +22,6 @@ function mothership_form_system_theme_settings_alter(&$form, $form_state) {
     '#description'   => t('Adds a html comment in block, node, regions fields etc with suggested theme hooks'),
   );
 
-  $form['development']['mothership_rebuild_registry'] = array(
-    '#type'          => 'checkbox',
-    '#title'         => t('Rebuild theme registry on every page.'),
-    '#default_value' => theme_get_setting('mothership_rebuild_registry'),
-    '#description'   => t('During theme development, it can be very useful to continuously <a href="!link">rebuild the theme registry</a>. <b>Turn this off on live sites!</b>', array('!link' => 'http://drupal.org/node/173880#theme-registry')),
-  );
-
   $form['development']['mothership_test'] = array(
     '#type'          => 'checkbox',
     '#title'         => t('create a test class in  &lt;body&gt;'),
@@ -55,11 +48,6 @@ function mothership_form_system_theme_settings_alter(&$form, $form_state) {
         '#weight'=> -19
     );
 
-    $form['js']['mothership_script_place_footer'] = array(
-      '#type'          => 'checkbox',
-      '#title'         => t('Put Javascript down to the bottom of the page') ,
-      '#default_value' => theme_get_setting('mothership_script_place_footer')
-    );
 
     $form['js']['mothership_js_onefile'] = array(
       '#type'          => 'checkbox',
@@ -113,8 +101,7 @@ function mothership_form_system_theme_settings_alter(&$form, $form_state) {
       '#type'          => 'checkbox',
       '#title'         => t('Respond  '),
       '#default_value' => theme_get_setting('mothership_respondjs'),
-      '#description'   => t('IE6-IE8 support for mediaqueries with <a href="!link">Respond</a> - <b>Only works with css aggregation turned on!</b>
-      ', array('!link' => 'https://github.com/scottjehl/Respond')),
+      '#description'   => t('IE6-IE8 support for mediaqueries with <a href="!link">Respond</a>', array('!link' => 'https://github.com/scottjehl/Respond')),
     );
 
     $form['js']['Libraries']['mothership_modernizr'] = array(
@@ -141,79 +128,6 @@ function mothership_form_system_theme_settings_alter(&$form, $form_state) {
       - <b>Only works with css aggregation turned on!</b>
       ', array('!link' => 'http://selectivizr.com')),
     );
-
-    $form['js']['nuke'] = array(
-        '#type'          => 'fieldset',
-        '#title'         => '&#9985; ' . t('Remove .js files'),
-        '#description'   => t('Settings to remove js files from Drupal'),
-        '#collapsible' => TRUE,
-        '#collapsed' => FALSE
-    );
-
-    $form['js']['nuke']['mothership_js_nuke_module'] = array(
-       '#type'          => 'checkbox',
-       '#title'         => t('Remove .js files from core modules'),
-       '#default_value' => theme_get_setting('mothership_js_nuke_module')
-     );
-
-    $form['js']['nuke']['mothership_js_nuke_module_contrib'] = array(
-       '#type'          => 'checkbox',
-       '#title'         => t('Remove .js files from contrib modules'),
-       '#default_value' => theme_get_setting('mothership_js_nuke_module_contrib')
-     );
-
-     $form['js']['nuke']['mothership_js_nuke_misc'] = array(
-       '#type'          => 'checkbox',
-       '#title'         => t('Remove all .js from core misc folder'),
-       '#default_value' => theme_get_setting('mothership_js_nuke_misc')
-     );
-
-     $form['js']['nuke']['mothership_js_nuke_misc'] = array(
-       '#type'          => 'checkbox',
-       '#title'         => t('Remove all .js from core misc folder'),
-       '#default_value' => theme_get_setting('mothership_js_nuke_misc')
-     );
-
-
-     //Get all the posible css files that drupal could spit out
-     //generate the $css_files_from_modules
-     $result = db_query("SELECT * FROM {system} WHERE type = 'module' AND status = 1");
-     foreach ($result as $module) {
-       $module_path = pathinfo($module->filename, PATHINFO_DIRNAME);
-       $js_files = file_scan_directory($module_path, '/.*\.js$/');
-       foreach((array)$js_files as $key => $file) {
-         $js_files_drupal[] = $module_path . "/" . $file->filename ;
-       }
-     }
-
-      //list all js from misc
-      $js_misc_files = file_scan_directory('misc', '/.*\.js$/');
-      foreach((array)$js_misc_files as $key => $file) {
-        $js_files_drupal[] = 'misc' . "/" . $file->filename ;
-      }
-      //kpr($js_files_from_misc);
-
-      //let sort em
-      asort($js_files_drupal);
-
-      $form['js']['nuke']['stripper'] = array(
-         '#type'          => 'fieldset',
-         '#title'         => t('Javascript File Stripping: ') . sizeof($js_files_drupal). ' Files',
-         '#collapsible' => TRUE,
-         '#collapsed' => TRUE,
-       );
-
-      $form['js']['nuke']['stripper']['mothership_js_freeform'] = array(
-        '#type'          => 'textarea',
-        '#title'         => t('Path to the CSS files thats gonna be stripped '),
-        '#default_value' => theme_get_setting('mothership_js_freeform'),
-        '#description'   => t('The whole path to the file(s) that should be removed from the theme, on pr line. <br>this list dosnt account for the BAT removal, will come in a later release'),
-        '#suffix'       => '<strong>CSS file paths, based on the modules loaded in you Drupal setup</strong><br>'.  implode('<br> ', $js_files_drupal )
-      );
-
-      //list of css files with links
-      global $base_url;
-
 
 
 
@@ -292,156 +206,9 @@ function mothership_form_system_theme_settings_alter(&$form, $form_state) {
      $form['css']['reset']['mothership_css_normalize'] = array(
         '#type'          => 'checkbox',
         '#title'         => t('Add normalize.css:'),
-        '#description'   => t('<a href="!link">normalize.css info</a>', array('!link' => 'https://github.com/necolas/normalize.css')),
+        '#description'   => t('<a href="!link">normalize.css 2.1.3</a>', array('!link' => 'https://github.com/necolas/normalize.css')),
           '#default_value' => theme_get_setting('mothership_css_normalize')
      );
-
-  /* ----------------------------- CSS FILES  NUKE ----------------------------- */
-  //Get all the posible css files that drupal could spit out
-  //generate the $css_files_from_modules
-  $result = db_query("SELECT * FROM {system} WHERE type = 'module' AND status = 1");
-  foreach ($result as $module) {
-    $module_path = pathinfo($module->filename, PATHINFO_DIRNAME);
-    $css_files = file_scan_directory($module_path, '/.*\.css$/');
-    foreach((array)$css_files as $key => $file) {
-      $css_files_from_modules[] = $module_path . "/" . $file->filename ;
-    }
-  }
-  //let sort em
-  asort($css_files_from_modules);
-
-  $form['css']['nuke'] = array(
-    '#type'         => 'fieldset',
-    '#title'        => t('Remove CSS Files'),
-    '#collapsible'  => TRUE,
-    '#collapsed'    => FALSE,
-  );
-
-  $form['css']['nuke']['mothership_css_nuke_theme'] = array(
-     '#type'          => 'checkbox',
-     '#title'         => t('Remove [foo].theme.css'),
-     '#default_value' => theme_get_setting('mothership_css_nuke_theme')
-   );
-  $form['css']['nuke']['mothership_css_nuke_admin'] = array(
-     '#type'          => 'checkbox',
-     '#title'         => t('Remove [foo].admin.css'),
-     '#default_value' => theme_get_setting('mothership_css_nuke_admin')
-   );
-  $form['css']['nuke']['mothership_css_nuke_module_contrib'] = array(
-     '#type'          => 'checkbox',
-     '#title'         => t('Remove the css from contrib modules (sites/all/modules/xxx etc)'),
-     '#default_value' => theme_get_setting('mothership_css_nuke_module_contrib')
-   );
-  $form['css']['nuke']['mothership_css_nuke_module_all'] = array(
-     '#type'          => 'checkbox',
-     '#title'         => t('Remove all css from core Modules'),
-     '#description'   => t('keeps the base.css, contextual, overlay, system & toolbar'),
-     '#default_value' => theme_get_setting('mothership_css_nuke_module_all')
-   );
-
-  $form['css']['nuke']['mothership_css_nuke_book'] = array(
-     '#type'          => 'checkbox',
-     '#title'         => t('change book.css & .base.css & .theme.css'),
-     '#default_value' => theme_get_setting('mothership_css_nuke_book')
-   );
-
-
-  $form['css']['nuke']['mothership_css_nuke_systemtoolbar'] = array(
-     '#type'          => 'checkbox',
-     '#title'         => t('Remove toolbar css'),
-     '#default_value' => theme_get_setting('mothership_css_nuke_systemtoolbar')
-   );
-  $form['css']['nuke']['mothership_css_nuke_system_message'] = array(
-     '#type'          => 'checkbox',
-     '#title'         => t('Remove system.messages.css'),
-     '#default_value' => theme_get_setting('mothership_css_nuke_system_message')
-   );
-  $form['css']['nuke']['mothership_css_nuke_system_menus'] = array(
-     '#type'          => 'checkbox',
-     '#title'         => t('Remove system.menus.css'),
-     '#default_value' => theme_get_setting('mothership_css_nuke_system_menus')
-   );
-   $form['css']['nuke']['mothership_css_nuke_system_theme'] = array(
-      '#type'          => 'checkbox',
-      '#title'         => t('Remove system.theme.css'),
-      '#default_value' => theme_get_setting('mothership_css_nuke_system_theme')
-    );
-
-
-
-  //remove the css thats already remove by BAT
-  foreach ($css_files_from_modules as $file => $value) {
-
-    switch (theme_get_setting('mothership_nuke_css')) {
-      //full
-      case 'mothership_css_nuke_theme_full':
-        if (strpos($value, 'theme.css') !== FALSE) {
-          unset($css_files_from_modules[$file]);
-        }
-      break;
-      //theme.css
-      case 'mothership_css_nuke_theme':
-        if (strpos($value, 'theme.css') !== FALSE) {
-          unset($css_files_from_modules[$file]);
-        }
-        break;
-
-      case 'mothership_css_nuke_admin':
-        if (strpos($value, 'admin.css') !== FALSE) {
-          unset($css_files_from_modules[$file]);
-        }
-        break;
-
-      case 'mothership_css_nuke_theme_admin':
-        if (strpos($value, 'theme.css') !== FALSE) {
-          unset($css_files_from_modules[$file]);
-        }
-        if (strpos($value, 'admin.css') !== FALSE) {
-          unset($css_files_from_modules[$file]);
-        }
-        break;
-
-      case 'mothership_css_nuke_module':
-        if (strpos($value, 'module') !== FALSE) {
-          unset($css_files_from_modules[$file]);
-        }
-
-        break;
-
-      case 'mothership_css_nuke_epic':
-          unset($css_files_from_modules);
-        break;
-
-      default:
-        # code...
-        break;
-    }
-  }
-
-  //now that we have cleared up from the BAT its time for some freeform removing :)
-
-  /* ----------------------------- STYLE STRIPPING ----------------------------- */
-  $form['css']['nuke']['stylestripper'] = array(
-     '#type'          => 'fieldset',
-     '#title'         => t('CSS File Stripping ') . sizeof($css_files_from_modules). ' CSS Files',
-     '#collapsible' => TRUE,
-     '#collapsed' => TRUE,
-   );
-
-  $form['css']['nuke']['stylestripper']['mothership_css_freeform'] = array(
-    '#type'          => 'textarea',
-    '#title'         => t('Path to the CSS files thats gonna be stripped '),
-    '#default_value' => theme_get_setting('mothership_css_freeform'),
-    '#description'   => t('The whole path to the file(s) that should be removed from the theme, on pr line. <br>this list dosnt account for the BAT removal, will come in a later release'),
-    '#suffix'       => '<strong>CSS file paths, based on the modules loaded in you Drupal setup</strong><br>'.  implode('<br> ', $css_files_from_modules )
-  );
-
-  //list of css files with links
-  global $base_url;
-
-  //foreach ($css_files_from_modules as $value){
-  //  print '<a href=" ' .  $base_url . $value . ' ">' . $base_url .' *** ' . $value . '</a><br>';
-  //}
 
 
 
@@ -953,13 +720,31 @@ function mothership_form_system_theme_settings_alter(&$form, $form_state) {
   );
 
 
+  //---------------- Theme styles
+  $form['styles'] = array(
+    '#type'          => 'fieldset',
+    '#title'         => '&#9733; ' . t('Theme Styles'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+    '#weight'=> -10
+  );
+
+  $form['styles']['mothership_styles'] = array(
+    '#type'  => 'textarea',
+    '#title'         => t('class names used for panels n shit'),
+    '#description'   => t('one class / line usable for panelstyles: motherstyles'),
+    '#default_value' => theme_get_setting('mothership_styles'),
+  );
+  
+
+
   //---------------- misc
   $form['misc'] = array(
     '#type'          => 'fieldset',
     '#title'         => '&#9733; ' . t('Motherships Misc goodie bag'),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
-    '#weight'=> -10
+    '#weight'=> -9
   );
 
 
@@ -978,6 +763,12 @@ function mothership_form_system_theme_settings_alter(&$form, $form_state) {
     '#description'   => t('Overwrites the html.tpl.php with html--404.tpl.php'),
   );
 
+  $form['misc']['mothership_forum'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Forum theming'),
+    '#default_value' => theme_get_setting('mothership_forum'),
+    '#description' => t('Adds Mothership forum preprocess functions.'),
+  );
 
   $form['misc']['mothership_frontpage_default_message'] = array(
     '#type'          => 'checkbox',

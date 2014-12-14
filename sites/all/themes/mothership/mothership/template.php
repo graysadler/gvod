@@ -14,9 +14,13 @@ $path_mothership = drupal_get_path('theme', 'mothership');
   include_once './' . $path_mothership . '/functions/system.php';
   include_once './' . $path_mothership . '/functions/date.php';
   include_once './' . $path_mothership . '/functions/misc.php';
-  include_once './' . $path_mothership . '/functions/forum.php';
   include_once './' . $path_mothership . '/functions/blockify.php';
   include_once './' . $path_mothership . '/functions/panels.php';
+
+// Load forum preprocess functions
+if (theme_get_setting('mothership_forum')) {
+  include_once './' . $path_mothership . '/functions/forum.php';
+}
 //load in the login
 if (theme_get_setting('mothership_goodies_login')) {
   include_once './' . $path_mothership . '/goodies/login.inc';
@@ -63,6 +67,19 @@ function mothership_preprocess(&$vars, $hook) {
     Go through all the hooks of drupal and give em epic love
   */
 
+  // Things common to both html & maintenance page templates.
+  if ($hook == 'html' || $hook == 'maintenance_page') {
+    // Selectivizr.
+    $vars['selectivizr'] = '';
+    if (theme_get_setting('mothership_selectivizr')) {
+      $vars['selectivizr'] .= '<!--[if (gte IE 6)&(lte IE 8)]>' . "\n";
+      $vars['selectivizr'] .= '<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/selectivizr/1.0.2/selectivizr-min.js"></script>' . "\n";
+      $vars['selectivizr'] .= '<![endif]-->' . "\n";
+    }
+
+    $vars['appletouchicon'] = $appletouchicon;
+  }
+
   if ( $hook == "html" ) {
     // =======================================| HTML |========================================
 
@@ -76,6 +93,14 @@ function mothership_preprocess(&$vars, $hook) {
       'lang' => $vars['language']->language,
       'dir' => $vars['language']->dir,
     );
+
+    //use the new epic rdfa 1.1 prefix attribute
+    if (function_exists('rdf_get_namespaces')) {
+      foreach (rdf_get_namespaces() as $prefix => $uri) {
+        $prefixes[] = $prefix . ': ' . $uri;
+      }
+      $vars['rdf_namespaces'] = ' prefix="' . implode(' ', $prefixes) . '"';
+    }
 
     $metatags = array(
       '#tag' => 'meta',
@@ -127,7 +152,6 @@ function mothership_preprocess(&$vars, $hook) {
     if (theme_get_setting('mothership_css_mothershipstyles')) {
       drupal_add_css( $path_mothership . '/css/mothership.css', array('group' => CSS_THEME, 'every_page' => TRUE, 'weight' => -10));
     }
-
     if (theme_get_setting('mothership_mediaquery_indicator')) {
       drupal_add_css( $path_mothership . '/css/mothership-devel-mediaqueries.css', array('group' => CSS_THEME, 'every_page' => TRUE, 'weight' => 0));
     }
@@ -140,14 +164,6 @@ function mothership_preprocess(&$vars, $hook) {
       drupal_add_js('http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.0.6/modernizr.min.js', 'external');
     }
 
-    //---- selectivizr
-    $vars['selectivizr'] = '';
-    if(theme_get_setting('mothership_selectivizr')) {
-      $vars['selectivizr'] .= '<!--[if (gte IE 6)&(lte IE 8)]>' . "\n";;
-      $vars['selectivizr'] .= '<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/selectivizr/1.0.2/selectivizr-min.js"></script>' . "\n";;
-      $vars['selectivizr'] .= '<![endif]-->' . "\n";;
-    }
-
     //---html5 fix
     $vars['html5iefix'] = '';
     if(theme_get_setting('mothership_html5')) {
@@ -155,8 +171,6 @@ function mothership_preprocess(&$vars, $hook) {
       $vars['html5iefix'] .= '<script src="' . $path_mothership . '/js/html5.js"></script>';
       $vars['html5iefix'] .= '<![endif]-->';
     }
-
-    $vars['appletouchicon'] = $appletouchicon;
 
     //-----<body> CSS CLASSES  -----------------------------------------------------------------------------------------------
     //Remove & add cleasses body
@@ -517,8 +531,6 @@ function mothership_preprocess(&$vars, $hook) {
     // =======================================| maintenance page |========================================
 
     $vars['path'] = $path;
-    $vars['appletouchicon'] = $appletouchicon;
-    $vars['selectivizr'] = $selectivizr;
     $vars['theme_hook_suggestions'][] = 'static__maintenance';
 
   }

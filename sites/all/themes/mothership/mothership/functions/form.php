@@ -72,7 +72,7 @@ function mothership_form_element($variables) {
     $attributes['class'][] = 'form-disabled';
   }
 
-  if(isset($element['#title']) && $element['#title'] != 'Language' && $element['#required']) {
+  if((isset($element['#title']) && $element['#title'] != 'Language') && (isset($element['#required']) && $element['#required'])) {
     $attributes['class'][] = 'form-required';
   }
 

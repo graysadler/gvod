@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!--[if lt IE 7 ]> <html class="no-js ie6 oldie" lang="<?php print $language->language; ?>"><![endif]-->
-<!--[if IE 7 ]>    <html class="no-js ie7 oldie" lang="<?php print $language->language; ?>"><![endif]-->
-<!--[if IE 8 ]>    <html class="no-js ie8 oldie" lang="<?php print $language->language; ?>"><![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="<?php print $language->language; ?>"> <!--<![endif]-->
+<!--[if lt IE 7 ]> <html class="no-js ie6 oldie"><![endif]-->
+<!--[if IE 7 ]>    <html class="no-js ie7 oldie"><![endif]-->
+<!--[if IE 8 ]>    <html class="no-js ie8 oldie"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 
 <?php print $mothership_poorthemers_helper; ?>
 

@@ -5,6 +5,10 @@
   password forgotten link is placed after the password field
 */
 
+//TODO: this should be something like this cause using prefix sucks
+//    $form['newaccount']['#weight'] ="1000";
+    // $form['newaccount']['#markup'] =  '<b>' . l(t('Create a new user account.'), 'user/register', array('attributes' => array('class' => 'login-register', 'title' => t('Create a new user account')))) . '</b>';
+
 function mothership_form_user_login_block_alter(&$form, &$form_state, $form_id) {
   //hide the orignal links
   $form['links']['#access'] = FALSE ;

@@ -5,8 +5,8 @@
 -->
 <?php } ?>
 
-<?php if(!empty($css_class)){ ?>
-<div class="<?php print $css_class; ?>">
+<?php if(!empty($css_class) OR !empty($classes)){ ?>
+<div class="<?php print $css_class . $classes ?>">
 <?php } ?>
 
   <?php print render($title_prefix); ?>
@@ -68,7 +68,7 @@
     </div>
   <?php endif; ?>
 
-<?php if(!empty($css_class)){ ?>
+<?php if(!empty($css_class) OR !empty($classes)){ ?>
 </div> <?php /* class view */ ?>
 <?php } ?>
 <?php if( theme_get_setting('mothership_poorthemers_helper') ){ ?>

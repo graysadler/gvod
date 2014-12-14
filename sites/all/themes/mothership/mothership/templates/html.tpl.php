@@ -1,8 +1,8 @@
 <!doctype html>
 
-<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="<?php print $language->language; ?>" <?php print $rdf_namespaces; ?> <?php print $html_attributes; ?>> <![endif]-->
-<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="<?php print $language->language; ?>" <?php print $rdf_namespaces; ?> <?php print $html_attributes; ?>> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="<?php print $language->language; ?>" <?php print $rdf_namespaces; ?> <?php print $html_attributes; ?>> <!--<![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" <?php print $rdf_namespaces; ?> <?php print $html_attributes; ?>> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" <?php print $rdf_namespaces; ?> <?php print $html_attributes; ?>> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" <?php print $rdf_namespaces; ?> <?php print $html_attributes; ?>> <!--<![endif]-->
 <?php print $mothership_poorthemers_helper; ?>
 <head>
 <title><?php print $head_title; ?></title>
@@ -30,7 +30,6 @@
     print $scripts;
   }
 ?>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css' />
 </head>
 <body class="<?php print $classes; ?>" <?php print $attributes;?>>
 <a href="#main-content" class="element-invisible element-focusable"><?php print t('Skip to main content'); ?></a>

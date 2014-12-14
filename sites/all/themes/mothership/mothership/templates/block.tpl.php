@@ -26,13 +26,13 @@ $role = '';
   <?php endif;?>
   <?php print render($title_suffix); ?>
 
-  <?php if (!theme_get_setting('mothership_classes_block_contentdiv') AND $block->module == "block"): ?>
+  <?php if (theme_get_setting('mothership_classes_block_contentdiv') AND $block->module == "block"): ?>
   <div <?php print $content_attributes; ?>>
   <?php endif ?>
 
   <?php print $content ?>
 
-  <?php if (!theme_get_setting('mothership_classes_block_contentdiv') AND $block->module == "block"): ?>
+  <?php if (theme_get_setting('mothership_classes_block_contentdiv') AND $block->module == "block"): ?>
   </div>
   <?php endif ?>
 </div>

@@ -22,15 +22,11 @@ if (arg(0) =="admin"){
         <div class="inside"><?php print $content['top']; ?></div>
       </div>
 
-      <div class="panel-panel panel-col-last">
-        <div class="inside"><?php print $content['top_mobile']; ?></div>
-      </div>
-
     </div>
   <?php endif; ?>
 
   <div class="panel-panel panel-col clearfix">
-      <div class="inside"><?php print $content['middle']; ?></div>
+      <div class="inside"><?php print $content['main']; ?></div>
   </div>
 
   <?php if ($content['bottom']): ?>
@@ -44,15 +40,16 @@ if (arg(0) =="admin"){
 }else{
 /*  and a clean mean markup for the frontend w*/
 ?>
-<div class="page">
+<div class="l-container" <?php if (!empty($css_id)) { print "id=\"$css_id\""; } ?>>
+
   <header role="banner">
-    <div class="top-default"><?php print $content['top']; ?></div>
-    <div class="top-mobile"><?php print $content['top_mobile']; ?></div>
+    <?php print $content['top']; ?>
   </header>
 
-  <div role="main" id="main-content">
-    <?php print $content['middle']; ?>
-  </div>
+  <main role="main" id="main-content">
+    
+    <?php print $content['main']; ?>
+  </main>
 
   <footer role="contentinfo">
     <?php print $content['bottom']; ?>
