@@ -72,6 +72,7 @@ features[page_manager_handlers][] = blog_panel_context
 features[page_manager_handlers][] = node_view_panel_context
 features[page_manager_pages][] = help_page
 features[page_manager_pages][] = home
+features[panelizer_defaults][] = node:blog:default
 features[panelizer_defaults][] = node:page:default
 features[panels_mini][] = header
 features[taxonomy][] = game_category
