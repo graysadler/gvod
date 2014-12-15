@@ -684,7 +684,7 @@ function sr_core_views_default_views() {
   $handler = $view->new_display('block', 'home show blog', 'block_3');
   $handler->display->display_options['defaults']['pager'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'some';
-  $handler->display->display_options['pager']['options']['items_per_page'] = '15';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '6';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'slideshow';
@@ -1269,7 +1269,7 @@ return $nide;
   $handler->display->display_options['fields']['body']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['body']['type'] = 'text_summary_or_trimmed';
   $handler->display->display_options['fields']['body']['settings'] = array(
-    'trim_length' => '200',
+    'trim_length' => '500',
   );
   /* Field: Content: Type */
   $handler->display->display_options['fields']['type']['id'] = 'type';
@@ -1480,11 +1480,15 @@ return $nide;
   $handler->display->display_options['fields']['view_node']['label'] = '';
   $handler->display->display_options['fields']['view_node']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['view_node']['text'] = 'Read more';
-  /* Sort criterion: Content: Post date */
-  $handler->display->display_options['sorts']['created']['id'] = 'created';
-  $handler->display->display_options['sorts']['created']['table'] = 'node';
-  $handler->display->display_options['sorts']['created']['field'] = 'created';
-  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Sort criterion: Content: Sticky */
+  $handler->display->display_options['sorts']['sticky']['id'] = 'sticky';
+  $handler->display->display_options['sorts']['sticky']['table'] = 'node';
+  $handler->display->display_options['sorts']['sticky']['field'] = 'sticky';
+  $handler->display->display_options['sorts']['sticky']['order'] = 'DESC';
+  /* Sort criterion: Content: Title */
+  $handler->display->display_options['sorts']['title']['id'] = 'title';
+  $handler->display->display_options['sorts']['title']['table'] = 'node';
+  $handler->display->display_options['sorts']['title']['field'] = 'title';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -1533,7 +1537,7 @@ return $nide;
   $handler->display->display_options['header']['area']['table'] = 'views';
   $handler->display->display_options['header']['area']['field'] = 'area';
   $handler->display->display_options['header']['area']['content'] = '<div class="inner-twitter-first">
-            <a href="http://localhost.gvod/"><img src="http://localhost.gvod/sites/default/files/twitter.png" class="watch"></a>            <div class="sign-desc"><ul><li><a href="https://twitter.com/StreamRiot">@StreamRiot</a></li><li><a href="https://twitter.com/StreamRiot">#StreamRiot</a></li></ul></div>
+            <a href="/"><img src="/sites/default/files/twitter.png" class="watch"></a>            <div class="sign-desc"><ul><li><a href="https://twitter.com/StreamRiot">@StreamRiot</a></li><li><a href="https://twitter.com/StreamRiot">#StreamRiot</a></li></ul></div>
         </div>';
   $handler->display->display_options['header']['area']['format'] = 'full_html';
   /* Field: Content: Twitter Name */
