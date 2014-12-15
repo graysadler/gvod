@@ -56,6 +56,7 @@
         $(".tags").live("click", function() {
             // console.log($(this).parent());
             $(this).parent().find(".tag-content").slideToggle("fast");
+            $(this).find('.field-items').slideToggle('fast');
         });
         // $(".login-blocks #user-login-form input[name=name]").before("<label class='log-email'>Email:</label>");
         // $(".login-blocks #user-register-form .username").before("<label class='log-email'>Email:</label>");
