@@ -118,7 +118,7 @@ function sr_core_default_panels_mini() {
     $display->content['new-74d54e69-9e71-44d0-adbf-348c640b331e'] = $pane;
     $display->panels['center'][0] = 'new-74d54e69-9e71-44d0-adbf-348c640b331e';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-74d54e69-9e71-44d0-adbf-348c640b331e';
+  $display->title_pane = '0';
   $mini->display = $display;
   $export['header'] = $mini;
 

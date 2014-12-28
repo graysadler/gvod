@@ -16,7 +16,7 @@ function multistream_quicktabs_default_quicktabs() {
   $quicktabs->machine_name = 'player_menu';
   $quicktabs->ajax = 0;
   $quicktabs->hide_empty_tabs = FALSE;
-  $quicktabs->default_tab = 999999;
+  $quicktabs->default_tab = 0;
   $quicktabs->title = 'Player Menu';
   $quicktabs->tabs = array(
     0 => array(
@@ -41,7 +41,7 @@ function multistream_quicktabs_default_quicktabs() {
       'type' => 'block',
     ),
     3 => array(
-      'bid' => 'multistream_delta_multistream_favorites',
+      'bid' => 'panels_mini_delta_favorites',
       'hide_title' => 1,
       'title' => 'Favorites',
       'weight' => '-97',
@@ -56,7 +56,7 @@ function multistream_quicktabs_default_quicktabs() {
     ),
   );
   $quicktabs->renderer = 'quicktabs';
-  $quicktabs->style = 'nostyle';
+  $quicktabs->style = 'Sky';
   $quicktabs->options = array();
 
   // Translatables

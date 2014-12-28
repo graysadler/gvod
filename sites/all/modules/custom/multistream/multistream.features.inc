@@ -49,28 +49,23 @@ function multistream_flag_default_flags() {
     'link_type' => 'toggle',
     'weight' => 0,
     'show_in_links' => array(
-      'teaser' => TRUE,
+      'teaser' => 'teaser',
+      'full' => 0,
+      'rss' => 0,
+      'search_index' => 0,
+      'search_result' => 0,
+      'token' => 0,
     ),
-    'show_as_field' => FALSE,
+    'show_as_field' => 0,
     'show_on_form' => 0,
     'access_author' => '',
     'show_contextual_link' => 0,
     'i18n' => 0,
-    'show_on_page' => 0,
-    'api_version' => 3,
     'module' => 'multistream',
     'locked' => array(
       0 => 'name',
     ),
-    'status' => FALSE,
-    'import_roles' => array(
-      'flag' => array(
-        0 => 2,
-      ),
-      'unflag' => array(
-        0 => 2,
-      ),
-    ),
+    'api_version' => 3,
   );
   // Exported flag: "User stream favorites".
   $flags['stream_favs'] = array(
@@ -93,21 +88,12 @@ function multistream_flag_default_flags() {
     'show_as_field' => FALSE,
     'show_on_form' => 0,
     'access_author' => '',
-    'show_contextual_link' => FALSE,
-    'api_version' => 3,
+    'show_contextual_link' => 0,
     'module' => 'multistream',
     'locked' => array(
       0 => 'name',
     ),
-    'status' => FALSE,
-    'import_roles' => array(
-      'flag' => array(
-        0 => 2,
-      ),
-      'unflag' => array(
-        0 => 2,
-      ),
-    ),
+    'api_version' => 3,
   );
   return $flags;
 

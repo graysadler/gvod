@@ -42,7 +42,7 @@ function multistream_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'comment_multistream';
-  $strongarm->value = '2';
+  $strongarm->value = '0';
   $export['comment_multistream'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -87,20 +87,20 @@ function multistream_strongarm() {
     'extra_fields' => array(
       'form' => array(
         'metatags' => array(
-          'weight' => '5',
+          'weight' => '6',
         ),
         'title' => array(
           'weight' => '0',
         ),
         'path' => array(
-          'weight' => '4',
+          'weight' => '5',
         ),
       ),
       'display' => array(
         'sharethis' => array(
           'default' => array(
             'weight' => '10',
-            'visible' => TRUE,
+            'visible' => FALSE,
           ),
         ),
       ),
@@ -135,7 +135,7 @@ function multistream_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'node_submitted_multistream';
-  $strongarm->value = 1;
+  $strongarm->value = 0;
   $export['node_submitted_multistream'] = $strongarm;
 
   return $export;

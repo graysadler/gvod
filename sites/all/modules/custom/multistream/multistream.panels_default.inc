@@ -15,7 +15,7 @@ function multistream_default_panels_mini() {
   $mini->api_version = 1;
   $mini->name = 'add_new_channel';
   $mini->category = '';
-  $mini->admin_title = 'Add New Channel';
+  $mini->admin_title = 'Add Channel';
   $mini->admin_description = '';
   $mini->requiredcontexts = array();
   $mini->contexts = array();
@@ -35,10 +35,10 @@ function multistream_default_panels_mini() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-7bff56d3-aff3-4480-9b9e-9a0c8e758ef8';
+    $pane->pid = 'new-ed0d8b58-67b4-43b5-b5fa-c15337ef8301';
     $pane->panel = 'center';
     $pane->type = 'block';
-    $pane->subtype = 'multistream-multistream_actions';
+    $pane->subtype = 'multistream-multistream_panel_actions';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -53,34 +53,9 @@ function multistream_default_panels_mini() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = '7bff56d3-aff3-4480-9b9e-9a0c8e758ef8';
-    $display->content['new-7bff56d3-aff3-4480-9b9e-9a0c8e758ef8'] = $pane;
-    $display->panels['center'][0] = 'new-7bff56d3-aff3-4480-9b9e-9a0c8e758ef8';
-    $pane = new stdClass();
-    $pane->pid = 'new-2f422a9e-370b-462b-b0ce-3fd37efc79e2';
-    $pane->panel = 'center';
-    $pane->type = 'custom';
-    $pane->subtype = 'custom';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'admin_title' => 'Add Channel Desc',
-      'title' => '',
-      'body' => 'Enter and Twitch channel by URL to add it to your Queue and Favs:',
-      'format' => 'filtered_html',
-      'substitute' => TRUE,
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 1;
-    $pane->locks = array();
-    $pane->uuid = '2f422a9e-370b-462b-b0ce-3fd37efc79e2';
-    $display->content['new-2f422a9e-370b-462b-b0ce-3fd37efc79e2'] = $pane;
-    $display->panels['center'][1] = 'new-2f422a9e-370b-462b-b0ce-3fd37efc79e2';
+    $pane->uuid = 'ed0d8b58-67b4-43b5-b5fa-c15337ef8301';
+    $display->content['new-ed0d8b58-67b4-43b5-b5fa-c15337ef8301'] = $pane;
+    $display->panels['center'][0] = 'new-ed0d8b58-67b4-43b5-b5fa-c15337ef8301';
     $pane = new stdClass();
     $pane->pid = 'new-810592ff-2997-4211-a786-803c4f265ac6';
     $pane->panel = 'center';
@@ -98,11 +73,11 @@ function multistream_default_panels_mini() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 2;
+    $pane->position = 1;
     $pane->locks = array();
     $pane->uuid = '810592ff-2997-4211-a786-803c4f265ac6';
     $display->content['new-810592ff-2997-4211-a786-803c4f265ac6'] = $pane;
-    $display->panels['center'][2] = 'new-810592ff-2997-4211-a786-803c4f265ac6';
+    $display->panels['center'][1] = 'new-810592ff-2997-4211-a786-803c4f265ac6';
     $pane = new stdClass();
     $pane->pid = 'new-22f09e9e-0aab-4adf-a04f-8473e31e349a';
     $pane->panel = 'center';
@@ -111,14 +86,18 @@ function multistream_default_panels_mini() {
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'admin_title' => 'Channel Chains',
+      'admin_title' => 'Channel Chain',
       'title' => 'Channel Chains',
-      'body' => 'Channel chains are the fastest way to create and share multi-streams. Just add Twitch channels to our URL.
+      'body' => '<p>Channel chains are the fastest way to create and share multi-streams. Just add Twitch channels to our URL.</p>
 
 <ol>
-<li> Copy & paste our URL into your browser\'s address bar</li>
-<li>Add Twitch channels by name. Separate each with a forward slash: /</li>
-<li>Share the link with your friends!</li>
+	<li>Copy &amp; paste our URL into your browser\'s address bar:
+	<ol>
+		<li>www.StreamRiot.com/MultiStream/</li>
+	</ol>
+	</li>
+	<li>Add Twitch channels by name. Separate each with a forward slash: /</li>
+	<li>Share the link with your friends!</li>
 </ol>
 ',
       'format' => 'full_html',
@@ -130,11 +109,11 @@ function multistream_default_panels_mini() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 3;
+    $pane->position = 2;
     $pane->locks = array();
     $pane->uuid = '22f09e9e-0aab-4adf-a04f-8473e31e349a';
     $display->content['new-22f09e9e-0aab-4adf-a04f-8473e31e349a'] = $pane;
-    $display->panels['center'][3] = 'new-22f09e9e-0aab-4adf-a04f-8473e31e349a';
+    $display->panels['center'][2] = 'new-22f09e9e-0aab-4adf-a04f-8473e31e349a';
     $pane = new stdClass();
     $pane->pid = 'new-7f91e52c-0c31-4887-a174-88e7d52917cb';
     $pane->panel = 'center';
@@ -152,11 +131,11 @@ function multistream_default_panels_mini() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 4;
+    $pane->position = 3;
     $pane->locks = array();
     $pane->uuid = '7f91e52c-0c31-4887-a174-88e7d52917cb';
     $display->content['new-7f91e52c-0c31-4887-a174-88e7d52917cb'] = $pane;
-    $display->panels['center'][4] = 'new-7f91e52c-0c31-4887-a174-88e7d52917cb';
+    $display->panels['center'][3] = 'new-7f91e52c-0c31-4887-a174-88e7d52917cb';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $mini->display = $display;
@@ -382,6 +361,76 @@ Did you mean: <strong><span class="alternative">StreamRiot</span></strong>',
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
+    $pane->pid = 'new-9a4b0ce2-de51-4273-82df-e1db02d73eba';
+    $pane->panel = 'center';
+    $pane->type = 'panels_mini';
+    $pane->subtype = 'favorites_anonymous';
+    $pane->shown = TRUE;
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'role',
+          'settings' => array(
+            'rids' => array(
+              0 => 2,
+            ),
+          ),
+          'context' => 'logged-in-user',
+          'not' => TRUE,
+        ),
+      ),
+    );
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => 'Favorites',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '9a4b0ce2-de51-4273-82df-e1db02d73eba';
+    $display->content['new-9a4b0ce2-de51-4273-82df-e1db02d73eba'] = $pane;
+    $display->panels['center'][0] = 'new-9a4b0ce2-de51-4273-82df-e1db02d73eba';
+    $pane = new stdClass();
+    $pane->pid = 'new-053b340a-1659-4ddb-b7f3-c96d4c2fa8fb';
+    $pane->panel = 'center';
+    $pane->type = 'block';
+    $pane->subtype = 'views-acc8fef0a69b15d42ed66e6fd0157553';
+    $pane->shown = TRUE;
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'role',
+          'settings' => array(
+            'rids' => array(
+              0 => 2,
+            ),
+          ),
+          'context' => 'logged-in-user',
+          'not' => FALSE,
+        ),
+      ),
+    );
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => 'Favorites',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = '053b340a-1659-4ddb-b7f3-c96d4c2fa8fb';
+    $display->content['new-053b340a-1659-4ddb-b7f3-c96d4c2fa8fb'] = $pane;
+    $display->panels['center'][1] = 'new-053b340a-1659-4ddb-b7f3-c96d4c2fa8fb';
+    $pane = new stdClass();
     $pane->pid = 'new-41ddb7e4-4638-4e44-936e-01aaa055af1d';
     $pane->panel = 'center';
     $pane->type = 'block';
@@ -398,11 +447,11 @@ Did you mean: <strong><span class="alternative">StreamRiot</span></strong>',
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 0;
+    $pane->position = 2;
     $pane->locks = array();
     $pane->uuid = '41ddb7e4-4638-4e44-936e-01aaa055af1d';
     $display->content['new-41ddb7e4-4638-4e44-936e-01aaa055af1d'] = $pane;
-    $display->panels['center'][0] = 'new-41ddb7e4-4638-4e44-936e-01aaa055af1d';
+    $display->panels['center'][2] = 'new-41ddb7e4-4638-4e44-936e-01aaa055af1d';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $mini->display = $display;
@@ -442,8 +491,17 @@ Did you mean: <strong><span class="alternative">StreamRiot</span></strong>',
     $pane->configuration = array(
       'admin_title' => 'Intro',
       'title' => '',
-      'body' => 'All of your favorited multi-streams and channels will appear here.',
-      'format' => 'filtered_html',
+      'body' => '<p>Your favorite multi-streams and channels will appear here.</p>
+<p>Start your own faves and sign up free!</p>
+<ul class="register-icons">
+<li class="twitter"></li>
+<li class="facebook"></li>
+<li class="twitch"></li>
+<li class="email"></li>
+</ul>
+
+<img src="/sites/all/modules/custom/multistream/images/favorites-preview.png" alt="favorites preview" title="favorites preview" />',
+      'format' => 'full_html',
       'substitute' => TRUE,
     );
     $pane->cache = array();
@@ -457,7 +515,7 @@ Did you mean: <strong><span class="alternative">StreamRiot</span></strong>',
     $pane->uuid = 'bb6caf7a-0643-4355-96f2-cd4313b248b4';
     $display->content['new-bb6caf7a-0643-4355-96f2-cd4313b248b4'] = $pane;
     $display->panels['center'][0] = 'new-bb6caf7a-0643-4355-96f2-cd4313b248b4';
-  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->hide_title = PANELS_TITLE_NONE;
   $display->title_pane = '0';
   $mini->display = $display;
   $export['favorites_anonymous'] = $mini;
@@ -656,11 +714,33 @@ Import channels you follow on twitch
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
+    $pane->pid = 'new-4f750ef7-bceb-4094-ad8e-f8decb934a40';
+    $pane->panel = 'center';
+    $pane->type = 'block';
+    $pane->subtype = 'multistream-multistream_panel_actions';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '4f750ef7-bceb-4094-ad8e-f8decb934a40';
+    $display->content['new-4f750ef7-bceb-4094-ad8e-f8decb934a40'] = $pane;
+    $display->panels['center'][0] = 'new-4f750ef7-bceb-4094-ad8e-f8decb934a40';
+    $pane = new stdClass();
     $pane->pid = 'new-9db72cf7-c8e3-46eb-916a-8cd8695cebb5';
     $pane->panel = 'center';
     $pane->type = 'block';
     $pane->subtype = 'multistream-multistream_actions';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array(
       'override_title' => 0,
@@ -672,11 +752,11 @@ Import channels you follow on twitch
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 0;
+    $pane->position = 1;
     $pane->locks = array();
     $pane->uuid = '9db72cf7-c8e3-46eb-916a-8cd8695cebb5';
     $display->content['new-9db72cf7-c8e3-46eb-916a-8cd8695cebb5'] = $pane;
-    $display->panels['center'][0] = 'new-9db72cf7-c8e3-46eb-916a-8cd8695cebb5';
+    $display->panels['center'][1] = 'new-9db72cf7-c8e3-46eb-916a-8cd8695cebb5';
     $pane = new stdClass();
     $pane->pid = 'new-83f99d22-5416-432b-849d-d417a97a96ec';
     $pane->panel = 'center';
@@ -694,11 +774,11 @@ Import channels you follow on twitch
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 2;
     $pane->locks = array();
     $pane->uuid = '83f99d22-5416-432b-849d-d417a97a96ec';
     $display->content['new-83f99d22-5416-432b-849d-d417a97a96ec'] = $pane;
-    $display->panels['center'][1] = 'new-83f99d22-5416-432b-849d-d417a97a96ec';
+    $display->panels['center'][2] = 'new-83f99d22-5416-432b-849d-d417a97a96ec';
   $display->hide_title = PANELS_TITLE_NONE;
   $display->title_pane = '0';
   $mini->display = $display;
@@ -729,12 +809,25 @@ Import channels you follow on twitch
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-cab5ad34-c856-4e7a-befd-08fb69d70c25';
+    $pane->pid = 'new-4421c209-dbe3-404e-8e5d-ba29e9c0d949';
     $pane->panel = 'center';
     $pane->type = 'block';
-    $pane->subtype = 'multistream-multistream_actions_manage';
+    $pane->subtype = 'multistream-multistream_panel_actions';
     $pane->shown = TRUE;
-    $pane->access = array();
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'role',
+          'settings' => array(
+            'rids' => array(
+              0 => 2,
+            ),
+          ),
+          'context' => 'logged-in-user',
+          'not' => FALSE,
+        ),
+      ),
+    );
     $pane->configuration = array(
       'override_title' => 1,
       'override_title_text' => '',
@@ -747,16 +840,79 @@ Import channels you follow on twitch
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = 'cab5ad34-c856-4e7a-befd-08fb69d70c25';
-    $display->content['new-cab5ad34-c856-4e7a-befd-08fb69d70c25'] = $pane;
-    $display->panels['center'][0] = 'new-cab5ad34-c856-4e7a-befd-08fb69d70c25';
+    $pane->uuid = '4421c209-dbe3-404e-8e5d-ba29e9c0d949';
+    $display->content['new-4421c209-dbe3-404e-8e5d-ba29e9c0d949'] = $pane;
+    $display->panels['center'][0] = 'new-4421c209-dbe3-404e-8e5d-ba29e9c0d949';
+    $pane = new stdClass();
+    $pane->pid = 'new-fdcf8f85-6f05-4eb5-985c-8156b592396c';
+    $pane->panel = 'center';
+    $pane->type = 'custom';
+    $pane->subtype = 'custom';
+    $pane->shown = TRUE;
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'role',
+          'settings' => array(
+            'rids' => array(
+              0 => 2,
+            ),
+          ),
+          'context' => 'logged-in-user',
+          'not' => TRUE,
+        ),
+      ),
+    );
+    $pane->configuration = array(
+      'admin_title' => 'Anonymous Content',
+      'title' => 'Customize',
+      'body' => '<p>Link your social networks, add Twitter feeds and upload cover images & backgrounds!</p>
+
+<p>Get started and register for a free account using social or sign up by email:</p>
+
+<ul class="register-icons">
+	<li class="twitter">&nbsp;</li>
+	<li class="facebook">&nbsp;</li>
+	<li class="twitch">&nbsp;</li>
+	<li class="email">&nbsp;</li>
+</ul>
+
+<p><img alt="favorites preview" src="/sites/all/modules/custom/multistream/images/favorites-preview.png" title="favorites preview" /></p>
+',
+      'format' => 'full_html',
+      'substitute' => TRUE,
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = 'fdcf8f85-6f05-4eb5-985c-8156b592396c';
+    $display->content['new-fdcf8f85-6f05-4eb5-985c-8156b592396c'] = $pane;
+    $display->panels['center'][1] = 'new-fdcf8f85-6f05-4eb5-985c-8156b592396c';
     $pane = new stdClass();
     $pane->pid = 'new-9e598516-03d4-4382-9d96-2d38ae382804';
     $pane->panel = 'center';
     $pane->type = 'block';
     $pane->subtype = 'multistream-multistream_manage';
     $pane->shown = TRUE;
-    $pane->access = array();
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'role',
+          'settings' => array(
+            'rids' => array(
+              0 => 2,
+            ),
+          ),
+          'context' => 'logged-in-user',
+          'not' => FALSE,
+        ),
+      ),
+    );
     $pane->configuration = array(
       'override_title' => 1,
       'override_title_text' => '',
@@ -767,11 +923,11 @@ Import channels you follow on twitch
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 2;
     $pane->locks = array();
     $pane->uuid = '9e598516-03d4-4382-9d96-2d38ae382804';
     $display->content['new-9e598516-03d4-4382-9d96-2d38ae382804'] = $pane;
-    $display->panels['center'][1] = 'new-9e598516-03d4-4382-9d96-2d38ae382804';
+    $display->panels['center'][2] = 'new-9e598516-03d4-4382-9d96-2d38ae382804';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $mini->display = $display;

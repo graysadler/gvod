@@ -320,7 +320,6 @@ function sr_core_default_page_manager_handlers() {
             'type' => array(
               'blog' => 'blog',
               'help' => 'help',
-              'multistream' => 'multistream',
               'staff' => 'staff',
             ),
           ),
