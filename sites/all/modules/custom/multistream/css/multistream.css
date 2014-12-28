@@ -1,0 +1,12 @@
+#manage-open {
+  cursor: pointer;
+}
+
+#manage-selection {
+  display: none;
+}
+
+#manage-selection article:hover {
+  background: #efefef;
+  cursor: pointer;
+}

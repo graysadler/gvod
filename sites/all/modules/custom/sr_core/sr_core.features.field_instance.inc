@@ -396,138 +396,6 @@ function sr_core_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-multistream-body'
-  $field_instances['node-multistream-body'] = array(
-    'bundle' => 'multistream',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'hidden',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 0,
-      ),
-      'teaser' => array(
-        'label' => 'hidden',
-        'module' => 'text',
-        'settings' => array(
-          'trim_length' => 600,
-        ),
-        'type' => 'text_summary_or_trimmed',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'body',
-    'label' => 'Description',
-    'required' => 1,
-    'settings' => array(
-      'display_summary' => 1,
-      'text_processing' => 1,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 20,
-        'summary_rows' => 5,
-      ),
-      'type' => 'text_textarea_with_summary',
-      'weight' => 3,
-    ),
-  );
-
-  // Exported field_instance: 'node-multistream-field_game_category'
-  $field_instances['node-multistream-field_game_category'] = array(
-    'bundle' => 'multistream',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'taxonomy',
-        'settings' => array(),
-        'type' => 'taxonomy_term_reference_link',
-        'weight' => 1,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_game_category',
-    'label' => 'Game category',
-    'required' => 1,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_select',
-      'weight' => 1,
-    ),
-  );
-
-  // Exported field_instance: 'node-multistream-field_stream_image'
-  $field_instances['node-multistream-field_stream_image'] = array(
-    'bundle' => 'multistream',
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'hidden',
-        'module' => 'image',
-        'settings' => array(
-          'image_link' => '',
-          'image_style' => 'full-page-inner',
-        ),
-        'type' => 'image',
-        'weight' => 2,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_stream_image',
-    'label' => 'Stream image',
-    'required' => 0,
-    'settings' => array(
-      'alt_field' => 1,
-      'default_image' => 0,
-      'file_directory' => 'multistream',
-      'file_extensions' => 'png gif jpg jpeg',
-      'max_filesize' => '',
-      'max_resolution' => '',
-      'min_resolution' => '',
-      'title_field' => 1,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'image',
-      'settings' => array(
-        'preview_image_style' => 'thumbnail',
-        'progress_indicator' => 'throbber',
-      ),
-      'type' => 'image_image',
-      'weight' => 2,
-    ),
-  );
-
   // Exported field_instance: 'node-page-body'
   $field_instances['node-page-body'] = array(
     'bundle' => 'page',
@@ -894,13 +762,11 @@ function sr_core_field_default_field_instances() {
   t('Enter comma separated list of words to describe your content. ');
   t('Enter the professional detail of staff eg : "DRUPAL Developer & CO-OWNER".');
   t('Enter twitter id eg: "@StreamRiot".');
-  t('Game category');
   t('Game image');
   t('Image');
   t('Profession');
   t('Question');
   t('Right Side Listing');
-  t('Stream image');
   t('Tags');
   t('Twitter Id');
   t('Twitter Name');

@@ -83,7 +83,8 @@ button,
 a.button,
 input[type="reset"],
 input[type="submit"],
-input[type="button"] {
+input[type="button"],
+input[type="image"] {
   &:focus,
   &:active {
   //  @include button-bg-color;
@@ -97,7 +98,8 @@ button,
 a.button,
 input[type="reset"],
 input[type="submit"],
-input[type="button"] {
+input[type="button"], 
+input[type="image"] {
   -webkit-appearance: none;
   @include background-clip(padding-box);
   border: 1px solid ;

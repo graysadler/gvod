@@ -1,3 +1,8 @@
+@import "compass/utilities/sprites";
+$images-sprite-dimensions: true;
+@import "sprite/images/*.png";
+@include all-images-sprites;
+
 // Panels IPE Fix.
 
 input.panels-ipe-save,
@@ -501,3 +506,16 @@ input[type="submit"].btn {
   text-decoration: none;
 }
 
+#add-channel-submit,
+#browse-by-game-submit {
+  padding: 8px;
+  text-indent: -1000px;
+  
+  &:hover {
+    background-color: $Active-bagColor;
+  }
+}
+
+#browse-by-game-submit {
+  padding: 10px;
+}

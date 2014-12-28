@@ -1,0 +1,204 @@
+<?php
+function stream_import_menu() {
+	$items['stream-import'] = array(
+			'page callback' => 'stream_import_page_import',
+			'access callback' => true,
+			'title' => 'Import Test',
+	);
+	
+	return $items; 
+}
+
+function stream_import_page_import() {
+	$streams = stream_import_get_twitch_streams();
+	
+	//dpm($streams);
+	return '';
+}
+
+function _curl_get($url, $headers = array()) {
+	// Initialize session and set URL.
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+	// Set so curl_exec returns the result instead of outputting it.
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+	// Get the response and close the channel.
+	$response = curl_exec($ch);
+	curl_close($ch);
+
+	return $response;
+}
+
+function time_diff($t1, $t2) {
+	$diff = $t2 - $t1;
+	$secs = $diff;
+	$mins = $diff / 60;
+	return "Seconds: $secs - Minutes: $mins";
+}
+
+function stream_import_get_twitch_streams() {
+	//$vocab = taxonomy_vocabulary_machine_name_load('stream_category');
+	//$provider_vocab = taxonomy_vocabulary_machine_name_load('provider');
+	//$twitch = taxonomy_term_lookup_term_by_name('twitch.tv', $provider_vocab->vid);
+
+	//get all games from twitch
+	$limit = 100;
+	$headers = array('Accept: application/vnd.twitchtv.v3+json');
+	
+	$streams = array();
+	$time_start = time();
+	
+	$schema = drupal_get_schema('stream');
+	$schema['fields']['stream_id'] = array('type'=>'int','not null'=>false);
+	$schema['primary key'] = array('provider', 'channel');
+	
+	db_drop_table('stream_tmp');
+	//db_delete('stream')->isNotNull('stream_id')->execute();
+	//db_query('DELETE FROM stream');
+	
+	db_create_table('stream_tmp', $schema);
+	$now = time();
+
+	//insert streams into temp table
+	$query = db_insert('stream_tmp');
+	$fields = array(
+		'channel',
+		'thumbnail',
+		'screencap',
+		'url',
+		'viewers',
+		'is_live',
+		'category',
+		'provider',
+		'created',
+		'changed',
+	);
+	$query->fields($fields);
+	
+	for($offset = 0;$offset <= $limit;$offset+=100) {
+		$t1 = time();
+		
+		$json = _curl_get('https://api.twitch.tv/kraken/streams?limit=100&offset='.$offset, $headers);
+//		dpm($json);
+		$t2 = time();
+		debug(time_diff($t1, $t2));
+		$t1 = time();
+		//$results = _parse_json($json);
+		$results = json_decode($json, true);
+		$t2 = time();
+		debug(time_diff($t1, $t2));
+		$t1 = time();
+		foreach($results['streams'] as $item) {
+			$stream = array(
+				'channel' 	=> $item['channel']['name'],
+				'thumbnail' => $item['channel']['logo'],
+				'screencap' => $item['preview']['medium'],
+				'url' 			=> $item['channel']['url'],
+				'viewers'		=> $item['viewers'],
+				'is_live'		=> true,
+				'category'	=> 1,
+				'provider'	=> 1,		
+				'created' 	=> $now,
+				'changed' 	=> $now,				
+			);
+			$streams[$stream['channel']] = $stream;
+		}
+		$t2 = time();
+		debug(time_diff($t1, $t2));
+	}		
+	
+	foreach($streams as $stream) {
+		$query->values($stream);		
+	}
+	dpm($streams);
+	
+	$t1 = time();	
+	$query->execute();
+	$t2 = time();
+	debug(time_diff($t1, $t2));
+	
+	$exists_query = db_select('stream_tmp', 'st')
+		->fields('s', array('stream_id', 'channel', 'provider'))
+		->addJoin('INNER', 'stream', 's', 's.provider = st.provider AND s.channel = st.channel');
+	//$update_stream_id_query = db_update('stream_tmp')
+	  //->condition('stream_tmp.channel', )
+		//->fields(array('stream_tmp.stream_id' => 'stream.stream_id'))
+		//->execute();
+	//update tmp table with stream_id
+	//update stream table: is_live, changed, category, screencap, thumbnail, viewers
+	db_query("
+		UPDATE {stream} s
+		INNER JOIN {stream_tmp} st ON 
+			s.provider = st.provider AND
+			s.channel  = st.channel  		
+		SET 
+			st.stream_id = s.stream_id,
+			s.is_live 		= 1,
+			s.changed			= :now,
+			s.category		= st.category,
+			s.screencap		= st.screencap,
+			s.thumbnail		= st.thumbnail,
+			s.viewers			= st.viewers;
+	", array(':now' => $now));	
+	db_query("
+		INSERT INTO {stream} 
+			(channel, thumbnail, screencap, url, viewers, is_live, category, provider, created, changed, data)
+			SELECT 
+				st.channel, 
+				st.thumbnail, 
+				st.screencap, 
+				st.url, 
+				st.viewers, 
+				st.is_live, 
+				st.category, 
+				st.provider, 
+				st.created, 
+				st.changed, 
+				st.data
+			FROM {stream_tmp} st
+			LEFT JOIN {stream} s ON
+				s.provider = st.provider AND
+				s.channel  = st.channel
+			WHERE IsNull(s.stream_id)					
+	");
+	
+	db_query("
+		UPDATE {stream} s
+		LEFT JOIN {stream_tmp} st ON
+			s.channel		= st.channel AND
+			s.provider	= st.provider
+		SET s.is_live = 0
+		WHERE IsNull(st.channel);	
+	");
+	/*
+	$update_query = db_update('stream')
+		->condition('stream.stream_id', $exists_query, 'IN')
+		->fields(array(
+			'is_live' 	=> 1,
+			'changed' 	=> $now,
+			'category' 	=> 'st.category',
+			'screencap' => 'st.screencap',
+			'thumbnail' => 'st.thumbnail',
+			'viewers' 	=> 'st.viewers',
+		));
+	*/
+	//$nonexists_query = db_select('stream_tmp', 'st');
+	//$nonexists_query->leftJoin('stream', 's', 's.provider = st.provider AND s.channel = st.channel');
+	//$nonexists_query->fields('st', array('channel', 'thumbnail', 'screencap', 'url', 'viewers', 'is_live', 'category', 'provider', 'created', 'changed'));
+	//$nonexists_query->isNull('s.channel');
+	//dpm($nonexists_query);
+	
+
+	//$insert_query = db_insert('stream')
+		//->from($nonexists_query)
+		//->execute();
+	
+	$time_end = time();
+	
+	debug(time_diff($time_start, $time_end));
+	return $streams;
+}

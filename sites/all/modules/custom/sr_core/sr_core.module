@@ -5,3 +5,53 @@
  */
 
 include_once 'sr_core.features.inc';
+
+
+function sr_core_get_entities($type, $filter, $account = null) {
+  $sql = '';
+  if(!$account) {
+    global $user;
+    $account = $user;    
+  }
+  
+  switch($filter) {
+  	case 'favorites':
+  	  $flags = flag_get_user_flags('node', null, $account->uid);
+  	  $nodes = array();
+  	  
+  	  foreach($flags['multistream_favs'] as $nid => $flag) {
+  	    $nids[$nid] = $nid; 
+  	  }
+  	  $nodes = node_load_multiple($nids);
+  	  return $nodes;
+  	  
+  	  //TODO Finish
+  	  $streams = flag_get_user_flags('stream', null, $account->uid);
+  	  break;
+  	case 'owned':
+  	  if(!$account->uid) {
+  	    return array();
+  	  }
+  	  $sql = "SELECT nid FROM {node} n WHERE n.type = 'multistream' AND status = 1 AND uid = $account->uid ORDER BY title ASC";  	 
+  	  $nids = db_query($sql)->fetchAllKeyed(0,0);
+  	  $nodes = node_load_multiple($nids);
+  	  return $nodes;
+  	    
+  	  break;
+  	case 'browse':
+
+  	  break;
+  	
+  }
+
+  
+
+}
+
+function sr_core_node_presave($node) {
+  if($node->type != 'multistream') {
+    return;
+  }
+  
+  flag('flag', 'multistream_favs', $node->nid);
+}

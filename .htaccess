@@ -3,7 +3,7 @@
 #
 
 # Protect files and directories from prying eyes.
-<FilesMatch "\.(engine|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\.php)?|xtmpl)$|^(\..*|Entries.*|Repository|Root|Tag|Template)$">
+<FilesMatch "\.(engine|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\.php)?|xtmpl)(~|\.sw[op]|\.bak|\.orig|\.save)?$|^(\..*|Entries.*|Repository|Root|Tag|Template)$|^#.*#$|\.php(~|\.sw[op]|\.bak|\.orig\.save)$">
   Order allow,deny
 </FilesMatch>
 
@@ -32,7 +32,6 @@ DirectoryIndex index.php index.html index.htm
   php_value mbstring.http_input             pass
   php_value mbstring.http_output            pass
   php_flag mbstring.encoding_translation    off
-  php_flag apc.cache_by_default             0
 </IfModule>
 
 # Requires mod_expires to be enabled.
@@ -57,6 +56,17 @@ DirectoryIndex index.php index.html index.htm
 <IfModule mod_rewrite.c>
   RewriteEngine on
 
+  # Set "protossl" to "s" if we were accessed via https://.  This is used later
+  # if you enable "www." stripping or enforcement, in order to ensure that
+  # you don't bounce between http and https.
+  RewriteRule ^ - [E=protossl]
+  RewriteCond %{HTTPS} on
+  RewriteRule ^ - [E=protossl:s]
+
+  # Make sure Authorization HTTP header is available to PHP
+  # even when running as CGI or FastCGI.
+  RewriteRule ^ - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
   # Block access to "hidden" directories whose names begin with a period. This
   # includes directories used by version control systems such as Subversion or
   # Git to store control files. Files whose names begin with a period, as well
@@ -79,14 +89,15 @@ DirectoryIndex index.php index.html index.htm
   # To redirect all users to access the site WITH the 'www.' prefix,
   # (http://example.com/... will be redirected to http://www.example.com/...)
   # uncomment the following:
+  # RewriteCond %{HTTP_HOST} .
   # RewriteCond %{HTTP_HOST} !^www\. [NC]
-  # RewriteRule ^ http://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  # RewriteRule ^ http%{ENV:protossl}://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
   #
   # To redirect all users to access the site WITHOUT the 'www.' prefix,
   # (http://www.example.com/... will be redirected to http://example.com/...)
   # uncomment the following:
   # RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-  # RewriteRule ^ http://%1%{REQUEST_URI} [L,R=301]
+  # RewriteRule ^ http%{ENV:protossl}://%1%{REQUEST_URI} [L,R=301]
 
   # Modify the RewriteBase if you are using Drupal in a subdirectory or in a
   # VirtualDocumentRoot and the rewrite rules are not working properly.
@@ -96,7 +107,7 @@ DirectoryIndex index.php index.html index.htm
   #
   # If your site is running in a VirtualDocumentRoot at http://example.com/,
   # uncomment the following line:
-  RewriteBase /
+  # RewriteBase /
 
   # Pass all requests not referring directly to files in the filesystem to
   # index.php. Clean URLs are handled in drupal_environment_initialize().
@@ -130,180 +141,3 @@ DirectoryIndex index.php index.html index.htm
     </FilesMatch>
   </IfModule>
 </IfModule>
-
-
-################################################################################
-### NON DRUPAL ADDITIONS
-################################################################################
-
-
-# ----------------------------------------------------------------------
-# Better website experience for IE users
-# ----------------------------------------------------------------------
-
-# Force the latest IE version, in various cases when it may fall back to IE7 mode
-#  github.com/rails/rails/commit/123eb25#commitcomment-118920
-# Use ChromeFrame if it's installed for a better experience for the poor IE folk
-
-<IfModule mod_headers.c>
-  Header set X-UA-Compatible "IE=Edge,chrome=1"
-  # mod_headers can't match by content-type, but we don't want to send this header on *everything*...
-  <FilesMatch "\.(appcache|crx|css|eot|gif|htc|ico|jpe?g|js|m4a|m4v|manifest|mp4|oex|oga|ogg|ogv|otf|pdf|png|safariextz|svg|svgz|ttf|vcf|webm|webp|woff|xml|xpi)$">
-    Header unset X-UA-Compatible
-  </FilesMatch>
-</IfModule>
-
-
-# ----------------------------------------------------------------------
-# Webfont access
-# ----------------------------------------------------------------------
-
-# Allow access from all domains for webfonts.
-# Alternatively you could only whitelist your
-# subdomains like "subdomain.example.com".
-
-<IfModule mod_headers.c>
-  <FilesMatch "\.(eot|font.css|otf|ttc|ttf|woff)$">
-    Header set Access-Control-Allow-Origin "*"
-  </FilesMatch>
-</IfModule>
-
-
-# ----------------------------------------------------------------------
-# Proper MIME type for all files
-# ----------------------------------------------------------------------
-
-# JavaScript
-#   Normalize to standard type (it's sniffed in IE anyways)
-#   tools.ietf.org/html/rfc4329#section-7.2
-AddType application/javascript         js jsonp
-AddType application/json               json
-
-# Audio
-AddType audio/mp4                      m4a f4a f4b
-AddType audio/ogg                      oga ogg
-
-# Video
-AddType video/mp4                      mp4 m4v f4v f4p
-AddType video/ogg                      ogv
-AddType video/webm                     webm
-AddType video/x-flv                    flv
-
-# SVG
-#   Required for svg webfonts on iPad
-#   twitter.com/FontSquirrel/status/14855840545
-AddType     image/svg+xml              svg svgz
-AddEncoding gzip                       svgz
-
-# Webfonts
-AddType application/vnd.ms-fontobject  eot
-AddType application/x-font-ttf         ttf ttc
-AddType application/x-font-woff        woff
-AddType font/opentype                  otf
-
-# Assorted types
-AddType application/octet-stream            safariextz
-AddType application/x-chrome-extension      crx
-AddType application/x-opera-extension       oex
-AddType application/x-shockwave-flash       swf
-AddType application/x-web-app-manifest+json webapp
-AddType application/x-xpinstall             xpi
-AddType application/xml                     rss atom xml rdf
-AddType image/webp                          webp
-AddType image/x-icon                        ico
-AddType text/cache-manifest                 appcache manifest
-AddType text/vtt                            vtt
-AddType text/x-component                    htc
-AddType text/x-vcard                        vcf
-
-
-# ----------------------------------------------------------------------
-# Expires headers (for better cache control)
-# ----------------------------------------------------------------------
-
-# These are pretty far-future expires headers.
-# They assume you control versioning with filename-based cache busting
-# Additionally, consider that outdated proxies may miscache
-#   www.stevesouders.com/blog/2008/08/23/revving-filenames-dont-use-querystring/
-
-# If you don't use filenames to version, lower the CSS and JS to something like
-# "access plus 1 week".
-
-<IfModule mod_expires.c>
-  ExpiresActive on
-
-# Perhaps better to whitelist expires rules? Perhaps.
-  ExpiresDefault                          "access plus 1 month"
-
-# cache.appcache needs re-requests in FF 3.6 (thanks Remy ~Introducing HTML5)
-  ExpiresByType text/cache-manifest       "access plus 0 seconds"
-
-# Your document html
-  ExpiresByType text/html                 "access plus 0 seconds"
-
-# Data
-  ExpiresByType application/json          "access plus 0 seconds"
-  ExpiresByType application/xml           "access plus 0 seconds"
-  ExpiresByType text/xml                  "access plus 0 seconds"
-
-# Feed
-  ExpiresByType application/atom+xml      "access plus 1 hour"
-  ExpiresByType application/rss+xml       "access plus 1 hour"
-
-# Favicon (cannot be renamed)
-  ExpiresByType image/x-icon              "access plus 1 week"
-
-# Media: images, video, audio
-  ExpiresByType audio/ogg                 "access plus 1 month"
-  ExpiresByType image/gif                 "access plus 1 month"
-  ExpiresByType image/jpeg                "access plus 1 month"
-  ExpiresByType image/png                 "access plus 1 month"
-  ExpiresByType video/mp4                 "access plus 1 month"
-  ExpiresByType video/ogg                 "access plus 1 month"
-  ExpiresByType video/webm                "access plus 1 month"
-
-# HTC files  (css3pie)
-  ExpiresByType text/x-component          "access plus 1 month"
-
-# Webfonts
-  ExpiresByType application/vnd.ms-fontobject "access plus 1 month"
-  ExpiresByType application/x-font-ttf    "access plus 1 month"
-  ExpiresByType application/x-font-woff   "access plus 1 month"
-  ExpiresByType font/opentype             "access plus 1 month"
-  ExpiresByType image/svg+xml             "access plus 1 month"
-
-# CSS and JavaScript
-  ExpiresByType application/javascript    "access plus 1 year"
-  ExpiresByType text/css                  "access plus 1 year"
-
-</IfModule>
-
-
-# ----------------------------------------------------------------------
-# UTF-8 encoding
-# ----------------------------------------------------------------------
-
-# Use UTF-8 encoding for anything served text/plain or text/html
-AddDefaultCharset utf-8
-
-# Force UTF-8 for a number of file formats
-AddCharset utf-8 .atom .css .js .json .rss .vtt .xml
-
-
-# ----------------------------------------------------------------------
-# ETag removal - Performance :)
-# ----------------------------------------------------------------------
-
-# FileETag None is not enough for every server.
-<IfModule mod_headers.c>
-  Header unset ETag
-  Header set Connection keep-alive
-</IfModule>
-
-# Since we're sending far-future expires, we don't need ETags for
-# static content.
-#   developer.yahoo.com/performance/rules.html#etags
-FileETag None
-
-# Force IE out of compatibility mode
-Header set X-UA-Compatible "IE=edge,chrome=1"

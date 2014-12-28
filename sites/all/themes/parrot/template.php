@@ -109,3 +109,212 @@ function parrot_preprocess_field(&$vars,$hook) {
 function parrot_preprocess_maintenance_page(){
   //  kpr($vars['content']);
 }
+
+/*
+
+changes the classes from the div wrapper around each field
+change the div class="description" to <small>
+adds form-required
+*/
+function parrot_form_element($variables) {
+  $output = '';
+  
+  $element = &$variables['element'];
+  // This is also used in the installer, pre-database setup.
+  $t = get_t();
+
+  // This function is invoked as theme wrapper, but the rendered form element
+  // may not necessarily have been processed by form_builder().
+  $element += array(
+      '#title_display' => 'before',
+  );
+
+  // Add element #id for #type 'item'.
+  if (isset($element['#markup']) && !empty($element['#id'])) {
+    $attributes['id'] = $element['#id'];
+  }
+  // Add element's #type and #name as class to aid with JS/CSS selectors.
+
+  $attributes['class'] = array();
+  if(! theme_get_setting('mothership_classes_form_wrapper_formitem')){
+    $attributes['class'] = array('form-item');
+  }
+
+  //date selects need the form-item for the show/hide end date
+  if(isset($element['#type'])){
+    if ($element['#type'] == 'date_select' OR $element['#type'] == 'date_text' OR $element['#type'] == 'date_popup' ){ //AND
+      $attributes['class'] = array('form-item');
+    }
+
+  }
+
+  if (!empty($element['#type'])) {
+    if(!theme_get_setting('mothership_classes_form_wrapper_formtype')){
+      $attributes['class'][] = 'form-type-' . strtr($element['#type'], '_', '-');
+    }
+  }
+  if (!empty($element['#name'])) {
+    if(!theme_get_setting('mothership_classes_form_wrapper_formname')){
+      $attributes['class'][] = 'form-item-' . strtr($element['#name'], array(' ' => '-', '_' => '-', '[' => '-', ']' => ''));
+    }
+  }
+  // Add a class for disabled elements to facilitate cross-browser styling.
+  if (!empty($element['#attributes']['disabled'])) {
+    $attributes['class'][] = 'form-disabled';
+  }
+
+  if((isset($element['#title']) && $element['#title'] != 'Language') && (isset($element['#required']) && $element['#required'])) {
+    $attributes['class'][] = 'form-required';
+  }
+
+
+  //freeform css class killing \m/
+  if($attributes['class']){
+    $remove_class_form = explode(", ", theme_get_setting('mothership_classes_form_freeform'));
+    $attributes['class'] = array_values(array_diff($attributes['class'],$remove_class_form));
+  }
+
+  if($attributes['class']){
+    $output =  '<div' . drupal_attributes($attributes) . '>' . "\n";
+  }else{
+    //$output =  "\n" . '<div>' . "\n";
+  }
+
+
+  // If #title is not set, we don't display any label or required marker.
+  if (!isset($element['#title'])) {
+    $element['#title_display'] = 'none';
+  }
+  $prefix = isset($element['#field_prefix']) ? '<span class="field-prefix">' . $element['#field_prefix'] . '</span> ' : '';
+  $suffix = isset($element['#field_suffix']) ? ' <span class="field-suffix">' . $element['#field_suffix'] . '</span>' : '';
+
+  switch ($element['#title_display']) {
+  	case 'before':
+  	case 'invisible':
+  	  $output .= ' ' . theme('form_element_label', $variables);
+  	  $output .= ' ' . $prefix . $element['#children'] . $suffix . "\n";
+  	  break;
+
+  	case 'after':
+  	  $output .= ' ' . $prefix . $element['#children'] . $suffix;
+  	  $output .= ' ' . theme('form_element_label', $variables) . "\n";
+  	  break;
+
+  	case 'none':
+  	case 'attribute':
+  	  // Output no label and no required marker, only the children.
+  	  $output .= ' ' . $prefix . $element['#children'] . $suffix . "\n";
+  	  break;
+  }
+
+  if (!empty($element['#description'])) {
+
+    /*
+     changes the description <div class="description"> to <small>
+    */
+    if(!theme_get_setting('mothership_classes_form_description')){
+      $output .= "\n" . '<div class="description">' . $element['#description'] . "</div>\n";
+    }else{
+      $output .= "\n" . '<small>' . $element['#description'] . "</small>\n";
+    }
+
+
+  }
+  if($attributes['class']){
+    $output .= "</div>\n";
+  }
+  return $output;
+}
+
+/*
+ * remove form-text class
+* remove text type if its html5
+* add placeholder in html5
+*/
+function parrot_textfield($variables) {
+  $element = $variables['element'];
+  $element['#size'] = isset($element['#size']) ? $element['#size'] : 30;
+
+  //is this element requred then lest add the required element into the input
+  $required = !empty($element['#required']) ? ' required' : '';
+
+  //dont need to set type in html5 its default so lets remove it because we can
+  $element['#attributes']['type'] = 'text';
+
+  //placeholder
+  if (!empty($element['#title']) AND theme_get_setting('mothership_classes_form_placeholder_label') ) {
+    $element['#attributes']['placeholder'] =  $element['#title'];
+  }
+
+
+  element_set_attributes($element, array('id', 'name', 'value', 'size', 'maxlength'));
+
+  //remove the form-text class
+  if(!theme_get_setting('mothership_classes_form_input')){
+    _form_set_class($element, array('form-text'));
+  }
+  $extra = '';
+  if ($element['#autocomplete_path'] && drupal_valid_path($element['#autocomplete_path'])) {
+    drupal_add_library('system', 'drupal.autocomplete');
+    $element['#attributes']['class'][] = 'form-autocomplete';
+
+    $attributes = array();
+    $attributes['type'] = 'hidden';
+    $attributes['id'] = $element['#attributes']['id'] . '-autocomplete';
+    $attributes['value'] = url($element['#autocomplete_path'], array('absolute' => TRUE));
+    $attributes['disabled'] = 'disabled';
+    $attributes['class'][] = 'autocomplete';
+    $extra = '<input' . drupal_attributes($attributes) . $required .' />';
+  }
+
+  $output = '<input' . drupal_attributes($element['#attributes']) . $required . ' />';
+
+  return $output . $extra;
+}
+
+/**
+ * Theme function to output content for classic Quicktabs style tabs.
+ *
+ * @ingroup themeable
+ */
+function parrot_qt_quicktabs($variables) {
+  $element = $variables['element'];
+  $output = '<div '. drupal_attributes($element['#options']['attributes']) .'>';
+
+  $output .= drupal_render($element['tabs']);
+
+  $output .= drupal_render($element['container']);
+  $output .= '<div class="handle"></div>';
+  $output .= '</div>';
+  
+  
+  //print_r($output);exit;
+  return $output;
+}
+
+/**
+ * Theme function to output tablinks for classic Quicktabs style tabs.
+ *
+ * @ingroup themeable
+ */
+function parrot_qt_quicktabs_tabset($vars) {
+  $variables = array(
+      'attributes' => array(
+          'class' => 'quicktabs-tabs quicktabs-style-' . $vars['tabset']['#options']['style'],
+      ),
+      'items' => array(),
+  );
+  foreach (element_children($vars['tabset']['tablinks']) as $key) {
+    $item = array();
+    if (is_array($vars['tabset']['tablinks'][$key])) {
+      $tab = $vars['tabset']['tablinks'][$key];
+      if ($key == $vars['tabset']['#options']['active']) {
+        $item['class'] = array('active');
+      }
+      $item['class'][] = drupal_html_class($tab['#title']);
+      $item['data'] = drupal_render($tab);
+      $variables['items'][] = $item;
+    }
+  }
+  return theme('item_list', $variables);
+}

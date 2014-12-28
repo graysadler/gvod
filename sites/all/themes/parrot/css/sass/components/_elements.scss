@@ -45,6 +45,9 @@ $images-sprite-dimensions: true;
     @include at-breakpoint($computer) {
       padding: 9px 0px 9px;
         position: fixed;
+        &.nofix {
+          position: static;
+        }
         .siteinfo {
             float: left;
             width: 25%;
@@ -168,7 +171,7 @@ $images-sprite-dimensions: true;
 .container {
     @include container;
 }
-li {
+ol li ol li {
     list-style-type: none;
 }
 #panel-wrapper {
@@ -1038,7 +1041,9 @@ ul.quicktabs-tabs.quicktabs-style-sky li.hover a:hover, ul.quicktabs-tabs.quickt
     border: none;
     line-height: 33px;
 }
-ul.quicktabs-tabs.quicktabs-style-sky li.last.active a, ul.quicktabs-tabs.quicktabs-style-sky li.last a:hover, ul.quicktabs-tabs.quicktabs-style-sky li.last.active a:hover {
+ul.quicktabs-tabs.quicktabs-style-sky li.last.active a, 
+ul.quicktabs-tabs.quicktabs-style-sky li.last a:hover, 
+ul.quicktabs-tabs.quicktabs-style-sky li.last.active a:hover {
     background-image: url(../img/sprite/sprite.png);
     background-color: $Active-bagColor;
     background-position: 8px -823px;
@@ -3213,4 +3218,295 @@ body.node-type-blog {
         @include images-sprite(TagDk);
       }
   }  
+}
+
+.quicktabs-wrapper {
+  
+  .handle {
+    background-color: #a0aab4;
+    height: 100%;
+    display: table-cell;
+    cursor: pointer;
+    width: 15px;  
+    &:after {
+      @include images-sprite(Collapse);
+      content: "";
+      left: 25%;
+      top: 50%;
+      position: relative;
+      display: block;
+    }
+    &.closed {
+      &:after {
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
+#mini-panel-player_menu {  
+  //width: 400px;
+  h2,
+  h2.title,
+  h2.pane-title {
+    text-transform: uppercase;
+    font-size: 1.5em;
+    font-weight: lighter;
+    margin-bottom: .5em;
+  }
+  
+  .pane-quicktabs-player-menu {
+
+    position: relative;
+        
+    & > h2 {
+      display: none;
+    }
+    #quicktabs-player_menu {     
+      display: table !important; 
+      min-height: 600px;
+      height:95vh;
+      
+      &.docked {
+        & > ul.quicktabs-tabs {
+          li {
+            &.hover {
+              &:after {
+                background: none repeat scroll 0 0 white;
+                display: block;
+                font-size: 1.5em;
+                height: 100%;
+                left: 100%;
+                line-height: 3em;
+                padding-left: 1em;
+                position: absolute;
+                text-transform: uppercase;
+                top: 0;
+                vertical-align: top;
+                width: 315px;
+                z-index: 1000;    
+                color: $Active-bagColor;
+              }              
+              &:nth-child(1):after {content: "Now Playing"; }
+              &:nth-child(2):after {content: "Add Channel"; }              
+              &:nth-child(3):after {content: "Browse"; }   
+              &:nth-child(4):after {content: "Favorites"; }   
+              &:nth-child(5):after {content: "Manage"; }                                             
+            }
+          }
+        }  
+      }      
+      & > ul.quicktabs-tabs {
+        width: 56px;
+        float: none;
+        vertical-align: top;
+        
+        display: table-cell;
+        //overflow: hidden;    
+        //position: absolute;
+        //top: 0;
+        //bottom: 0;
+        //left: 0;
+        background-color: #3c4650;
+        padding-top: 75px;
+        
+        li {
+          width: 56px;
+          clear:both;
+          //display: block;
+          //padding: 1em;
+          position: relative;
+          margin-bottom: 20px;
+          background-color: transparent;
+          
+          &.active a,
+          & a:hover {
+              background-color: $Active-bagColor;
+          }
+          a {
+            text-indent: -1000px;
+            width: 100%;
+            margin: auto;
+            float: none;
+            padding: 1em;
+            background-color: transparent;
+            
+
+            &:after {
+              content: "";
+              position: absolute;
+              top: 15px;
+              left: 15px;
+            }  
+            &.now-playing:after { @include images-sprite(NowPlayingSm); }
+            &.add-channel:after { @include images-sprite(AddChannel); }
+            &.browse:after { @include images-sprite(SearchLgDk); }
+            &.favorites:after { @include images-sprite(Favorites); }
+            &.manage:after { @include images-sprite(SRGear); }
+          }
+          &.last a {
+            background-image: none;
+          }
+        }
+      }
+      
+      #quicktabs-container-player_menu {
+        clear: none;
+        max-width: 400px - 56px - 20px;
+        width: 400px - 56px - 20px;
+        vertical-align: top;
+        //position: absolute;
+        //top: 0;
+        //bottom: 0;
+        //right: 0;      
+        display: table-cell;
+        padding-left: 1.25em;
+        .quicktabs-tabpage {
+          max-width: 295px;
+          width: 295px;
+          min-width: 295px;
+          max-height: 95vh;
+          overflow-y: scroll;
+          //height: 100%;
+          //display: table-cell;
+        }
+        .quicktabs-hide {
+          display: none;
+        }
+        .panel-pane {
+          margin-right: 1em;
+        }
+      }
+    }
+  } 
+  
+  ul.panel-actions {
+    text-align: right;
+    margin-right: 20px;
+    
+    li {
+      display: inline;
+      cursor: pointer;
+      
+      &:after {
+        content: " | ";
+      }
+      
+      &:last-child {
+        &:after {
+          content: "";
+        }
+      }
+    }
+  }
+}
+
+// Streams 
+.stream-wrapper {
+  border-bottom: solid 2px #e7e7e7;
+  position: relative;
+
+  //height: 46px;
+  
+  .stream-actions {
+    background: white;
+    width: 75%;
+  }
+  .image-wrapper {
+    background-color: #aab4be;
+  }
+  &.hover {
+    .stream-actions {
+      display: block;
+    }
+    .image {
+      display: none;
+    }
+    .image-wrapper {
+      background-color: $Active-bagColor;
+    }
+    .image-overlay {
+      @include images-sprite(AddLgLt);       
+      top: 10px;
+      left: 20px;     
+    }
+  }
+  ul.add-to-player {
+  margin-top: 10px;
+  margin-left: 5px;
+    li {
+      display: inline-block;
+      font-size: 1.5em;
+      font-weight: lighter;
+      margin: 0 .25em;
+      cursor: pointer;
+      
+      &:hover {
+        color: $Active-bagColor;
+        font-weight: bold;
+        
+      }
+    }
+  }  
+  .favorite {
+    @include images-sprite(Unfaved);
+    position: absolute;
+    top: 0;
+    right: 10px;
+    cursor: pointer;
+    
+  }
+  .remove {
+    @include images-sprite(Remove);
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    cursor: pointer;
+  }
+
+
+}
+
+// Now Playing Streams
+#now-playing {
+  .stream-wrapper {
+    .image-wrapper {
+      
+      
+      img {
+        display: none;
+      }
+    }
+    
+
+    .image:after {
+      color: white;
+      display: block;
+      font-size: 2em;
+      padding-top: 0.5em;
+      text-align: center;
+      vertical-align: middle;
+    }    
+    
+    &:nth-child(1) .image:after {content: "1";} 
+    &:nth-child(2) .image:after {content: "2";} 
+    &:nth-child(3) .image:after {content: "3";} 
+    &:nth-child(4) .image:after {content: "4";} 
+    &:nth-child(5) .image:after {content: "5";} 
+  }  
+}
+
+// Register Icons
+ul.register-icons {
+  li {
+    list-style: none;
+    display: inline-block;
+    cursor: pointer;
+    
+    //margin-right: 10px;
+  
+    &.twitter {@include images-sprite(TwitterLg);}
+    &.facebook {@include images-sprite(FacebookLg);}
+    &.twitch {@include images-sprite(TwitchLg);}
+    &.email {@include images-sprite(EmailLg);}
+  }
 }

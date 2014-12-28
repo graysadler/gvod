@@ -1,0 +1,1 @@
+<?php print render($player_menu); ?>

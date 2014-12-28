@@ -281,14 +281,6 @@ function sr_core_node_info() {
       'title_label' => t('Title'),
       'help' => '',
     ),
-    'multistream' => array(
-      'name' => t('Multistream'),
-      'base' => 'node_content',
-      'description' => t('This content type store the home page banner data with term reference Game category.'),
-      'has_title' => '1',
-      'title_label' => t('Title'),
-      'help' => '',
-    ),
     'staff' => array(
       'name' => t('Staff'),
       'base' => 'node_content',
