@@ -1,12 +1,48 @@
+#multistream-manage {
+  position: relative;
+  min-height: 300px;
+}
 #manage-open {
   cursor: pointer;
 }
-
 #manage-selection {
   display: none;
+  position: absolute;
+  top: 2em;
+  z-index: 1000;
+  height: 300px;
 }
-
 #manage-selection article:hover {
   background: #efefef;
   cursor: pointer;
+}
+#manage-form #field-streams-values input,
+#manage-form #field-streams-values select, 
+#manage-form #field-streams-add-more-wrapper  { display: none; }
+
+.panel-actions-wrapper {
+  position: absolute;
+  z-index: 999;
+  width: 100%;
+  right: 0;
+}
+.panel-actions-popup {
+  position: absolute;
+  background: white;
+  z-index: 1000;
+  width: 100%;
+  margin: 0;
+}
+.panel-actions-popup li {
+  display: none;
+  list-style: none;  
+}
+
+.panel-overlay {
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  opacity: .5;
+  position: absolute;
+  z-index: 100;
 }

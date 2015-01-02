@@ -32,7 +32,7 @@ function multistream_field_group_info() {
       'label' => 'Upload Images',
       'instance_settings' => array(
         'required_fields' => 1,
-        'classes' => '',
+        'classes' => 'upload-images',
         'description' => '',
       ),
       'formatter' => 'collapsed',
@@ -66,7 +66,7 @@ function multistream_field_group_info() {
       'label' => 'More Settings',
       'instance_settings' => array(
         'required_fields' => 1,
-        'classes' => '',
+        'classes' => 'more-settings',
         'description' => '',
       ),
       'formatter' => 'collapsed',
@@ -91,17 +91,16 @@ function multistream_field_group_info() {
       1 => 'field_google_plus',
       2 => 'field_reddit',
       3 => 'field_twitter',
-      4 => 'field_twitter_feed',
-      5 => 'field_website',
-      6 => 'field_youtube',
-      7 => 'field_twitter_feeds',
+      4 => 'field_website',
+      5 => 'field_youtube',
+      6 => 'field_twitter_feed',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
       'label' => 'Social Media',
       'instance_settings' => array(
         'required_fields' => 1,
-        'classes' => '',
+        'classes' => 'social-media',
         'description' => '',
       ),
       'formatter' => 'collapsed',
@@ -129,7 +128,7 @@ function multistream_field_group_info() {
       'label' => 'Streams',
       'instance_settings' => array(
         'required_fields' => 1,
-        'classes' => '',
+        'classes' => 'streams',
         'description' => '',
       ),
       'formatter' => 'collapsed',

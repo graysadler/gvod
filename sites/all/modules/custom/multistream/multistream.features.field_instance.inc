@@ -46,7 +46,7 @@ function multistream_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 3,
+      'weight' => 1,
     ),
   );
 
@@ -57,11 +57,11 @@ function multistream_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'image',
         'settings' => array(
           'image_link' => '',
-          'image_style' => '',
+          'image_style' => 'stream_thumb',
         ),
         'type' => 'image',
         'weight' => 4,
@@ -88,7 +88,7 @@ function multistream_field_default_field_instances() {
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
       'max_resolution' => '',
-      'min_resolution' => '',
+      'min_resolution' => '66x46',
       'title_field' => 0,
       'user_register_form' => FALSE,
     ),
@@ -96,7 +96,7 @@ function multistream_field_default_field_instances() {
       'active' => 1,
       'module' => 'image',
       'settings' => array(
-        'preview_image_style' => 'thumbnail',
+        'preview_image_style' => 'stream_thumb',
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
@@ -146,7 +146,7 @@ function multistream_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_text',
-      'weight' => 1,
+      'weight' => 2,
     ),
   );
 
@@ -182,7 +182,7 @@ function multistream_field_default_field_instances() {
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'size' => 60,
+        'size' => 12,
       ),
       'type' => 'text_textfield',
       'weight' => 6,
@@ -221,7 +221,7 @@ function multistream_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 2,
+      'weight' => 3,
     ),
   );
 
@@ -257,7 +257,7 @@ function multistream_field_default_field_instances() {
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'size' => 60,
+        'size' => 12,
       ),
       'type' => 'text_textfield',
       'weight' => 10,
@@ -294,7 +294,7 @@ function multistream_field_default_field_instances() {
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
       'max_resolution' => '',
-      'min_resolution' => '',
+      'min_resolution' => '600x600',
       'title_field' => 0,
       'user_register_form' => FALSE,
     ),
@@ -342,7 +342,7 @@ function multistream_field_default_field_instances() {
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'size' => 60,
+        'size' => 12,
       ),
       'type' => 'text_textfield',
       'weight' => 8,
@@ -506,7 +506,7 @@ function multistream_field_default_field_instances() {
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'size' => 60,
+        'size' => 12,
       ),
       'type' => 'text_textfield',
       'weight' => 5,
@@ -516,68 +516,27 @@ function multistream_field_default_field_instances() {
   // Exported field_instance: 'node-multistream-field_twitter_feed'
   $field_instances['node-multistream-field_twitter_feed'] = array(
     'bundle' => 'multistream',
-    'default_value' => array(
-      0 => array(
-        'value' => 0,
-      ),
-    ),
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 6,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 2,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_twitter_feed',
-    'label' => 'Twitter Feed',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(
-        'display_label' => 1,
-      ),
-      'type' => 'options_onoff',
-      'weight' => 11,
-    ),
-  );
-
-  // Exported field_instance: 'node-multistream-field_twitter_feeds'
-  $field_instances['node-multistream-field_twitter_feeds'] = array(
-    'bundle' => 'multistream',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
+        'module' => 'text',
         'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 13,
+        'type' => 'text_default',
+        'weight' => 14,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 6,
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_twitter_feeds',
-    'label' => 'Twitter Feeds',
+    'field_name' => 'field_twitter_feed',
+    'label' => 'Twitter Feed',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -587,10 +546,10 @@ function multistream_field_default_field_instances() {
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'size' => 60,
+        'rows' => 5,
       ),
-      'type' => 'text_textfield',
-      'weight' => 12,
+      'type' => 'text_textarea',
+      'weight' => 11,
     ),
   );
 
@@ -681,7 +640,7 @@ function multistream_field_default_field_instances() {
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'size' => 60,
+        'size' => 12,
       ),
       'type' => 'text_textfield',
       'weight' => 7,
@@ -782,7 +741,6 @@ function multistream_field_default_field_instances() {
   t('Streams');
   t('Twitter');
   t('Twitter Feed');
-  t('Twitter Feeds');
   t('Viewers');
   t('Website');
   t('YouTube');

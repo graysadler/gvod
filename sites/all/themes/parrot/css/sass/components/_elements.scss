@@ -3247,7 +3247,8 @@ body.node-type-blog {
   //width: 400px;
   h2,
   h2.title,
-  h2.pane-title {
+  h2.pane-title,
+  .fieldset-title {
     text-transform: uppercase;
     font-size: 1.5em;
     font-weight: lighter;
@@ -3265,6 +3266,11 @@ body.node-type-blog {
       display: table !important; 
       min-height: 600px;
       height:95vh;
+      position: relative;
+      
+      .quicktabs-tabpage {
+        padding-left: 1em;
+      }
       
       &.docked {
         & > ul.quicktabs-tabs {
@@ -3317,7 +3323,7 @@ body.node-type-blog {
           position: relative;
           margin-bottom: 20px;
           background-color: transparent;
-          
+          display: block;
           &.active a,
           & a:hover {
               background-color: $Active-bagColor;
@@ -3329,7 +3335,7 @@ body.node-type-blog {
             float: none;
             padding: 1em;
             background-color: transparent;
-            
+            display: block;
 
             &:after {
               content: "";
@@ -3359,23 +3365,30 @@ body.node-type-blog {
         //bottom: 0;
         //right: 0;      
         display: table-cell;
-        padding-left: 1.25em;
-        .quicktabs-tabpage {
-          max-width: 295px;
-          width: 295px;
-          min-width: 295px;
-          max-height: 95vh;
-          overflow-y: scroll;
-          //height: 100%;
-          //display: table-cell;
-        }
-        .quicktabs-hide {
-          display: none;
+        //padding-left: 1.25em;
+
+        .panel-actions-wrapper.quicktabs-hide {
+          display: block;
         }
         .panel-pane {
           margin-right: 1em;
         }
       }
+      
+      .minipanel-two-50-bottom {
+        float: none;
+        max-width: 295px;
+        width: 295px;
+        min-width: 295px;
+        max-height: 95vh;
+        min-height: 500px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        //height: 100%;
+        //display: table-cell;
+        display: block;
+        clear: both;
+      }      
     }
   } 
   
@@ -3398,6 +3411,11 @@ body.node-type-blog {
       }
     }
   }
+  
+  .minipanel-two-50-bottom {
+    position: relative;
+    top: 30px;  
+  }  
 }
 
 // Streams 
@@ -3431,8 +3449,9 @@ body.node-type-blog {
     }
   }
   ul.add-to-player {
-  margin-top: 10px;
-  margin-left: 5px;
+    margin-top: 10px;
+    margin-left: 5px;
+    
     li {
       display: inline-block;
       font-size: 1.5em;
@@ -3442,18 +3461,24 @@ body.node-type-blog {
       
       &:hover {
         color: $Active-bagColor;
-        font-weight: bold;
-        
+        font-weight: bold;        
       }
     }
   }  
-  .favorite {
-    @include images-sprite(Unfaved);
-    position: absolute;
-    top: 0;
-    right: 10px;
-    cursor: pointer;
-    
+  .flag-wrapper {
+      position: absolute;
+      top: 0;
+      right: 10px;
+    a.flag {
+      text-indent: -1000px;
+      @include images-sprite(Unfaved);
+      cursor: pointer;
+      display: block;
+      &:hover,
+      &.unflag-action {
+        @include images-sprite(Favd);
+      }    
+    }
   }
   .remove {
     @include images-sprite(Remove);
@@ -3510,3 +3535,325 @@ ul.register-icons {
     &.email {@include images-sprite(EmailLg);}
   }
 }
+
+#manage-open {
+  background-color: $dkbg;
+  padding: 1em;
+  margin-bottom: 2em;
+  color: white;
+  display: inline-block;
+  width: 100%;
+  
+  &:after {
+    @include images-sprite(ArrowDownSmLt);
+    content: "";
+    display: inline-block;
+    float: right;
+    margin-top: -2px;
+  }
+}
+
+#manage-selection,
+.panel-actions-popup li.open {
+  top: 50px;
+  background-color: $lightergray;
+  
+  article {
+    background: transparent;
+    
+    &:hover {
+      background-color: $SRblue;
+      
+      color: white;
+    }
+  }
+}
+
+#manage-form {  
+  fieldset {
+    border: none;
+    padding: 0;
+    legend {
+      margin-bottom: 1em;
+    }
+    .fieldset-title {
+  
+    }
+    .fieldset-legend {
+      @include images-sprite(ArrowBlRight);
+      padding-left: 35px;
+      width: 100%;
+    }
+    
+    &.collapsed {
+      .fieldset-legend {
+        @include images-sprite(ArrowDkRight);
+        width: 100%;
+      }
+      .fieldset-title {
+        color: $charcoal;
+      }  
+    }    
+  }
+  
+  
+  fieldset.social-media {
+    .form-wrapper {
+      display: block;
+      
+      &:before {
+        display: inline-block;
+        content: "";
+        vertical-align: top;
+      }
+      
+      & > div {
+        display: inline-block;
+        margin-left: 1em;
+        width: 200px;
+        
+        & > div {
+          float: left;
+        }
+        
+        .btn {
+          float: right;
+          background-color: $SRgreen;
+          background-image: none;
+          border-radius: 0;
+          border: none;
+          color: white;
+          text-shadow: none;
+          border-shadow: none;
+          padding: 5px 20px;
+          font-size: 8pt;
+          margin-top: -15px;
+          
+        }
+      }
+      
+      label {
+        display: block;
+        font-weight: normal;
+      }
+      
+      input[type="text"] {
+        height: 24px;
+        
+        padding: 0;
+      }
+      input[disabled],
+      textarea[disabled] {
+        color: $SRpink;
+        background: white;
+        border: none;
+        font-style: italic;
+      } 
+      label[for="edit-field-website-und-0-url"] {
+        display: none;
+      }      
+    }
+  }
+  #edit-field-twitter:before {@include images-sprite(TwitterDk);}
+  #edit-field-facebook:before {@include images-sprite(FacebookDk);}
+  #edit-field-youtube:before {@include images-sprite(TwitterDk);}
+  #edit-field-reddit:before {@include images-sprite(TwitterDk);}
+  #edit-field-website:before {@include images-sprite(TwitterDk);}
+  #edit-field-google-plus:before {@include images-sprite(TwitterDk);}
+  #edit-field-twitter-feed:before {@include images-sprite(TwitterDk);}
+
+  // Upload Images
+  .field-name-field-stream-image { display: none; }
+  .field-name-field-player-background,
+  .field-name-field-cover {
+    position: relative;
+    margin-bottom: 1em;
+    .field-icon-wrapper {
+      background-color: $darkgray;
+      width: 66px;
+      height: 46px;
+      float: left;
+      margin-right: 1em;
+      cursor: pointer;
+      &:hover {
+        background-color: $SRblue;
+      }
+      .field-icon {
+        @include images-sprite(Img);
+        position: absolute;
+        top: 10px;
+        left: 20px;      
+      }
+    }  
+    label {
+      position: absolute;
+      top: 0;
+      left: 75px;
+    }
+    small {
+      position: absolute;
+      top: 25px;
+      left: 75px;      
+    }
+    .image-widget {
+      .image-preview {
+        position: absolute;
+      }
+      
+      .image-widget-data {
+        .file,
+        .file-size,
+        .upload,
+        .upload-button {
+          display: none;
+        }
+        
+        .remove-button {
+          position: absolute;
+          right: 0;
+          top: 0;
+          text-indent: -1000px;
+          //background: none;
+          padding: 0;
+          @include images-sprite(Remove);
+          background-color: transparent;
+          border: none;
+        }
+      }
+    }
+    
+  }
+
+  // More Settings
+  
+  fieldset.more-settings {
+    label {
+      display: block;
+    }
+    
+    #edit-field-event-dates,
+    #edit-body,
+    #edit-field-game-category,
+    #edit-field-stream-category,
+    #edit-body-und-0-format {
+      display: none;
+    }
+    
+  }
+  
+  .vertical-tabs-panes {
+    display: none;
+  }
+}
+
+article.node-multistream.selection {
+  padding: 0;
+  min-height: 40px;
+  
+  .content {
+    margin-left: 40px;
+    font-weight: bold;
+    &:before {
+      @include images-sprite(MultiStreamSmDk);
+      content: "";
+      display:inline-block;
+      margin-left: -30px;
+      margin-right: 5px;
+      position: relative;
+      top: 10px;
+      vertical-align: top;
+    }
+    a {
+      min-height: 40px;
+      display: inline-block;
+      width: 100%;
+    }
+  }
+  
+  &:hover {
+    .content {
+      &:before {
+        @include images-sprite(MultiStreamSmLt);
+      }
+    }
+  }
+}
+
+// Now playing stream hover
+#now-playing .stream-wrapper:nth-child(1) .stream-actions .add-1:hover { color: $darkgray; cursor: default;}
+#now-playing .stream-wrapper:nth-child(2) .stream-actions .add-2:hover { color: $darkgray; cursor: default; }
+#now-playing .stream-wrapper:nth-child(3) .stream-actions .add-3:hover { color: $darkgray; cursor: default; }
+#now-playing .stream-wrapper:nth-child(4) .stream-actions .add-4:hover { color: $darkgray; cursor: default; }
+#now-playing .stream-wrapper:nth-child(5) .stream-actions .add-5:hover { color: $darkgray; cursor: default; }
+#queue .stream-wrapper .stream-actions .add-q:hover { color: $darkgray; cursor: default; }
+
+#browse-filter-wrapper {
+  position: relative;
+  
+  #browse-filter-button {
+    display: block;
+    position: absolute;
+    right: 0px;
+    top: 0;
+    background-color: $charcoal;
+    padding: 5px 15px;
+    color: white;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 8pt;
+    
+    &:hover, &.active {
+      background-color: $SRblue;
+    }
+  }
+  
+  #browse-filter-options-wrapper {
+    position: absolute;
+    top: 35px;
+    right: 0px;
+    width: 250px;
+    z-index: 1000;
+    background-color: $lightgray;
+    
+    & > div {
+      line-height: 4em;
+      margin-left: 2em;
+    }
+    
+    ul#browse-filter-options {
+      margin-left: 0;
+      
+      li {
+        cursor: pointer;
+        list-style: none;
+        line-height: 4em;
+        &:before {
+          content: "";
+          display: block;
+          float: left;
+          margin-top: 1em;
+          margin-left: 2em;
+          margin-right: 1em;
+        }
+        &:hover {
+          background-color: $SRblue;
+          color: white;
+        }
+        &.multistreams:hover {
+          &:before {
+            @include images-sprite(MultiStreamSmLt);
+          }
+        }
+        &.multistreams:before {
+          @include images-sprite(MultiStreamSmDk);
+                   
+        }
+        &.streams:before {
+          @include images-sprite(LiveStreamSmDk);
+        }
+
+      }
+    }  
+  }    
+}
+

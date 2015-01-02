@@ -123,8 +123,13 @@
           $(this).find('a').trigger('click');
         }
       });        
+
+      $('#manage-form .field-type-image .field-icon-wrapper').click(function() {
+         $(this).siblings('.image-widget').find('.upload').trigger('click');
+      });
+
+      
     }
-        
   }
   
 })(jQuery);

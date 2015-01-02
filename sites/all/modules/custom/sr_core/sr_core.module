@@ -43,9 +43,6 @@ function sr_core_get_entities($type, $filter, $account = null) {
   	  break;
   	
   }
-
-  
-
 }
 
 function sr_core_node_presave($node) {
@@ -54,4 +51,17 @@ function sr_core_node_presave($node) {
   }
   
   flag('flag', 'multistream_favs', $node->nid);
+}
+
+function sr_core_entity_view_alter(&$build, $type) {
+  if($type == 'node') {
+    $node = $build['#node'];
+    if($node->type != 'multistream') {
+      return;
+    }
+    
+    if($build['#view_mode'] == 'teaser') {
+      $build['favorite'] = flag_create_link('multistream_favs', $node->nid);
+    }
+  }
 }

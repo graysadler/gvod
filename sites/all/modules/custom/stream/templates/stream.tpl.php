@@ -14,7 +14,7 @@
   		<li class="item add-4">4</li>
   		<li class="item add-5">5</li>
     </ul>
-  	<div class="favorite"></div>
+  	<?php print $content['favorite']; ?>
   	<div class="remove"></div>		
 	</div>
 </div>

@@ -401,7 +401,7 @@ table {
   border-spacing: 0; }
 
 /* line 10, sass/components/_sprites.scss */
-[class^="icon-"], [class*="icon-"], ul.quicktabs-tabs.quicktabs-style-sky li.last a,
+[class^="icon-"], ul.quicktabs-tabs.quicktabs-style-sky li.last a,
 .views-slideshow-controls-bottom .views_slideshow_controls_text span a, .ui-state-default .ui-icon,
 .ui-state-active .ui-icon {
   background-image: url(../img/sprite/sprite.png);
@@ -3455,7 +3455,7 @@ input[type="image"] {
   input[type="image"]:focus,
   input[type="image"]:hover {
     background-color: #079dd8;
-    border: 1px solid #079dd8; }
+    border: 1px solid #079dd9; }
   /* line 137, sass/base/_forms.scss */
   button::-moz-focus-inner,
   a.button::-moz-focus-inner,
@@ -3928,9 +3928,11 @@ video {
 audio:not([controls]) {
   display: none; }
 
-/* line 608, sprite/images/*.png */
-.images-sprite, .images-AccountLt, .images-AddChannel, .images-AddChannelActive, .images-AddChannelSmLt, .images-AddLgLt, .images-AddSmDk, .images-ArrowBlRight, .images-ArrowDkRight, .images-ArrowDownSmLt, .images-ArrowInactive, .images-BlogLg, .images-BlogSubscribe, .images-BlogSubscribed, .images-Browse, .images-Calendar, .images-ChatLgDk, .images-ChatSmDk, .images-CheckmarkActive, .images-CheckmarkInactive, .images-CloseInactive, .images-CloseStream, .images-Collapse, .images-CreateNew, .images-Customize, .images-EditLt, .images-EmailLg, .images-Facebook, .images-FacebookDk, .images-FacebookLg, .images-FacebookSm, .images-Favd, .images-Favorites, .images-FeedbackDk, .images-HelpCenterDk, .images-Img, .images-ImportTwitch, .images-Mascot, .images-MascotSm, .images-MultiStreamSmActive, .images-MultiStreamSmDk, .images-MultiStreamSmInactive, .images-MultiStreamSmLt, .images-MultiStreams, .images-MuscleArm, .images-NowPlayingDk, .images-NowPlayingLg, .images-NowPlayingSm, .images-OpenActive, .images-RedditLg, .images-Remove, .images-SRGear, .images-SaveDk, .images-SaveLt, .images-Search, .images-SearchLgDk, .images-SearchSmLt, .images-Share, .images-ShareDk, .images-SignOutDk, .images-TagDk, .images-TutorialDk, .images-TwitchDk, .images-TwitchImported, .images-TwitchLg, .images-Twitter, .images-TwitterDk, .images-TwitterFeedDk, .images-TwitterLg, .images-TwitterSm, .images-Unfaved, .images-Upload, .view-staff-watching .staff .views-field-field-twitter-id a:before, .social-feed .item.tweet:before, .social-feed .item.facebook, body.node-type-blog .created:before, body.node-type-blog .author:before, body.node-type-blog .tags:before, .quicktabs-wrapper .handle:after, #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.now-playing:after, #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.add-channel:after, #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.browse:after, #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.favorites:after, #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.manage:after, .stream-wrapper.hover .image-overlay, .stream-wrapper .favorite, .stream-wrapper .remove, ul.register-icons li.twitter, ul.register-icons li.facebook, ul.register-icons li.twitch, ul.register-icons li.email {
-  background-image: url('../img/sprite/images-s7d72f33673.png');
+/* line 616, sprite/images/*.png */
+.images-sprite, .images-AccountLt, .images-AddChannel, .images-AddChannelActive, .images-AddChannelSmLt, .images-AddLgLt, .images-AddSmDk, .images-ArrowBlRight, .images-ArrowDkRight, .images-ArrowDownSmLt, .images-ArrowInactive, .images-BlogLg, .images-BlogSubscribe, .images-BlogSubscribed, .images-Browse, .images-Calendar, .images-ChatLgDk, .images-ChatSmDk, .images-CheckmarkActive, .images-CheckmarkInactive, .images-CloseInactive, .images-CloseStream, .images-Collapse, .images-CreateNew, .images-Customize, .images-EditLt, .images-EmailLg, .images-Facebook, .images-FacebookDk, .images-FacebookLg, .images-FacebookSm, .images-Favd, .images-Favorites, .images-FeedbackDk, .images-HelpCenterDk, .images-Img, .images-ImportTwitch, .images-LiveStreamSmDk, .images-Mascot, .images-MascotSm, .images-MultiStreamSmActive, .images-MultiStreamSmDk, .images-MultiStreamSmInactive, .images-MultiStreamSmLt, .images-MultiStreams, .images-MuscleArm, .images-NowPlayingDk, .images-NowPlayingLg, .images-NowPlayingSm, .images-OpenActive, .images-RedditLg, .images-Remove, .images-SRGear, .images-SaveDk, .images-SaveLt, .images-Search, .images-SearchLgDk, .images-SearchSmLt, .images-Share, .images-ShareDk, .images-SignOutDk, .images-TagDk, .images-TutorialDk, .images-TwitchDk, .images-TwitchImported, .images-TwitchLg, .images-Twitter, .images-TwitterDk, .images-TwitterFeedDk, .images-TwitterLg, .images-TwitterSm, .images-Unfaved, .images-Upload, .view-staff-watching .staff .views-field-field-twitter-id a:before, .social-feed .item.tweet:before, .social-feed .item.facebook, body.node-type-blog .created:before, body.node-type-blog .author:before, body.node-type-blog .tags:before, .quicktabs-wrapper .handle:after, #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.now-playing:after, #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.add-channel:after, #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.browse:after, #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.favorites:after, #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.manage:after, .stream-wrapper.hover .image-overlay, .stream-wrapper .flag-wrapper a.flag, .stream-wrapper .flag-wrapper a.flag:hover, .stream-wrapper .flag-wrapper a.flag.unflag-action, .stream-wrapper .remove, ul.register-icons li.twitter, ul.register-icons li.facebook, ul.register-icons li.twitch, ul.register-icons li.email, #manage-open:after, #manage-form fieldset .fieldset-legend, #manage-form fieldset.collapsed .fieldset-legend, #manage-form #edit-field-twitter:before, #manage-form #edit-field-facebook:before, #manage-form #edit-field-youtube:before, #manage-form #edit-field-reddit:before, #manage-form #edit-field-website:before, #manage-form #edit-field-google-plus:before, #manage-form #edit-field-twitter-feed:before, #manage-form .field-name-field-player-background .field-icon-wrapper .field-icon,
+#manage-form .field-name-field-cover .field-icon-wrapper .field-icon, #manage-form .field-name-field-player-background .image-widget .image-widget-data .remove-button,
+#manage-form .field-name-field-cover .image-widget .image-widget-data .remove-button, article.node-multistream.selection .content:before, article.node-multistream.selection:hover .content:before, #browse-filter-wrapper #browse-filter-options-wrapper ul#browse-filter-options li.multistreams:hover:before, #browse-filter-wrapper #browse-filter-options-wrapper ul#browse-filter-options li.multistreams:before, #browse-filter-wrapper #browse-filter-options-wrapper ul#browse-filter-options li.streams:before {
+  background-image: url('../img/sprite/images-s4d30e4340b.png');
   background-repeat: no-repeat; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
@@ -4150,212 +4152,218 @@ audio:not([controls]) {
   width: 44px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
-.images-Mascot {
+.images-LiveStreamSmDk {
   background-position: 0 -1311px;
+  height: 18px;
+  width: 14px; }
+
+/* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+.images-Mascot {
+  background-position: 0 -1329px;
   height: 29px;
   width: 28px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-MascotSm {
-  background-position: 0 -1340px;
+  background-position: 0 -1358px;
   height: 24px;
   width: 25px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-MultiStreamSmActive {
-  background-position: 0 -1364px;
+  background-position: 0 -1382px;
   height: 19px;
   width: 19px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-MultiStreamSmDk {
-  background-position: 0 -1383px;
+  background-position: 0 -1401px;
   height: 19px;
   width: 20px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-MultiStreamSmInactive {
-  background-position: 0 -1402px;
+  background-position: 0 -1420px;
   height: 19px;
   width: 20px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-MultiStreamSmLt {
-  background-position: 0 -1421px;
+  background-position: 0 -1439px;
   height: 19px;
   width: 19px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-MultiStreams {
-  background-position: 0 -1440px;
+  background-position: 0 -1458px;
   height: 141px;
   width: 130px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-MuscleArm {
-  background-position: 0 -1581px;
+  background-position: 0 -1599px;
   height: 121px;
   width: 140px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-NowPlayingDk {
-  background-position: 0 -1702px;
+  background-position: 0 -1720px;
   height: 23px;
   width: 24px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-NowPlayingLg {
-  background-position: 0 -1725px;
+  background-position: 0 -1743px;
   height: 140px;
   width: 140px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-NowPlayingSm {
-  background-position: 0 -1865px;
+  background-position: 0 -1883px;
   height: 24px;
   width: 25px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-OpenActive {
-  background-position: 0 -1889px;
+  background-position: 0 -1907px;
   height: 18px;
   width: 25px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-RedditLg {
-  background-position: 0 -1907px;
+  background-position: 0 -1925px;
   height: 60px;
   width: 60px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-Remove {
-  background-position: 0 -1967px;
+  background-position: 0 -1985px;
   height: 16px;
   width: 16px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-SRGear {
-  background-position: 0 -1983px;
+  background-position: 0 -2001px;
   height: 24px;
   width: 24px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-SaveDk {
-  background-position: 0 -2007px;
+  background-position: 0 -2025px;
   height: 18px;
   width: 18px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-SaveLt {
-  background-position: 0 -2025px;
+  background-position: 0 -2043px;
   height: 21px;
   width: 21px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-Search {
-  background-position: 0 -2046px;
+  background-position: 0 -2064px;
   height: 24px;
   width: 25px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-SearchLgDk {
-  background-position: 0 -2070px;
+  background-position: 0 -2088px;
   height: 23px;
   width: 24px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-SearchSmLt {
-  background-position: 0 -2093px;
+  background-position: 0 -2111px;
   height: 16px;
   width: 16px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-Share {
-  background-position: 0 -2109px;
+  background-position: 0 -2127px;
   height: 28px;
   width: 55px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-ShareDk {
-  background-position: 0 -2137px;
+  background-position: 0 -2155px;
   height: 28px;
   width: 24px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-SignOutDk {
-  background-position: 0 -2165px;
+  background-position: 0 -2183px;
   height: 60px;
   width: 61px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-TagDk {
-  background-position: 0 -2225px;
+  background-position: 0 -2243px;
   height: 23px;
   width: 23px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-TutorialDk {
-  background-position: 0 -2248px;
+  background-position: 0 -2266px;
   height: 60px;
   width: 63px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-TwitchDk {
-  background-position: 0 -2308px;
+  background-position: 0 -2326px;
   height: 44px;
   width: 44px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-TwitchImported {
-  background-position: 0 -2352px;
+  background-position: 0 -2370px;
   height: 44px;
   width: 44px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-TwitchLg {
-  background-position: 0 -2396px;
+  background-position: 0 -2414px;
   height: 60px;
   width: 60px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-Twitter {
-  background-position: 0 -2456px;
+  background-position: 0 -2474px;
   height: 16px;
   width: 16px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-TwitterDk {
-  background-position: 0 -2472px;
+  background-position: 0 -2490px;
   height: 44px;
   width: 44px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-TwitterFeedDk {
-  background-position: 0 -2516px;
+  background-position: 0 -2534px;
   height: 27px;
   width: 28px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-TwitterLg {
-  background-position: 0 -2543px;
+  background-position: 0 -2561px;
   height: 60px;
   width: 60px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-TwitterSm {
-  background-position: 0 -2603px;
+  background-position: 0 -2621px;
   height: 16px;
   width: 16px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-Unfaved {
-  background-position: 0 -2619px;
+  background-position: 0 -2637px;
   height: 17px;
   width: 18px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-Upload {
-  background-position: 0 -2636px;
+  background-position: 0 -2654px;
   height: 24px;
   width: 24px; }
 
@@ -5005,7 +5013,7 @@ input[type="submit"].btn {
   /* line 514, sass/components/_buttons.scss */
   #add-channel-submit:hover,
   #browse-by-game-submit:hover {
-    background-color: #079dd8; }
+    background-color: #079dd9; }
 
 /* line 519, sass/components/_buttons.scss */
 #browse-by-game-submit {
@@ -6039,9 +6047,11 @@ a.label:hover, a.badge:hover {
 .carousel-caption p {
   margin-bottom: 0; }
 
-/* line 608, sprite/images/*.png */
-.images-sprite, .images-AccountLt, .images-AddChannel, .images-AddChannelActive, .images-AddChannelSmLt, .images-AddLgLt, .images-AddSmDk, .images-ArrowBlRight, .images-ArrowDkRight, .images-ArrowDownSmLt, .images-ArrowInactive, .images-BlogLg, .images-BlogSubscribe, .images-BlogSubscribed, .images-Browse, .images-Calendar, .images-ChatLgDk, .images-ChatSmDk, .images-CheckmarkActive, .images-CheckmarkInactive, .images-CloseInactive, .images-CloseStream, .images-Collapse, .images-CreateNew, .images-Customize, .images-EditLt, .images-EmailLg, .images-Facebook, .images-FacebookDk, .images-FacebookLg, .images-FacebookSm, .images-Favd, .images-Favorites, .images-FeedbackDk, .images-HelpCenterDk, .images-Img, .images-ImportTwitch, .images-Mascot, .images-MascotSm, .images-MultiStreamSmActive, .images-MultiStreamSmDk, .images-MultiStreamSmInactive, .images-MultiStreamSmLt, .images-MultiStreams, .images-MuscleArm, .images-NowPlayingDk, .images-NowPlayingLg, .images-NowPlayingSm, .images-OpenActive, .images-RedditLg, .images-Remove, .images-SRGear, .images-SaveDk, .images-SaveLt, .images-Search, .images-SearchLgDk, .images-SearchSmLt, .images-Share, .images-ShareDk, .images-SignOutDk, .images-TagDk, .images-TutorialDk, .images-TwitchDk, .images-TwitchImported, .images-TwitchLg, .images-Twitter, .images-TwitterDk, .images-TwitterFeedDk, .images-TwitterLg, .images-TwitterSm, .images-Unfaved, .images-Upload, .view-staff-watching .staff .views-field-field-twitter-id a:before, .social-feed .item.tweet:before, .social-feed .item.facebook, body.node-type-blog .created:before, body.node-type-blog .author:before, body.node-type-blog .tags:before, .quicktabs-wrapper .handle:after, #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.now-playing:after, #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.add-channel:after, #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.browse:after, #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.favorites:after, #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.manage:after, .stream-wrapper.hover .image-overlay, .stream-wrapper .favorite, .stream-wrapper .remove, ul.register-icons li.twitter, ul.register-icons li.facebook, ul.register-icons li.twitch, ul.register-icons li.email {
-  background-image: url('../img/sprite/images-s7d72f33673.png');
+/* line 616, sprite/images/*.png */
+.images-sprite, .images-AccountLt, .images-AddChannel, .images-AddChannelActive, .images-AddChannelSmLt, .images-AddLgLt, .images-AddSmDk, .images-ArrowBlRight, .images-ArrowDkRight, .images-ArrowDownSmLt, .images-ArrowInactive, .images-BlogLg, .images-BlogSubscribe, .images-BlogSubscribed, .images-Browse, .images-Calendar, .images-ChatLgDk, .images-ChatSmDk, .images-CheckmarkActive, .images-CheckmarkInactive, .images-CloseInactive, .images-CloseStream, .images-Collapse, .images-CreateNew, .images-Customize, .images-EditLt, .images-EmailLg, .images-Facebook, .images-FacebookDk, .images-FacebookLg, .images-FacebookSm, .images-Favd, .images-Favorites, .images-FeedbackDk, .images-HelpCenterDk, .images-Img, .images-ImportTwitch, .images-LiveStreamSmDk, .images-Mascot, .images-MascotSm, .images-MultiStreamSmActive, .images-MultiStreamSmDk, .images-MultiStreamSmInactive, .images-MultiStreamSmLt, .images-MultiStreams, .images-MuscleArm, .images-NowPlayingDk, .images-NowPlayingLg, .images-NowPlayingSm, .images-OpenActive, .images-RedditLg, .images-Remove, .images-SRGear, .images-SaveDk, .images-SaveLt, .images-Search, .images-SearchLgDk, .images-SearchSmLt, .images-Share, .images-ShareDk, .images-SignOutDk, .images-TagDk, .images-TutorialDk, .images-TwitchDk, .images-TwitchImported, .images-TwitchLg, .images-Twitter, .images-TwitterDk, .images-TwitterFeedDk, .images-TwitterLg, .images-TwitterSm, .images-Unfaved, .images-Upload, .view-staff-watching .staff .views-field-field-twitter-id a:before, .social-feed .item.tweet:before, .social-feed .item.facebook, body.node-type-blog .created:before, body.node-type-blog .author:before, body.node-type-blog .tags:before, .quicktabs-wrapper .handle:after, #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.now-playing:after, #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.add-channel:after, #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.browse:after, #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.favorites:after, #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.manage:after, .stream-wrapper.hover .image-overlay, .stream-wrapper .flag-wrapper a.flag, .stream-wrapper .flag-wrapper a.flag:hover, .stream-wrapper .flag-wrapper a.flag.unflag-action, .stream-wrapper .remove, ul.register-icons li.twitter, ul.register-icons li.facebook, ul.register-icons li.twitch, ul.register-icons li.email, #manage-open:after, #manage-form fieldset .fieldset-legend, #manage-form fieldset.collapsed .fieldset-legend, #manage-form #edit-field-twitter:before, #manage-form #edit-field-facebook:before, #manage-form #edit-field-youtube:before, #manage-form #edit-field-reddit:before, #manage-form #edit-field-website:before, #manage-form #edit-field-google-plus:before, #manage-form #edit-field-twitter-feed:before, #manage-form .field-name-field-player-background .field-icon-wrapper .field-icon,
+#manage-form .field-name-field-cover .field-icon-wrapper .field-icon, #manage-form .field-name-field-player-background .image-widget .image-widget-data .remove-button,
+#manage-form .field-name-field-cover .image-widget .image-widget-data .remove-button, article.node-multistream.selection .content:before, article.node-multistream.selection:hover .content:before, #browse-filter-wrapper #browse-filter-options-wrapper ul#browse-filter-options li.multistreams:hover:before, #browse-filter-wrapper #browse-filter-options-wrapper ul#browse-filter-options li.multistreams:before, #browse-filter-wrapper #browse-filter-options-wrapper ul#browse-filter-options li.streams:before {
+  background-image: url('../img/sprite/images-s4d30e4340b.png');
   background-repeat: no-repeat; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
@@ -6261,212 +6271,218 @@ a.label:hover, a.badge:hover {
   width: 44px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
-.images-Mascot {
+.images-LiveStreamSmDk {
   background-position: 0 -1311px;
+  height: 18px;
+  width: 14px; }
+
+/* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+.images-Mascot {
+  background-position: 0 -1329px;
   height: 29px;
   width: 28px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-MascotSm {
-  background-position: 0 -1340px;
+  background-position: 0 -1358px;
   height: 24px;
   width: 25px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-MultiStreamSmActive {
-  background-position: 0 -1364px;
+  background-position: 0 -1382px;
   height: 19px;
   width: 19px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-MultiStreamSmDk {
-  background-position: 0 -1383px;
+  background-position: 0 -1401px;
   height: 19px;
   width: 20px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-MultiStreamSmInactive {
-  background-position: 0 -1402px;
+  background-position: 0 -1420px;
   height: 19px;
   width: 20px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-MultiStreamSmLt {
-  background-position: 0 -1421px;
+  background-position: 0 -1439px;
   height: 19px;
   width: 19px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-MultiStreams {
-  background-position: 0 -1440px;
+  background-position: 0 -1458px;
   height: 141px;
   width: 130px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-MuscleArm {
-  background-position: 0 -1581px;
+  background-position: 0 -1599px;
   height: 121px;
   width: 140px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-NowPlayingDk {
-  background-position: 0 -1702px;
+  background-position: 0 -1720px;
   height: 23px;
   width: 24px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-NowPlayingLg {
-  background-position: 0 -1725px;
+  background-position: 0 -1743px;
   height: 140px;
   width: 140px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-NowPlayingSm {
-  background-position: 0 -1865px;
+  background-position: 0 -1883px;
   height: 24px;
   width: 25px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-OpenActive {
-  background-position: 0 -1889px;
+  background-position: 0 -1907px;
   height: 18px;
   width: 25px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-RedditLg {
-  background-position: 0 -1907px;
+  background-position: 0 -1925px;
   height: 60px;
   width: 60px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-Remove {
-  background-position: 0 -1967px;
+  background-position: 0 -1985px;
   height: 16px;
   width: 16px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-SRGear {
-  background-position: 0 -1983px;
+  background-position: 0 -2001px;
   height: 24px;
   width: 24px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-SaveDk {
-  background-position: 0 -2007px;
+  background-position: 0 -2025px;
   height: 18px;
   width: 18px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-SaveLt {
-  background-position: 0 -2025px;
+  background-position: 0 -2043px;
   height: 21px;
   width: 21px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-Search {
-  background-position: 0 -2046px;
+  background-position: 0 -2064px;
   height: 24px;
   width: 25px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-SearchLgDk {
-  background-position: 0 -2070px;
+  background-position: 0 -2088px;
   height: 23px;
   width: 24px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-SearchSmLt {
-  background-position: 0 -2093px;
+  background-position: 0 -2111px;
   height: 16px;
   width: 16px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-Share {
-  background-position: 0 -2109px;
+  background-position: 0 -2127px;
   height: 28px;
   width: 55px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-ShareDk {
-  background-position: 0 -2137px;
+  background-position: 0 -2155px;
   height: 28px;
   width: 24px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-SignOutDk {
-  background-position: 0 -2165px;
+  background-position: 0 -2183px;
   height: 60px;
   width: 61px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-TagDk {
-  background-position: 0 -2225px;
+  background-position: 0 -2243px;
   height: 23px;
   width: 23px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-TutorialDk {
-  background-position: 0 -2248px;
+  background-position: 0 -2266px;
   height: 60px;
   width: 63px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-TwitchDk {
-  background-position: 0 -2308px;
+  background-position: 0 -2326px;
   height: 44px;
   width: 44px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-TwitchImported {
-  background-position: 0 -2352px;
+  background-position: 0 -2370px;
   height: 44px;
   width: 44px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-TwitchLg {
-  background-position: 0 -2396px;
+  background-position: 0 -2414px;
   height: 60px;
   width: 60px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-Twitter {
-  background-position: 0 -2456px;
+  background-position: 0 -2474px;
   height: 16px;
   width: 16px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-TwitterDk {
-  background-position: 0 -2472px;
+  background-position: 0 -2490px;
   height: 44px;
   width: 44px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-TwitterFeedDk {
-  background-position: 0 -2516px;
+  background-position: 0 -2534px;
   height: 27px;
   width: 28px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-TwitterLg {
-  background-position: 0 -2543px;
+  background-position: 0 -2561px;
   height: 60px;
   width: 60px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-TwitterSm {
-  background-position: 0 -2603px;
+  background-position: 0 -2621px;
   height: 16px;
   width: 16px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-Unfaved {
-  background-position: 0 -2619px;
+  background-position: 0 -2637px;
   height: 17px;
   width: 18px; }
 
 /* line 84, ../../../../../../../.rvm/gems/ruby-2.0.0-p353/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
 .images-Upload {
-  background-position: 0 -2636px;
+  background-position: 0 -2654px;
   height: 24px;
   width: 24px; }
 
@@ -6804,7 +6820,7 @@ ol li ol li {
     margin-bottom: 20px; }
     /* line 301, sass/components/_elements.scss */
     .embed .free-embed:hover, .embed .free-embed:focus {
-      background-color: #079dd8;
+      background-color: #079dd9;
       text-decoration: none; }
   /* line 307, sass/components/_elements.scss */
   .embed .amezing {
@@ -6929,7 +6945,7 @@ ol li ol li {
         display: block; }
     /* line 429, sass/components/_elements.scss */
     .login-blocks-menus li a:hover {
-      background-color: #079dd8;
+      background-color: #079dd9;
       color: white; }
       /* line 432, sass/components/_elements.scss */
       .login-blocks-menus li a:hover .icon-Logout {
@@ -6992,7 +7008,7 @@ ol li ol li {
 
 /* line 499, sass/components/_elements.scss */
 #edit-actions--2 #edit-submit--2:active, #edit-actions--2 #edit-submit--2:focus, #edit-actions--2 #edit-submit--2:hover, #edit-actions--2 #edit-submit--3:active, #edit-actions--2 #edit-submit--3:focus, #edit-actions--2 #edit-submit--3:hover, #edit-actions--2 #edit-submit:active, #edit-actions--2 #edit-submit:focus, #edit-actions--2 #edit-submit:hover, #edit-actions #edit-submit--2:active, #edit-actions #edit-submit--2:focus, #edit-actions #edit-submit--2:hover, #edit-actions #edit-submit--3:active, #edit-actions #edit-submit--3:focus, #edit-actions #edit-submit--3:hover, #edit-actions #edit-submit:active, #edit-actions #edit-submit:focus, #edit-actions #edit-submit:hover, #edit-actions--3 #edit-submit--2:active, #edit-actions--3 #edit-submit--2:focus, #edit-actions--3 #edit-submit--2:hover, #edit-actions--3 #edit-submit--3:active, #edit-actions--3 #edit-submit--3:focus, #edit-actions--3 #edit-submit--3:hover, #edit-actions--3 #edit-submit:active, #edit-actions--3 #edit-submit:focus, #edit-actions--3 #edit-submit:hover {
-  border: 1px solid #079dd8; }
+  border: 1px solid #079dd9; }
 
 /* line 504, sass/components/_elements.scss */
 .login-blocks #user-login-form .form-required {
@@ -7482,7 +7498,7 @@ ol li ol li {
 
 /* line 1039, sass/components/_elements.scss */
 ul.quicktabs-tabs.quicktabs-style-sky li.hover a:hover, ul.quicktabs-tabs.quicktabs-style-sky li.active a, ul.quicktabs-tabs.quicktabs-style-sky li.active a:visited, ul.quicktabs-tabs.quicktabs-style-sky li a:hover, ul.quicktabs-tabs.quicktabs-style-sky li.active a:hover {
-  background: #079dd8;
+  background: #079dd9;
   border: none;
   line-height: 33px; }
 
@@ -7491,7 +7507,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last.active a,
 ul.quicktabs-tabs.quicktabs-style-sky li.last a:hover,
 ul.quicktabs-tabs.quicktabs-style-sky li.last.active a:hover {
   background-image: url(../img/sprite/sprite.png);
-  background-color: #079dd8;
+  background-color: #079dd9;
   background-position: 8px -823px; }
 
 /* line 1051, sass/components/_elements.scss */
@@ -7827,7 +7843,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
           overflow: hidden; }
         /* line 1376, sass/components/_elements.scss */
         .front #main-content .Signup .signup-home .inner-signup .inner-signup-second:hover, .front #main-content .Signup .signup-home .inner-signup .inner-signup-second:focus, .front #main-content .Signup .signup-home .inner-signup .inner-signup-second:active, .front #main-content .Signup .signup-home .inner-signup .inner-signup-second .active, .front #main-content .Signup .signup-home .inner-signup .inner-signup-third:hover, .front #main-content .Signup .signup-home .inner-signup .inner-signup-third:focus, .front #main-content .Signup .signup-home .inner-signup .inner-signup-third:active, .front #main-content .Signup .signup-home .inner-signup .inner-signup-third .active, .front #main-content .Signup .signup-home .inner-signup .inner-signup-last:hover, .front #main-content .Signup .signup-home .inner-signup .inner-signup-last:focus, .front #main-content .Signup .signup-home .inner-signup .inner-signup-last:active, .front #main-content .Signup .signup-home .inner-signup .inner-signup-last .active, .front #main-content .Signup .signup-home .inner-signup .inner-signup-first:hover, .front #main-content .Signup .signup-home .inner-signup .inner-signup-first:focus, .front #main-content .Signup .signup-home .inner-signup .inner-signup-first:active, .front #main-content .Signup .signup-home .inner-signup .inner-signup-first .active {
-          background-color: #079dd8;
+          background-color: #079dd9;
           cursor: pointer; }
         /* line 1382, sass/components/_elements.scss */
         .front #main-content .Signup .signup-home .inner-signup .inner-signup-first {
@@ -7851,7 +7867,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
             display: none; }
           /* line 1401, sass/components/_elements.scss */
           .front #main-content .Signup .signup-home .inner-signup .inner-signup-second:hover {
-            background-color: #079dd8; }
+            background-color: #079dd9; }
           /* line 1404, sass/components/_elements.scss */
           .front #main-content .Signup .signup-home .inner-signup .inner-signup-second .sign-free {
             margin-bottom: 15px;
@@ -7864,7 +7880,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
           margin-left: 15px; }
           /* line 1414, sass/components/_elements.scss */
           .front #main-content .Signup .signup-home .inner-signup .inner-signup-third:hover {
-            background-color: #079dd8; }
+            background-color: #079dd9; }
         /* line 1418, sass/components/_elements.scss */
         .front #main-content .Signup .signup-home .inner-signup .inner-signup-last {
           float: left;
@@ -7873,7 +7889,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
           margin-left: 15px; }
           /* line 1423, sass/components/_elements.scss */
           .front #main-content .Signup .signup-home .inner-signup .inner-signup-last:hover {
-            background-color: #079dd8; }
+            background-color: #079dd9; }
         /* line 1427, sass/components/_elements.scss */
         .front #main-content .Signup .signup-home .inner-signup .sign-title {
           margin-bottom: 15px; }
@@ -9144,7 +9160,7 @@ p a {
 
 /* line 2671, sass/components/_elements.scss */
 .streamriots-inner:hover .stream-link span {
-  background-color: #079dd8; }
+  background-color: #079dd9; }
 
 /* line 2675, sass/components/_elements.scss */
 .inner-signup-last a {
@@ -9476,7 +9492,7 @@ p a {
     content: "";
     position: relative;
     float: left;
-    background-position: 0 -2603px;
+    background-position: 0 -2621px;
     height: 16px;
     width: 16px; }
 
@@ -9528,7 +9544,7 @@ p a {
     float: left; }
   /* line 3097, sass/components/_elements.scss */
   .social-feed .item.tweet:before {
-    background-position: 0 -2603px;
+    background-position: 0 -2621px;
     height: 16px;
     width: 16px; }
   /* line 3101, sass/components/_elements.scss */
@@ -9619,7 +9635,7 @@ body.node-type-blog .author:before {
   content: "";
   position: relative;
   float: left;
-  background-position: 0 -1340px;
+  background-position: 0 -1358px;
   height: 24px;
   width: 25px; }
 /* line 3213, sass/components/_elements.scss */
@@ -9628,7 +9644,7 @@ body.node-type-blog .tags:before {
   content: "";
   position: relative;
   float: left;
-  background-position: 0 -2225px;
+  background-position: 0 -2243px;
   height: 23px;
   width: 23px; }
 
@@ -9656,23 +9672,28 @@ body.node-type-blog .tags:before {
 /* line 3248, sass/components/_elements.scss */
 #mini-panel-player_menu h2,
 #mini-panel-player_menu h2.title,
-#mini-panel-player_menu h2.pane-title {
+#mini-panel-player_menu h2.pane-title,
+#mini-panel-player_menu .fieldset-title {
   text-transform: uppercase;
   font-size: 1.5em;
   font-weight: lighter;
   margin-bottom: .5em; }
-/* line 3257, sass/components/_elements.scss */
+/* line 3258, sass/components/_elements.scss */
 #mini-panel-player_menu .pane-quicktabs-player-menu {
   position: relative; }
-  /* line 3261, sass/components/_elements.scss */
+  /* line 3262, sass/components/_elements.scss */
   #mini-panel-player_menu .pane-quicktabs-player-menu > h2 {
     display: none; }
-  /* line 3264, sass/components/_elements.scss */
+  /* line 3265, sass/components/_elements.scss */
   #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu {
     display: table !important;
     min-height: 600px;
-    height: 95vh; }
-    /* line 3273, sass/components/_elements.scss */
+    height: 95vh;
+    position: relative; }
+    /* line 3271, sass/components/_elements.scss */
+    #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu .quicktabs-tabpage {
+      padding-left: 1em; }
+    /* line 3279, sass/components/_elements.scss */
     #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu.docked > ul.quicktabs-tabs li.hover:after {
       background: none repeat scroll 0 0 white;
       display: block;
@@ -9687,23 +9708,23 @@ body.node-type-blog .tags:before {
       vertical-align: top;
       width: 315px;
       z-index: 1000;
-      color: #079dd8; }
-    /* line 3289, sass/components/_elements.scss */
+      color: #079dd9; }
+    /* line 3295, sass/components/_elements.scss */
     #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu.docked > ul.quicktabs-tabs li.hover:nth-child(1):after {
       content: "Now Playing"; }
-    /* line 3290, sass/components/_elements.scss */
+    /* line 3296, sass/components/_elements.scss */
     #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu.docked > ul.quicktabs-tabs li.hover:nth-child(2):after {
       content: "Add Channel"; }
-    /* line 3291, sass/components/_elements.scss */
+    /* line 3297, sass/components/_elements.scss */
     #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu.docked > ul.quicktabs-tabs li.hover:nth-child(3):after {
       content: "Browse"; }
-    /* line 3292, sass/components/_elements.scss */
+    /* line 3298, sass/components/_elements.scss */
     #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu.docked > ul.quicktabs-tabs li.hover:nth-child(4):after {
       content: "Favorites"; }
-    /* line 3293, sass/components/_elements.scss */
+    /* line 3299, sass/components/_elements.scss */
     #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu.docked > ul.quicktabs-tabs li.hover:nth-child(5):after {
       content: "Manage"; }
-    /* line 3298, sass/components/_elements.scss */
+    /* line 3304, sass/components/_elements.scss */
     #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs {
       width: 56px;
       float: none;
@@ -9711,148 +9732,166 @@ body.node-type-blog .tags:before {
       display: table-cell;
       background-color: #3c4650;
       padding-top: 75px; }
-      /* line 3312, sass/components/_elements.scss */
+      /* line 3318, sass/components/_elements.scss */
       #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li {
         width: 56px;
         clear: both;
         position: relative;
         margin-bottom: 20px;
-        background-color: transparent; }
-        /* line 3321, sass/components/_elements.scss */
+        background-color: transparent;
+        display: block; }
+        /* line 3327, sass/components/_elements.scss */
         #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li.active a, #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a:hover {
-          background-color: #079dd8; }
-        /* line 3325, sass/components/_elements.scss */
+          background-color: #079dd9; }
+        /* line 3331, sass/components/_elements.scss */
         #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a {
           text-indent: -1000px;
           width: 100%;
           margin: auto;
           float: none;
           padding: 1em;
-          background-color: transparent; }
-          /* line 3334, sass/components/_elements.scss */
+          background-color: transparent;
+          display: block; }
+          /* line 3340, sass/components/_elements.scss */
           #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a:after {
             content: "";
             position: absolute;
             top: 15px;
             left: 15px; }
-          /* line 3340, sass/components/_elements.scss */
+          /* line 3346, sass/components/_elements.scss */
           #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.now-playing:after {
-            background-position: 0 -1865px;
+            background-position: 0 -1883px;
             height: 24px;
             width: 25px; }
-          /* line 3341, sass/components/_elements.scss */
+          /* line 3347, sass/components/_elements.scss */
           #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.add-channel:after {
             background-position: 0 -61px;
             height: 20px;
             width: 24px; }
-          /* line 3342, sass/components/_elements.scss */
+          /* line 3348, sass/components/_elements.scss */
           #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.browse:after {
-            background-position: 0 -2070px;
+            background-position: 0 -2088px;
             height: 23px;
             width: 24px; }
-          /* line 3343, sass/components/_elements.scss */
+          /* line 3349, sass/components/_elements.scss */
           #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.favorites:after {
             background-position: 0 -1101px;
             height: 24px;
             width: 24px; }
-          /* line 3344, sass/components/_elements.scss */
+          /* line 3350, sass/components/_elements.scss */
           #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li a.manage:after {
-            background-position: 0 -1983px;
+            background-position: 0 -2001px;
             height: 24px;
             width: 24px; }
-        /* line 3346, sass/components/_elements.scss */
+        /* line 3352, sass/components/_elements.scss */
         #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu > ul.quicktabs-tabs li.last a {
           background-image: none; }
-    /* line 3352, sass/components/_elements.scss */
+    /* line 3358, sass/components/_elements.scss */
     #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu #quicktabs-container-player_menu {
       clear: none;
       max-width: 324px;
       width: 324px;
       vertical-align: top;
-      display: table-cell;
-      padding-left: 1.25em; }
-      /* line 3363, sass/components/_elements.scss */
-      #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu #quicktabs-container-player_menu .quicktabs-tabpage {
-        max-width: 295px;
-        width: 295px;
-        min-width: 295px;
-        max-height: 95vh;
-        overflow-y: scroll; }
-      /* line 3372, sass/components/_elements.scss */
-      #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu #quicktabs-container-player_menu .quicktabs-hide {
-        display: none; }
-      /* line 3375, sass/components/_elements.scss */
+      display: table-cell; }
+      /* line 3370, sass/components/_elements.scss */
+      #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu #quicktabs-container-player_menu .panel-actions-wrapper.quicktabs-hide {
+        display: block; }
+      /* line 3373, sass/components/_elements.scss */
       #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu #quicktabs-container-player_menu .panel-pane {
         margin-right: 1em; }
-/* line 3382, sass/components/_elements.scss */
+    /* line 3378, sass/components/_elements.scss */
+    #mini-panel-player_menu .pane-quicktabs-player-menu #quicktabs-player_menu .minipanel-two-50-bottom {
+      float: none;
+      max-width: 295px;
+      width: 295px;
+      min-width: 295px;
+      max-height: 95vh;
+      min-height: 500px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      display: block; }
+/* line 3394, sass/components/_elements.scss */
 #mini-panel-player_menu ul.panel-actions {
   text-align: right;
   margin-right: 20px; }
-  /* line 3386, sass/components/_elements.scss */
+  /* line 3398, sass/components/_elements.scss */
   #mini-panel-player_menu ul.panel-actions li {
     display: inline;
     cursor: pointer; }
-    /* line 3390, sass/components/_elements.scss */
+    /* line 3402, sass/components/_elements.scss */
     #mini-panel-player_menu ul.panel-actions li:after {
       content: " | "; }
-    /* line 3395, sass/components/_elements.scss */
+    /* line 3407, sass/components/_elements.scss */
     #mini-panel-player_menu ul.panel-actions li:last-child:after {
       content: ""; }
+/* line 3414, sass/components/_elements.scss */
+#mini-panel-player_menu .minipanel-two-50-bottom {
+  position: relative;
+  top: 30px; }
 
-/* line 3404, sass/components/_elements.scss */
+/* line 3421, sass/components/_elements.scss */
 .stream-wrapper {
   border-bottom: solid 2px #e7e7e7;
   position: relative; }
-  /* line 3410, sass/components/_elements.scss */
+  /* line 3427, sass/components/_elements.scss */
   .stream-wrapper .stream-actions {
     background: white;
     width: 75%; }
-  /* line 3414, sass/components/_elements.scss */
+  /* line 3431, sass/components/_elements.scss */
   .stream-wrapper .image-wrapper {
     background-color: #aab4be; }
-  /* line 3418, sass/components/_elements.scss */
+  /* line 3435, sass/components/_elements.scss */
   .stream-wrapper.hover .stream-actions {
     display: block; }
-  /* line 3421, sass/components/_elements.scss */
+  /* line 3438, sass/components/_elements.scss */
   .stream-wrapper.hover .image {
     display: none; }
-  /* line 3424, sass/components/_elements.scss */
+  /* line 3441, sass/components/_elements.scss */
   .stream-wrapper.hover .image-wrapper {
-    background-color: #079dd8; }
-  /* line 3427, sass/components/_elements.scss */
+    background-color: #079dd9; }
+  /* line 3444, sass/components/_elements.scss */
   .stream-wrapper.hover .image-overlay {
     background-position: 0 -161px;
     height: 24px;
     width: 24px;
     top: 10px;
     left: 20px; }
-  /* line 3433, sass/components/_elements.scss */
+  /* line 3450, sass/components/_elements.scss */
   .stream-wrapper ul.add-to-player {
     margin-top: 10px;
     margin-left: 5px; }
-    /* line 3436, sass/components/_elements.scss */
+    /* line 3454, sass/components/_elements.scss */
     .stream-wrapper ul.add-to-player li {
       display: inline-block;
       font-size: 1.5em;
       font-weight: lighter;
       margin: 0 .25em;
       cursor: pointer; }
-      /* line 3443, sass/components/_elements.scss */
+      /* line 3461, sass/components/_elements.scss */
       .stream-wrapper ul.add-to-player li:hover {
-        color: #079dd8;
+        color: #079dd9;
         font-weight: bold; }
-  /* line 3450, sass/components/_elements.scss */
-  .stream-wrapper .favorite {
-    background-position: 0 -2619px;
-    height: 17px;
-    width: 18px;
+  /* line 3467, sass/components/_elements.scss */
+  .stream-wrapper .flag-wrapper {
     position: absolute;
     top: 0;
-    right: 10px;
-    cursor: pointer; }
-  /* line 3458, sass/components/_elements.scss */
+    right: 10px; }
+    /* line 3471, sass/components/_elements.scss */
+    .stream-wrapper .flag-wrapper a.flag {
+      text-indent: -1000px;
+      background-position: 0 -2637px;
+      height: 17px;
+      width: 18px;
+      cursor: pointer;
+      display: block; }
+      /* line 3476, sass/components/_elements.scss */
+      .stream-wrapper .flag-wrapper a.flag:hover, .stream-wrapper .flag-wrapper a.flag.unflag-action {
+        background-position: 0 -1085px;
+        height: 16px;
+        width: 16px; }
+  /* line 3482, sass/components/_elements.scss */
   .stream-wrapper .remove {
-    background-position: 0 -1967px;
+    background-position: 0 -1985px;
     height: 16px;
     width: 16px;
     position: absolute;
@@ -9860,10 +9899,10 @@ body.node-type-blog .tags:before {
     right: 10px;
     cursor: pointer; }
 
-/* line 3475, sass/components/_elements.scss */
+/* line 3499, sass/components/_elements.scss */
 #now-playing .stream-wrapper .image-wrapper img {
   display: none; }
-/* line 3481, sass/components/_elements.scss */
+/* line 3505, sass/components/_elements.scss */
 #now-playing .stream-wrapper .image:after {
   color: white;
   display: block;
@@ -9871,46 +9910,393 @@ body.node-type-blog .tags:before {
   padding-top: 0.5em;
   text-align: center;
   vertical-align: middle; }
-/* line 3490, sass/components/_elements.scss */
+/* line 3514, sass/components/_elements.scss */
 #now-playing .stream-wrapper:nth-child(1) .image:after {
   content: "1"; }
-/* line 3491, sass/components/_elements.scss */
+/* line 3515, sass/components/_elements.scss */
 #now-playing .stream-wrapper:nth-child(2) .image:after {
   content: "2"; }
-/* line 3492, sass/components/_elements.scss */
+/* line 3516, sass/components/_elements.scss */
 #now-playing .stream-wrapper:nth-child(3) .image:after {
   content: "3"; }
-/* line 3493, sass/components/_elements.scss */
+/* line 3517, sass/components/_elements.scss */
 #now-playing .stream-wrapper:nth-child(4) .image:after {
   content: "4"; }
-/* line 3494, sass/components/_elements.scss */
+/* line 3518, sass/components/_elements.scss */
 #now-playing .stream-wrapper:nth-child(5) .image:after {
   content: "5"; }
 
-/* line 3500, sass/components/_elements.scss */
+/* line 3524, sass/components/_elements.scss */
 ul.register-icons li {
   list-style: none;
   display: inline-block;
   cursor: pointer; }
-  /* line 3507, sass/components/_elements.scss */
+  /* line 3531, sass/components/_elements.scss */
   ul.register-icons li.twitter {
-    background-position: 0 -2543px;
+    background-position: 0 -2561px;
     height: 60px;
     width: 60px; }
-  /* line 3508, sass/components/_elements.scss */
+  /* line 3532, sass/components/_elements.scss */
   ul.register-icons li.facebook {
     background-position: 0 -1009px;
     height: 60px;
     width: 60px; }
-  /* line 3509, sass/components/_elements.scss */
+  /* line 3533, sass/components/_elements.scss */
   ul.register-icons li.twitch {
-    background-position: 0 -2396px;
+    background-position: 0 -2414px;
     height: 60px;
     width: 60px; }
-  /* line 3510, sass/components/_elements.scss */
+  /* line 3534, sass/components/_elements.scss */
   ul.register-icons li.email {
     background-position: 0 -889px;
     height: 60px;
     width: 60px; }
+
+/* line 3538, sass/components/_elements.scss */
+#manage-open {
+  background-color: #a0aab4;
+  padding: 1em;
+  color: white;
+  display: inline-block;
+  width: 100%; }
+  /* line 3546, sass/components/_elements.scss */
+  #manage-open:after {
+    background-position: 0 -251px;
+    height: 24px;
+    width: 24px;
+    content: "";
+    display: inline-block;
+    float: right;
+    margin-top: -2px; }
+
+/* line 3555, sass/components/_elements.scss */
+#manage-selection,
+.panel-actions-popup li.open {
+  top: 50px;
+  background-color: #f8f8f8; }
+  /* line 3560, sass/components/_elements.scss */
+  #manage-selection article,
+  .panel-actions-popup li.open article {
+    background: transparent; }
+    /* line 3563, sass/components/_elements.scss */
+    #manage-selection article:hover,
+    .panel-actions-popup li.open article:hover {
+      background-color: #079dd9;
+      color: white; }
+
+/* line 3572, sass/components/_elements.scss */
+#manage-form fieldset {
+  border: none;
+  padding: 0; }
+  /* line 3575, sass/components/_elements.scss */
+  #manage-form fieldset legend {
+    margin-bottom: 1em; }
+  /* line 3581, sass/components/_elements.scss */
+  #manage-form fieldset .fieldset-legend {
+    background-position: 0 -202px;
+    height: 24px;
+    width: 24px;
+    padding-left: 35px;
+    width: 100%; }
+  /* line 3588, sass/components/_elements.scss */
+  #manage-form fieldset.collapsed .fieldset-legend {
+    background-position: 0 -226px;
+    height: 25px;
+    width: 24px;
+    width: 100%; }
+  /* line 3592, sass/components/_elements.scss */
+  #manage-form fieldset.collapsed .fieldset-title {
+    color: #3c4650; }
+/* line 3600, sass/components/_elements.scss */
+#manage-form fieldset.social-media .form-wrapper {
+  display: block; }
+  /* line 3603, sass/components/_elements.scss */
+  #manage-form fieldset.social-media .form-wrapper:before {
+    display: inline-block;
+    content: "";
+    vertical-align: top; }
+  /* line 3609, sass/components/_elements.scss */
+  #manage-form fieldset.social-media .form-wrapper > div {
+    display: inline-block;
+    margin-left: 1em;
+    width: 200px; }
+    /* line 3614, sass/components/_elements.scss */
+    #manage-form fieldset.social-media .form-wrapper > div > div {
+      float: left; }
+    /* line 3618, sass/components/_elements.scss */
+    #manage-form fieldset.social-media .form-wrapper > div .btn {
+      float: right;
+      background-color: #64be00;
+      background-image: none;
+      border-radius: 0;
+      border: none;
+      color: white;
+      text-shadow: none;
+      border-shadow: none;
+      padding: 5px 20px;
+      font-size: 8pt;
+      margin-top: -15px; }
+  /* line 3634, sass/components/_elements.scss */
+  #manage-form fieldset.social-media .form-wrapper label {
+    display: block;
+    font-weight: normal; }
+  /* line 3639, sass/components/_elements.scss */
+  #manage-form fieldset.social-media .form-wrapper input[type="text"] {
+    height: 24px;
+    padding: 0; }
+  /* line 3644, sass/components/_elements.scss */
+  #manage-form fieldset.social-media .form-wrapper input[disabled],
+  #manage-form fieldset.social-media .form-wrapper textarea[disabled] {
+    color: #ff0050;
+    background: white;
+    border: none;
+    font-style: italic; }
+  /* line 3651, sass/components/_elements.scss */
+  #manage-form fieldset.social-media .form-wrapper label[for="edit-field-website-und-0-url"] {
+    display: none; }
+/* line 3656, sass/components/_elements.scss */
+#manage-form #edit-field-twitter:before {
+  background-position: 0 -2490px;
+  height: 44px;
+  width: 44px; }
+/* line 3657, sass/components/_elements.scss */
+#manage-form #edit-field-facebook:before {
+  background-position: 0 -965px;
+  height: 44px;
+  width: 44px; }
+/* line 3658, sass/components/_elements.scss */
+#manage-form #edit-field-youtube:before {
+  background-position: 0 -2490px;
+  height: 44px;
+  width: 44px; }
+/* line 3659, sass/components/_elements.scss */
+#manage-form #edit-field-reddit:before {
+  background-position: 0 -2490px;
+  height: 44px;
+  width: 44px; }
+/* line 3660, sass/components/_elements.scss */
+#manage-form #edit-field-website:before {
+  background-position: 0 -2490px;
+  height: 44px;
+  width: 44px; }
+/* line 3661, sass/components/_elements.scss */
+#manage-form #edit-field-google-plus:before {
+  background-position: 0 -2490px;
+  height: 44px;
+  width: 44px; }
+/* line 3662, sass/components/_elements.scss */
+#manage-form #edit-field-twitter-feed:before {
+  background-position: 0 -2490px;
+  height: 44px;
+  width: 44px; }
+/* line 3665, sass/components/_elements.scss */
+#manage-form .field-name-field-stream-image {
+  display: none; }
+/* line 3666, sass/components/_elements.scss */
+#manage-form .field-name-field-player-background,
+#manage-form .field-name-field-cover {
+  position: relative;
+  margin-bottom: 1em; }
+  /* line 3670, sass/components/_elements.scss */
+  #manage-form .field-name-field-player-background .field-icon-wrapper,
+  #manage-form .field-name-field-cover .field-icon-wrapper {
+    background-color: #a0aab4;
+    width: 66px;
+    height: 46px;
+    float: left;
+    margin-right: 1em;
+    cursor: pointer; }
+    /* line 3677, sass/components/_elements.scss */
+    #manage-form .field-name-field-player-background .field-icon-wrapper:hover,
+    #manage-form .field-name-field-cover .field-icon-wrapper:hover {
+      background-color: #079dd9; }
+    /* line 3680, sass/components/_elements.scss */
+    #manage-form .field-name-field-player-background .field-icon-wrapper .field-icon,
+    #manage-form .field-name-field-cover .field-icon-wrapper .field-icon {
+      background-position: 0 -1245px;
+      height: 22px;
+      width: 25px;
+      position: absolute;
+      top: 10px;
+      left: 20px; }
+  /* line 3687, sass/components/_elements.scss */
+  #manage-form .field-name-field-player-background label,
+  #manage-form .field-name-field-cover label {
+    position: absolute;
+    top: 0;
+    left: 75px; }
+  /* line 3692, sass/components/_elements.scss */
+  #manage-form .field-name-field-player-background small,
+  #manage-form .field-name-field-cover small {
+    position: absolute;
+    top: 25px;
+    left: 75px; }
+  /* line 3698, sass/components/_elements.scss */
+  #manage-form .field-name-field-player-background .image-widget .image-preview,
+  #manage-form .field-name-field-cover .image-widget .image-preview {
+    position: absolute; }
+  /* line 3703, sass/components/_elements.scss */
+  #manage-form .field-name-field-player-background .image-widget .image-widget-data .file,
+  #manage-form .field-name-field-player-background .image-widget .image-widget-data .file-size,
+  #manage-form .field-name-field-player-background .image-widget .image-widget-data .upload,
+  #manage-form .field-name-field-player-background .image-widget .image-widget-data .upload-button,
+  #manage-form .field-name-field-cover .image-widget .image-widget-data .file,
+  #manage-form .field-name-field-cover .image-widget .image-widget-data .file-size,
+  #manage-form .field-name-field-cover .image-widget .image-widget-data .upload,
+  #manage-form .field-name-field-cover .image-widget .image-widget-data .upload-button {
+    display: none; }
+  /* line 3710, sass/components/_elements.scss */
+  #manage-form .field-name-field-player-background .image-widget .image-widget-data .remove-button,
+  #manage-form .field-name-field-cover .image-widget .image-widget-data .remove-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    text-indent: -1000px;
+    padding: 0;
+    background-position: 0 -1985px;
+    height: 16px;
+    width: 16px;
+    background-color: transparent;
+    border: none; }
+/* line 3729, sass/components/_elements.scss */
+#manage-form fieldset.more-settings label {
+  display: block; }
+/* line 3733, sass/components/_elements.scss */
+#manage-form fieldset.more-settings #edit-field-event-dates,
+#manage-form fieldset.more-settings #edit-body,
+#manage-form fieldset.more-settings #edit-field-game-category,
+#manage-form fieldset.more-settings #edit-field-stream-category,
+#manage-form fieldset.more-settings #edit-body-und-0-format {
+  display: none; }
+/* line 3743, sass/components/_elements.scss */
+#manage-form .vertical-tabs-panes {
+  display: none; }
+
+/* line 3748, sass/components/_elements.scss */
+article.node-multistream.selection {
+  padding: 0;
+  min-height: 40px; }
+  /* line 3752, sass/components/_elements.scss */
+  article.node-multistream.selection .content {
+    margin-left: 40px;
+    font-weight: bold; }
+    /* line 3755, sass/components/_elements.scss */
+    article.node-multistream.selection .content:before {
+      background-position: 0 -1401px;
+      height: 19px;
+      width: 20px;
+      content: "";
+      display: inline-block;
+      margin-left: -30px;
+      margin-right: 5px;
+      position: relative;
+      top: 10px;
+      vertical-align: top; }
+    /* line 3765, sass/components/_elements.scss */
+    article.node-multistream.selection .content a {
+      min-height: 40px;
+      display: inline-block;
+      width: 100%; }
+  /* line 3774, sass/components/_elements.scss */
+  article.node-multistream.selection:hover .content:before {
+    background-position: 0 -1439px;
+    height: 19px;
+    width: 19px; }
+
+/* line 3782, sass/components/_elements.scss */
+#now-playing .stream-wrapper:nth-child(1) .stream-actions .add-1:hover {
+  color: #a0aab4;
+  cursor: default; }
+
+/* line 3783, sass/components/_elements.scss */
+#now-playing .stream-wrapper:nth-child(2) .stream-actions .add-2:hover {
+  color: #a0aab4;
+  cursor: default; }
+
+/* line 3784, sass/components/_elements.scss */
+#now-playing .stream-wrapper:nth-child(3) .stream-actions .add-3:hover {
+  color: #a0aab4;
+  cursor: default; }
+
+/* line 3785, sass/components/_elements.scss */
+#now-playing .stream-wrapper:nth-child(4) .stream-actions .add-4:hover {
+  color: #a0aab4;
+  cursor: default; }
+
+/* line 3786, sass/components/_elements.scss */
+#now-playing .stream-wrapper:nth-child(5) .stream-actions .add-5:hover {
+  color: #a0aab4;
+  cursor: default; }
+
+/* line 3787, sass/components/_elements.scss */
+#queue .stream-wrapper .stream-actions .add-q:hover {
+  color: #a0aab4;
+  cursor: default; }
+
+/* line 3789, sass/components/_elements.scss */
+#browse-filter-wrapper {
+  position: relative; }
+  /* line 3792, sass/components/_elements.scss */
+  #browse-filter-wrapper #browse-filter-button {
+    display: block;
+    position: absolute;
+    right: 0px;
+    top: 0;
+    background-color: #3c4650;
+    padding: 5px 15px;
+    color: white;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 8pt; }
+    /* line 3804, sass/components/_elements.scss */
+    #browse-filter-wrapper #browse-filter-button:hover, #browse-filter-wrapper #browse-filter-button.active {
+      background-color: #079dd9; }
+  /* line 3809, sass/components/_elements.scss */
+  #browse-filter-wrapper #browse-filter-options-wrapper {
+    position: absolute;
+    top: 35px;
+    right: 0px;
+    width: 250px;
+    z-index: 1000;
+    background-color: #e6e6e6; }
+    /* line 3817, sass/components/_elements.scss */
+    #browse-filter-wrapper #browse-filter-options-wrapper > div {
+      line-height: 4em;
+      margin-left: 2em; }
+    /* line 3822, sass/components/_elements.scss */
+    #browse-filter-wrapper #browse-filter-options-wrapper ul#browse-filter-options {
+      margin-left: 0; }
+      /* line 3825, sass/components/_elements.scss */
+      #browse-filter-wrapper #browse-filter-options-wrapper ul#browse-filter-options li {
+        cursor: pointer;
+        list-style: none;
+        line-height: 4em; }
+        /* line 3829, sass/components/_elements.scss */
+        #browse-filter-wrapper #browse-filter-options-wrapper ul#browse-filter-options li:before {
+          content: "";
+          display: block;
+          float: left;
+          margin-top: 1em;
+          margin-left: 2em;
+          margin-right: 1em; }
+        /* line 3837, sass/components/_elements.scss */
+        #browse-filter-wrapper #browse-filter-options-wrapper ul#browse-filter-options li:hover {
+          background-color: #079dd9;
+          color: white; }
+        /* line 3842, sass/components/_elements.scss */
+        #browse-filter-wrapper #browse-filter-options-wrapper ul#browse-filter-options li.multistreams:hover:before {
+          background-position: 0 -1439px;
+          height: 19px;
+          width: 19px; }
+        /* line 3846, sass/components/_elements.scss */
+        #browse-filter-wrapper #browse-filter-options-wrapper ul#browse-filter-options li.multistreams:before {
+          background-position: 0 -1401px;
+          height: 19px;
+          width: 20px; }
+        /* line 3850, sass/components/_elements.scss */
+        #browse-filter-wrapper #browse-filter-options-wrapper ul#browse-filter-options li.streams:before {
+          background-position: 0 -1311px;
+          height: 18px;
+          width: 14px; }
 
 /* ---------------------------------------------------------------------------------------- */

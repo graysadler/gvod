@@ -365,6 +365,9 @@ class Stream extends Entity {
     return array('path' => 'stream/' . $this->stream_id);
   } 
   
+  public function uri() {
+    return '';
+  }
 }
 
 /**
@@ -438,10 +441,15 @@ class StreamController extends EntityAPIController {
     //viewers
     $content['viewers'] = '<div class="viewers">' . number_format($entity->viewers, 0) . '</div>';
     //fav
+    $content['favorite'] = flag_create_link('stream_favs', $entity->stream_id);
     
     //remove
 
     return $content;
+  }
+  
+  public function uri() {
+    return '';
   }
   
 }
