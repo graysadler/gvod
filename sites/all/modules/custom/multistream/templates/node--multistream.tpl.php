@@ -17,8 +17,12 @@ hide($content['links']);
 <article <?php print $id_node . $classes .  $attributes; ?> role="article">
   <?php print $mothership_poorthemers_helper; ?>
 
-  <div class="content">
-    <?php print render($content);?>
-  </div>
+  <?php print render($content);?>
 
 </article>
+
+<?php 
+if($page) {
+  $tst = 'test';
+}
+?>

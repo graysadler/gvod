@@ -152,30 +152,27 @@ function multistream_default_panels_mini() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-3cb7793f-7952-4945-888a-468f74b7e293';
+    $pane->pid = 'new-c3bdbbe3-8f90-46fd-b840-dbc7e46ab420';
     $pane->panel = 'minipanel_two_50_bottom';
     $pane->type = 'block';
-    $pane->subtype = 'views-games-block';
+    $pane->subtype = 'multistream-multistream_browse_results';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'override_title' => 0,
+      'override_title' => 1,
       'override_title_text' => '',
     );
     $pane->cache = array();
     $pane->style = array(
       'settings' => NULL,
     );
-    $pane->css = array(
-      'css_id' => 'browse-results',
-      'css_class' => '',
-    );
+    $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = '3cb7793f-7952-4945-888a-468f74b7e293';
-    $display->content['new-3cb7793f-7952-4945-888a-468f74b7e293'] = $pane;
-    $display->panels['minipanel_two_50_bottom'][0] = 'new-3cb7793f-7952-4945-888a-468f74b7e293';
+    $pane->uuid = 'c3bdbbe3-8f90-46fd-b840-dbc7e46ab420';
+    $display->content['new-c3bdbbe3-8f90-46fd-b840-dbc7e46ab420'] = $pane;
+    $display->panels['minipanel_two_50_bottom'][0] = 'new-c3bdbbe3-8f90-46fd-b840-dbc7e46ab420';
     $pane = new stdClass();
     $pane->pid = 'new-92a3fa92-1305-4f2e-9dcd-c53de26dea1a';
     $pane->panel = 'minipanel_two_50_top';

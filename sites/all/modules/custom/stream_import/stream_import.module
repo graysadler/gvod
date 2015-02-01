@@ -40,6 +40,45 @@ function time_diff($t1, $t2) {
 	return "Seconds: $secs - Minutes: $mins";
 }
 
+/**
+ * Import a single twitch channel
+ * @param $channel the channel name
+ * 
+ * returns a stream object
+ */
+function stream_import_twitch_stream($channel) {
+  // Check if stream exists
+  if(!$stream = stream_load_stream_by_channel($channel)) {
+    // If not, import it
+    $headers = array('Accept: application/vnd.twitchtv.v3+json');
+    $json = _curl_get('https://api.twitch.tv/kraken/streams/'.$channel, $headers);
+    
+    $parsed = json_decode($json, true);
+    if(!array_key_exists('stream', $parsed)) {
+      return false;
+    }
+    $item = $parsed['stream'];
+    $stream = new Stream();
+    
+    $stream->channel 	= $channel;
+    $stream->thumbnai = $item ? $item['channel']['logo'] : '';
+    $stream->screencap = $item ? $item['preview']['medium'] : '';
+    $stream->url = $item ? $item['channel']['url'] : '';
+    $stream->viewers = $item ? $item['viewers'] : '';
+    $stream->is_live = $item ? true : false;
+    $stream->category	= 1;
+    $stream->provider	= 1;
+    $stream->created = $now;
+    $stream->changed = $now;
+  
+    $stream->save();
+
+  } 
+  
+  // Return the stream object
+  return $stream;
+}
+
 function stream_import_get_twitch_streams() {
 	//$vocab = taxonomy_vocabulary_machine_name_load('stream_category');
 	//$provider_vocab = taxonomy_vocabulary_machine_name_load('provider');

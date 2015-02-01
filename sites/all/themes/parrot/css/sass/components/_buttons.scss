@@ -1,8 +1,3 @@
-@import "compass/utilities/sprites";
-$images-sprite-dimensions: true;
-@import "sprite/images/*.png";
-@include all-images-sprites;
-
 // Panels IPE Fix.
 
 input.panels-ipe-save,

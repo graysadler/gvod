@@ -18,7 +18,7 @@
 }
 #manage-form #field-streams-values input,
 #manage-form #field-streams-values select, 
-#manage-form #field-streams-add-more-wrapper  { display: none; }
+#manage-form div[id*="field-streams-add-more-wrapper"]  { display: none!important; }
 
 .panel-actions-wrapper {
   position: absolute;
@@ -45,4 +45,20 @@
   opacity: .5;
   position: absolute;
   z-index: 100;
+  pointer-events: auto;
 }
+
+.multistream-owner #mini-panel-player_menu ul.panel-actions li.fav {
+  display: none;
+}
+
+body:not(.anon) .panel-actions .save {
+  display: none!important;
+}
+body:not(.anon) .multistream-owner .panel-actions .save {
+  display: inline!important;
+}
+
+label[for*="edit-add-stream"] { display: block; }
+
+div[id*="edit-field-streams"] .flag-stream-favs { display: none; }

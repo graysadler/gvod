@@ -7,6 +7,7 @@
 include_once 'multistream.features.inc';
 
 define('PLAYER_MAX_DEFAULT', 4);
+define('PLAYER_MAX_NOW_PLAYING', 5);
 
 function multistream_menu() {
 	$items['multistream'] = array(
@@ -48,14 +49,56 @@ function multistream_menu() {
 	    'access arguments' => array('access content'),
 	    'type' => MENU_CALLBACK,
 	);	
-		
+	$items['multistream/stream-autocomplete'] = array(
+	    'title' => 'Add Stream Autocomplete',
+	    'page callback' => 'multistream_autocomplete_stream',
+	    'access arguments' => array('access content'),
+	    'type' => MENU_CALLBACK,
+	);
+	$items['multistream/update-streams'] = array(
+	    'title' => 'Update Stream',
+	    'page callback' => 'multistream_ajax_update_streams',
+	    'access arguments' => array('access content'),
+	    'type' => MENU_CALLBACK,
+	);			
 	return $items; 
 }
 
-function multistream_view_multistream($context, $streams = array(), $streams_collapsed = false, $chat_collapsed = false) {
-	drupal_add_library('system', 'drupal.ajax');
-	drupal_add_library('system', 'effects.blind');
+function multistream_ajax_update_streams() {
+  global $user;
+  
+  $values = $_POST;
+  
+  if(!$node = node_load($values['nid'])) {
+    return;
+  }
+  
+  if($node->type != 'multistream') {
+    return;
+  }
+  
+  if(!node_access('update', $node)) {
+    return false;
+  }
+  
+  $node->field_streams['und'] = array();
+  
+  foreach($values['streams'] as $stream) {
+    if(!is_numeric($stream['stream_id'])) {
+      continue;
+    }
+    $node->field_streams['und'][]['target_id'] = $stream['stream_id'];  
+  }
+  node_save($node);
+  return true;
+}
 
+function multistream_view_multistream($context, $streams = array(), $node = null, $streams_collapsed = false, $chat_collapsed = false) {
+	drupal_add_library('system', 'drupal.ajax');
+	drupal_add_library('system', 'drupal.autocomplete');
+	drupal_add_library('system', 'effects.blind');
+	drupal_add_library('system', 'ui.sortable');
+	
 	drupal_add_css(drupal_get_path('module', 'stream').'/css/stream.css');
 	drupal_add_js(drupal_get_path('module', 'stream').'/js/stream.js');
 
@@ -74,13 +117,16 @@ function multistream_view_multistream($context, $streams = array(), $streams_col
 			// Streams will come from the path
 			// Get args and loop through each to load
 			$streams = multistream_get_streams_from_url();
-			dpm($streams);
+
 			break;
 		case 'riot':
 			// Streams will be passed through the $streams array	
 			break;
 	}
 	
+	// Order the streams
+	$streams = multistream_sort_riot_streams($streams);
+		
 	multistream_cache_streams($streams);
 	
 	$vars['streams'] = $streams;
@@ -89,11 +135,21 @@ function multistream_view_multistream($context, $streams = array(), $streams_col
 	$player_menu = module_invoke('panels_mini', 'block_view', 'player_menu');
 	$vars['player_menu'] = $player_menu['content'];
 	
-	//$vars['social_menu'] = quicktabs_block_view('social_menu');
+	$social_menu = module_invoke('panels_mini', 'block_view', 'social_menu');
+	$vars['social_menu'] = $social_menu['content'];
 	
-
 	$vars['riot'] = multistream_view_player($streams);
+
+	$vars['background'] = '';
 	
+	if($node) {
+	  $background = field_view_field('node', $node, 'field_player_background', 'full');
+	  $background[0]['#item']['height'] = null;
+	  $background = field_get_items('node', $node, 'field_player_background');
+	  if(count($background)) {
+	    $vars['background'] = file_create_url($background[0]['uri']);
+	  }
+	}
 	return theme('multistream_view_multistream', $vars);
 }
 
@@ -114,7 +170,7 @@ function multistream_get_streams_from_url() {
 	array_shift($args);
 	
 	foreach($args as $channel) {
-		if(!$stream = stream_load_stream_by_channel(null, $channel)) {
+		if(!$stream = stream_load_stream_by_channel($channel)) {
 			continue;
 		}
 		
@@ -138,7 +194,8 @@ function multistream_cache_streams($cache = array()) {
 function multistream_view_player($streams) {
 	global $base_url;
 	global $conf;
-
+	$settings = array();
+	
 	if(!is_array($streams)) {
 		$streams = array();
 	}
@@ -149,18 +206,36 @@ function multistream_view_player($streams) {
 	$width = 836 * $scale;
 	$height = 600;
 	$width = 570;
-	if(!$conf['disable_riot_player']) {
+	if(!variable_get('disable_riot_player', 1)) {
 		drupal_add_js(drupal_get_path('module', 'multistream').'/lib/swfobject/src/swfobject.js');
 		$script = 'var flashvars = {};var params = {allowScriptAccess: "always", allowFullScreen: "true", allowNetworking: "all", wmode: "transparent"};var attributes = {};';
 		$script .= 'swfobject.embedSWF("'.$player.'", "riot-player", "'.$width.'", "'.$height.'", "9.0.0", "expressInstall.swf", flashvars, params, attributes)';
+		$settings['multistream']['debug'] = false;
+	} else {
+	  $settings['multistream']['debug'] = true;
 	}
 
 	$count = 0;
-	$settings = array();
 
+
+	for($i=1;$i<=PLAYER_MAX_NOW_PLAYING;$i++) {
+	  $settings['multistream']['stream_pos'][$i] = '';	  
+	}
+	$settings['multistream']['streams'] = array();
+	$settings['multistream']['updated'] = false;
+	
 	foreach($streams as $key => $stream) {
 		$count++;
-		$settings['multistream']['streams'][$stream->stream_id] = stream_get_stream_settings($stream, $key);
+		
+		if($count <= PLAYER_MAX_DEFAULT) {
+		  $pos = $count;
+  		$settings['multistream']['stream_pos'][$count] = $stream->stream_id;
+		} else {
+		  $pos = 'q';		   
+		}
+		
+		$settings['multistream']['streams'][$stream->stream_id] = stream_get_stream_settings($stream, $pos);
+		
 	}
 
 	$default_num = $count <= PLAYER_MAX_DEFAULT ? $count : PLAYER_MAX_DEFAULT;
@@ -184,6 +259,12 @@ function multistream_block_info() {
 			'cache' => DRUPAL_CACHE_GLOBAL,
 	);
 
+	$blocks['multistream_browse_results'] = array(
+	    'info' => t('Browse Results'),
+	    'cache' => DRUPAL_CACHE_GLOBAL,
+	);
+	
+	
 	$blocks['multistream_manage'] = array(
 			'info' => t('Multistream Manage'),
 			'cache' => DRUPAL_NO_CACHE,
@@ -193,12 +274,25 @@ function multistream_block_info() {
 			'info' => t('Multistream Add Channel'),
 			'cache' => DRUPAL_CACHE_GLOBAL,
 	);
-	
+
 	$blocks['multistream_panel_actions'] = array(
 	    'info' => t('Multistream Panel Actions'),
 	    'cache' => DRUPAL_CACHE_GLOBAL,
 	);
-	
+
+	$blocks['multistream_panel_actions_anon'] = array(
+	    'info' => t('Multistream Panel Actions Anon'),
+	    'cache' => DRUPAL_CACHE_GLOBAL,
+	);
+	$blocks['multistream_twitter_feed'] = array(
+	    'info' => t('Multistream Twitter Feed'),
+	    'cache' => DRUPAL_CACHE_GLOBAL,
+	);	
+
+	$blocks['multistream_chat'] = array(
+	    'info' => t('Multistream Chat'),
+	    'cache' => DRUPAL_CACHE_GLOBAL,
+	);	
 	return $blocks;
 }
 
@@ -211,9 +305,6 @@ function multistream_block_view($delta = '') {
 			// Grab the streams from static cache that's loaded in
 			// multistream_view_player()
 			$streams = multistream_cache_streams();
-			
-			// Order the streams
-			$streams = multistream_sort_riot_streams($streams);
 			
 			//drupal_add_js('misc/jquery.form.js');
 			drupal_add_library('system', 'drupal.ajax');
@@ -238,14 +329,18 @@ function multistream_block_view($delta = '') {
 			$block['content'] = drupal_render(drupal_get_form('multistream_form_add_channel'));				
 			break;
 		case 'multistream_panel_actions':
+		case 'multistream_panel_actions_anon':
+		  
 		  $block['subject'] = t('Actions');
 
-		  $flag_link = '';
+		  $flag_link = 'Fav';
 		  
-		  if($node = menu_get_object()) {
-		    $flag_link = flag_create_link('multistream_favs', $node->nid);		    
+		  if(user_is_logged_in()) {
+  		  if($node = menu_get_object()) {
+  		    $flag_link = flag_create_link('multistream_favs', $node->nid);		    
+  		  }
 		  }
-		  
+		  		  
 		  $links = array(
 		  	array('data' => 'Open', 'class'=>array('open')),
 		    array('data' => 'New', 'class'=>array('new')),
@@ -255,7 +350,9 @@ function multistream_block_view($delta = '') {
 		  
 		  $vars['items'] = $links;
 		  $vars['attributes'] = array('class'=>'panel-actions');
-		  
+		  if($delta == 'multistream_panel_actions_anon') {
+		    $vars['attributes']['class'] .= ' anon';
+		  }
 		  $output = '<div class="panel-actions-wrapper">';
 		  $output .= theme('item_list', $vars);
 		  
@@ -278,30 +375,177 @@ function multistream_block_view($delta = '') {
 
 		  
 		  break;
-
+		  
+		case 'multistream_browse_results' :
+		  $block['subject'] = t('Results');
+		  $block['content'] = '<div id="browse-results"></div>';
+		  break;
+		case 'multistream_twitter_feed':
+		  $block['subject'] = t('Twitter Feed');
+		  $node = menu_get_object();
+		  
+		  $block['content'] = multistream_block_twitter_feed($node);
+	    break;	  
+    case 'multistream_chat':
+      $block['subject'] = t('');
+      $block['content'] = multistream_block_chat();
+      break;
 	}
 	return $block;
 }
 
+function multistream_block_chat() {
+  $streams = multistream_cache_streams();
+  
+  $output = '<div id="chat-wrapper">';
+  $output .= '<div id="chat-open">Open Chat</div>';
+  $output .= '<div id="chat-selection">';
+  foreach($streams as $stream) {
+    $output .= '<div class="stream" data-id="'.$stream->stream_id.'">'.$stream->channel.'</div>';
+  }
+  $output .= '</div>'; // chat-selection
+  $output .= '<div id="chat-rooms"></div>';
+  $output .= '</div>'; // chat-wrapper
+
+  return $output;
+}
+
+function multistream_block_twitter_feed($node = null) {
+  $default = "streamriot";
+  $tweets = null;
+  $update = null;
+  
+  if(!$node) {
+    $search = $default;
+  } else {
+    // load cached statuses
+    // cache min life 30 seconds
+    $result = db_query('SELECT * FROM {multistream_twitter_feeds} WHERE nid = ' . $node->nid)->fetchAssoc();
+    if(!empty($result)) {
+      $time = time() - 30;
+      $update = true;      
+      if($result['updated'] >= $time) {
+        $tweets = unserialize($result['data']);
+      }
+    }
+    
+    
+    $feeds = field_get_items('node', $node, 'field_twitter_feed');
+    if(empty($feeds)) {
+      $search = $default;
+    } else {
+      $feeds = check_plain($feeds[0]['value']);
+      $feeds_array = explode(' ', $feeds);
+      $feeds = str_replace(' ', ' OR ', $feeds);
+      $search = $feeds;
+    }
+  }
+  
+  if(!$tweets) {
+    $accounts = twitter_load_authenticated_accounts();
+    $account = array_shift($accounts);
+    
+    $twitter = twitter_connect($account);
+    $params['q'] = $search;
+    $tweets = $twitter->call('search/tweets', $params);
+  }
+  
+  if($node) {
+    $record = array(
+        'nid' => $node->nid,
+        'updated' => time(),
+        'data' => $tweets,
+    );
+    drupal_write_record('multistream_twitter_feeds', $record, $update ? 'nid' : null);
+  }  
+  //$tweets = $twitter->search_tweets($search, array('include_entities'=>'true'));
+  $output .= '<div id="twitter-feed">';
+  foreach($tweets['statuses'] as $tweet) {
+    $tweet['twitter_id'] = $tweet['id'];
+    
+    // Format the timestamp.
+    $time_diff = REQUEST_TIME - strtotime($tweet['created_at']);
+    
+    // Format the message.  
+    $tweet['time_ago'] = t('%time ago', array('%time' => format_interval($time_diff, 2))); 
+    $vars['status'] = (object)$tweet;
+    $vars['author'] = (object)$tweet['user'];
+    $output .= theme('twitter_status', $vars);
+  }
+  $output .= '</div>';
+  
+  //return $output;
+  $hashtags = array();
+  foreach($feeds_array as $item) {
+    if(strpos($item, '#') !== false) {
+      $hashtags[] = str_replace('#', '', $item);      
+    } elseif(strpos($item, '@') !== false) {
+      $users[] = $item;
+    }
+  }
+  
+  $hash = '';
+  if(!empty($hashtags)) {
+    $hash = implode(',', $hashtags);
+  }
+  $via = '';
+  if(!empty($users)) {
+    $via = implode(' ', $users);
+  }
+    
+  $output .= '<a href="https://twitter.com/intent/tweet?hashtags='.$hash.'&text='.$via.'">Send a Tweet</a>';
+  
+  $output .= '' . //'<a class="twitter-timeline"  href="https://twitter.com/search?q='.$search.'" data-widget-id="">Tweets</a>'.
+    '<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>';
+    
+  return $output;
+}
+
 function multistream_form_new_multistream($form, $form_state, $save = false) {
+  // are we in an existing node?
+  if(arg(0) == 'node') {
+    $node = menu_get_object();
+  }
+
+  $form_id = $save ? 'multistream-form-new-multistream-save' : 'multistream-form-new-multistream-new';
+  $form['#id'] = $form_id;
+  $form['#prefix'] = '<div id="'.$form_id.'-wrapper">';
+  $form['#suffix'] = '</div>';
+  
+  
+  if(!$save) {    
+    $form['message'] = array(
+      '#markup' => '<strong>New Multi-Stream</strong><p class="multistream-updated"><small>Creating a new multi-stream will clear the player stage.<br/><br/>Would you like to save your Now Playing first?</small></p>',
+    );
+  } else {
+    $form['message'] = array(
+        '#markup' => '<strong>Save to Favorites</strong><p class="multistream-updated"><small>Add a title and save.</small></p>',
+    );    
+  }
+
   $form['title'] = array(
     '#type' => 'textfield',
-    '#size' => 20,
-    //'#title' => t('New Multi-Stream'),
-    '#prefix' => '<strong>New Multi-Stream</strong><br/><small>Creating a new multi-stream will clear the player stage.<br />Would you like to save your Now Playing first?</small>',
+    '#size' => 30,
+    //'#title' => t('Save Multi-Stream'),
+    //'#prefix' => '<strong>New Multi-Stream</strong><br/><small>Creating a new multi-stream will clear the player stage.</small>',
+    '#suffix' => '',    
     '#attributes' => array('placeholder'=>'Enter Multi-Stream Title'),
   );
   
+  $submit_id = $save ? 'save-multistream-button-save' : 'save-multistream-button-new';
+
   $form['submit'] = array(
   	'#type' => 'submit',
-    '#id' => 'save-multistream-button',
+    '#id' => $submit_id,
     '#value' => t('Save'),
+    '#prefix' => '',
+    '#validate' => array('multistream_form_new_multistream_validate'),
     '#ajax' => array(
         'callback' => 'multistream_form_new_multistream_callback',
-        //'wrapper' => 'pager-content',
-        //'effect' => 'fade',
-        //'speed' => 'slow',
-        //'method' => 'append',
+        'wrapper' => $form_id.'-wrapper',
+        'effect' => 'fade',
+        'speed' => 'slow',
+        'method' => 'replace',
     ),      
   );
   
@@ -310,8 +554,43 @@ function multistream_form_new_multistream($form, $form_state, $save = false) {
     	'#markup' => '<div class="clear-stage">'.l('No, clear player stage', 'multistream').'</div>',
     );
   }
+  
+  $form['streams'] = array('#type'=>'hidden');
 
   return $form;
+}
+
+function multistream_form_new_multistream_validate(&$form, &$form_state) {
+  if(!$title = $form_state['values']['title']) {
+    form_set_error('title', 'You must enter a title');
+  }
+}
+
+function multistream_form_new_multistream_callback(&$form, &$form_state) {
+  global $user;
+
+  if(!$form_state['executed']) {
+    return $form;
+  }
+  
+  $title = $form_state['values']['title'];
+  
+  $node = new stdClass();
+  $node->type = 'multistream';
+  $node->title = $title;
+  node_object_prepare($node);
+  $node->language = 'und'; // Or e.g. 'en' if locale is enabled
+  $node->uid = $user->uid;
+  $node->status = 1; //(1 or 0): published or not
+  $node->promote = 0; //(1 or 0): promoted to front page
+  $node->comment = 0; // 0 = comments disabled, 1 = read only, 2 = read/write
+  $node->is_new = true;
+  
+  foreach($form_state['values']['streams'] as $id => $stream_id) {
+    $node->field_streams['und'][]['target_id'] = $id;
+  }
+  $node = node_submit($node);
+  node_save($node);
 }
 
 function multistream_form_manage($node = null) {
@@ -405,7 +684,7 @@ function multistream_form_browse_by_game() {
 				'speed' => 'slow',
 				'method' => 'replace',
 		),
-		'#suffix' => '<div id="browse-filter-wrapper" style="display:none;"><div id="browse-filter-button">Filter</div><div id="browse-filter-options-wrapper" style="display:none;"><div>Filter By:</div><ul id="browse-filter-options"><li class="multistreams">Multistreams</li><li class="streams">Streams</li></ul></div></div>',
+		'#suffix' => '<div id="browse-filter-wrapper" class="filter-wrapper" style="display:none;"><div id="browse-filter-button" class="filter-button">Filter</div><div id="browse-filter-options-wrapper" class="filter-options-wrapper" style="display:none;"><div>Filter By:</div><ul id="browse-filter-options" class="filter-options"><li class="multistreams">Multistreams</li><li class="streams">Streams</li></ul></div></div>',
 				
 	);
 	
@@ -458,8 +737,8 @@ function multistream_form_browse_by_game_callback($form, &$form_state) {
     }
   } else {   
     $commands['filter'] = ajax_command_invoke('#browse-filter-wrapper', 'show');
-    $results .= '<div id="browse-results-streams">'.$s_view->render().'</div>';
-    $results .= '<div id="browse-results-multistreams" style="display:none;">'.$ms_view->render().'</div>';
+    $results .= '<div id="browse-results-streams" class="results-streams">'.$s_view->render().'</div>';
+    $results .= '<div id="browse-results-multistreams" style="display:none;" class="results-multistreams">'.$ms_view->render().'</div>';
   }
   
   //$output = '<div id="browse-results">';
@@ -484,6 +763,10 @@ function multistream_preprocess_multistream_now_playing(&$vars) {
 		
 	foreach($streams as $key => $stream) {
 		if($key <= PLAYER_MAX_DEFAULT) {
+		  $stream->stream_pos = $key;
+		  //$controller = entity_get_controller('stream');
+		  //$vars['now_playing'][] = $controller->view(array($stream));
+		  //$vars['now_playing'][] = ->view(array($stream));
 			$vars['now_playing'][] = entity_view('stream', array($stream));
 		} else {
 			$vars['queue'][] = entity_view('stream', array($stream));
@@ -552,33 +835,26 @@ function multistream_sort_riot_streams($nodes = array()) {
 	return $streams;
 }
 
-function stream_load_stream_by_channel($provider = null, $channel) {
-	$query = db_select('stream', 's')->fields('s');
-	$query->condition('s.channel', $channel);
-	//$query->condition('s.provider', $provider);
-	$result = $query->execute();
-
-	//check if channel exists
-	if(!$stream = $result->fetchObject()) {
-		//channel doesn't exist, create one
-		//$node = streamriot_save_stream_provider_channel($provider, $channel);
-	} else {
-		//channel exists, load it
-		//$node = node_load($data->nid);
-	}
-	
-	//for some reason a channel wasn't loaded, bail
-	if(!$stream) {
-		return false;
-	}
-	
-	return $stream;
+function stream_load_stream_by_channel($channel) {
+  $controller = new StreamController('stream');
+  $streams = $controller->load(false, array('channel'=>$channel));
+  if(empty($streams)) {
+    return false;
+  } 
+  
+  return array_shift($streams);
 }
 
 function stream_get_stream_settings($stream, $n) {
 
 	$return = new stdClass;
-	return $return;
+	
+	$return->position = $n;
+	$return->stream_id = $stream->stream_id;
+	$return->channel = $stream->channel;
+	$return->provider = $stream->provider;
+	
+	//return $return;
 	
 	
 	$provider = $stream->provider;
@@ -590,20 +866,20 @@ function stream_get_stream_settings($stream, $n) {
 	$field_chat_url 	= field_get_items('taxonomy_term', $provider, 'field_chat_url');
 
 	$player = $field_player_url[0]['value'];
-	$player = token_replace($player, array('node' => $node));
-	$chat = $field_chat_url[0]['url'];
-	$chat = token_replace($chat, array('node' => $node));
+	$player = str_replace('[stream:channel]', $stream->channel, $player);
+	$chat = $field_chat_url[0]['value'];
+	$chat = str_replace('[stream:channel]', $stream->channel, $chat);
 
 	$return->src = $player;
-	$return->channel = $node->field_channel['und'][0]['value'];
-	$return->channel_name = $node->field_channel_name['und'][0]['value'];
-	$return->player_num = $n;
-	$return->stream_num = $n;
-	$return->stream_id = $node->nid;
-	$items = field_get_items('node', $node, 'field_current_viewers');
-	$return->num_viewers = $items ? $items[0] : 0;
+	//$return->channel = $node->field_channel['und'][0]['value'];
+	//->channel_name = $node->field_channel_name['und'][0]['value'];
+	//$return->player_num = $n;
+	//$return->stream_num = $n;
+	//$return->stream_id = $node->nid;
+	//$items = field_get_items('node', $node, 'field_current_viewers');
+	//$return->num_viewers = $items ? $items[0] : 0;
 	$return->chat = $chat;
-	$return->provider = strtolower($provider->name);
+	//$return->provider = strtolower($provider->name);
 
 	$params = explode("\n", $field_params[0]['value']);
 	$params = array_map('trim', $params);
@@ -633,7 +909,7 @@ function stream_get_stream_settings($stream, $n) {
 	}
 
 	global $base_root;
-	if($base_root == 'http://sr') {
+	if($base_root == 'http://localhost.gvod') {
 		$thevars['consumer_key'] = '';
 	}
 	$return->base_root = $base_root;
@@ -649,31 +925,29 @@ function stream_get_stream_settings($stream, $n) {
 }
 
 function multistream_preprocess_node(&$vars) {
+  global $user;
+  
   $node = $vars['node'];
 
   if($node->type != 'multistream') {
     return;
   }
   
+  if($node->uid == $user->uid) {
+    $vars['classes_array'][] = 'multistream-owner';    
+  }
   $vars['classes_array'][] = $vars['view_mode'];
   
   $vars['attributes_array']['data-nid'][] = $node->nid;
 }
 
 function multistream_node_view($node, $view_mode) {	
-	if($node->type != 'multistream') {
+	global $user;
+	
+  if($node->type != 'multistream') {
 		return;
 	}
-	
-	if($view_mode == 'teaser') {
-	  $node->content = array('#markup' => l($node->title, 'node/'.$node->nid));	   
-	  return;
-	}
-	
-	if($view_mode == 'selection') {
-	  $node->content = array('title'=>array('#markup' => l($node->title, 'node/'.$node->nid)));	   
-	}
-	
+
 	if(!$items = field_get_items('node', $node, 'field_streams')) {
 	  $items = array();
 	}
@@ -681,12 +955,49 @@ function multistream_node_view($node, $view_mode) {
 	$streams = array();
 	
 	foreach($items as $item) {
-		$streams[] = $item['target_id'];
+	  $streams[] = $item['target_id'];
+	}
+	
+	$streams = entity_load('stream', $streams);
+  $live = 0;
+  $total = count($streams);
+  
+	foreach($streams as $stream) {
+	  if($stream->is_live) {
+	    $live++;
+	  }
 	}
 
-	$streams = entity_load('stream', $streams);
+	if($view_mode == 'teaser') {
+	  $thumb = field_view_field('node', $node, 'field_cover', 'teaser');
+	  //$node->content['thumb'] = $thumb;
+	}
 	
-	$node->content['multistream']['#markup'] = multistream_view_multistream('riot', $streams);
+	if($view_mode != 'full') {
+	  $node->content['title'] = array('#markup' => l($node->title, 'node/'.$node->nid));	   
+	  //$node->content['title'] = array('#markup' => '<div class="title">'.l($node->title, 'node/'.$node->nid).'</div>');
+	  $node->content['streams'] = array('#markup' => '<div class="live">'.t('@live live of @total streams', array('@live'=>$live, '@total'=>$total)).'</div>');
+	}
+	
+	if($view_mode == 'selection') {
+	  return;
+	}	
+	
+	if($view_mode == 'full') {
+	  unset($node->content['field_player_background']);
+	  
+	  $node->content['multistream']['#markup'] = multistream_view_multistream('riot', $streams, $node);	   
+	  $settings['multistream']['is_owner'] = false;
+	  
+	  if($user->uid == $node->uid) {
+	    $settings['multistream']['is_owner'] = true;
+	    $settings['multistream']['nid'] = $node->nid;
+	  
+	  }
+	  
+	  drupal_add_js($settings, 'setting', 'footer', false, true, false);	  
+	}
+
 }
 
 function multistream_autocomplete_my_multistreams() {
@@ -707,6 +1018,18 @@ function multistream_autocomplete_my_multistreams() {
 	}
 	
 	drupal_json_output($matches);
+}
+
+function multistream_autocomplete_stream($keyword) {  
+  $keyword .= '%';
+  $sql = "SELECT channel FROM {stream} WHERE channel LIKE(:search) ORDER BY channel ASC LIMIT 10";
+  $results = db_query($sql, array(':search'=>$keyword))->fetchAllKeyed(0,0);
+  $matches = array();
+
+  foreach($results as $item) {
+    $matches[$item] = $item;
+  }
+  drupal_json_output($matches);
 }
 
 function multistream_autocomplete_game() {
@@ -822,10 +1145,9 @@ function multistream_form_add_channel($form, $form_state) {
 	//$message = variable_get('multistream_add_channel_message', 'Added channel');
 	
 	//$form['success']['#markup'] = $message;
-	$form['wrapper']['#markup'] = '<div id="add-channel-message"></div>';
 	$form['channel'] = array(
 			'#type' => 'textfield',
-			'#prefix' => '<small>'.t('Add Twitch Channels by name. Use semi-colins (;) to add multiple channels.').'</small>',
+			'#prefix' => '<small>'.t('Add Twitch Channels by name; add multiple channels by entering a space between each channel.').'</small>',
 	    '#id' => 'add-channel',
 	    '#size' => 20,
 	);
@@ -840,13 +1162,16 @@ function multistream_form_add_channel($form, $form_state) {
 			'#submit' => array('multistream_block_add_channel_submit'),
 			'#ajax' => array(
 					'callback' => 'multistream_block_add_channel_callback',
-					'wrapper' => 'pager-content',
+					'wrapper' => 'add-channel-message',
 					'effect' => 'fade',
 					'speed' => 'slow',
 					'method' => 'append',
 			),
-			//'#prefix' => '<div id="pager-content"></div>',
+			//'#suffix' => '<div id="add-channel-message"></div>',
 	);
+	
+	$form['wrapper']['#markup'] = '<div id="add-channel-message"></div>';
+	
 
 	//$form['#theme'] = 'multistream_block_add_channel';
 
@@ -873,8 +1198,12 @@ function multistream_block_view_quicktabs_player_menu_alter(&$data, $block) {
   foreach($data['content']['content']['tabs']['tablinks'] as $key => $tab) {
     $data['content']['content']['tabs']['tablinks'][$key]['#attributes']['class'][] = drupal_html_class($tab['#title']);
   }
-  
-  $test = 'tezt';
+}
+
+function multistream_block_view_quicktabs_social_menu_alter(&$data, $block) {
+  foreach($data['content']['content']['tabs']['tablinks'] as $key => $tab) {
+    $data['content']['content']['tabs']['tablinks'][$key]['#attributes']['class'][] = drupal_html_class($tab['#title']);
+  }
 }
 
 function multistream_form_multistream_node_form_alter(&$form, &$form_state) {
@@ -891,11 +1220,34 @@ function multistream_form_multistream_node_form_alter(&$form, &$form_state) {
       $form['field_streams']['und'][$key]['target_id']['#attributes']['data-id'][] = $id;
     }
   }
+  
   if(!isset($node->is_manage_form)) {
     return;
   }
   
-  $streams = entity_load('stream', $stream_nids);
+  $form['changed']['#default_value'] = time() + 300; // gives the user 5 minutes to modify this form
+  
+  // Add autocomplete to add new streams
+  $form['add_stream'] = array(
+  	'#type' => 'textfield',
+    '#title' => t('Add Channel'),
+    '#size' => 10,
+    '#autocomplete_path' => 'multistream/stream-autocomplete',
+    '#weight' => -10,
+  );
+  
+  $form['add_stream_submit'] = array(
+  	'#type' => 'button',
+    '#value' => t('Add'),
+    '#ajax' => array(
+  	 'callback' => 'multistream_ajax_add_stream_submit_callback',
+    ),
+  );
+  $form['#group_children']['add_stream'] = 'group_streams';
+  $form['#group_children']['add_stream_submit'] = 'group_streams';
+  
+
+  $streams = entity_load('stream', $stream_nids, true);
   
   foreach($form['field_streams']['und'] as $key => $stream) {
     if(!is_numeric($key)) {
@@ -904,6 +1256,8 @@ function multistream_form_multistream_node_form_alter(&$form, &$form_state) {
     if(!isset($stream['target_id']['#attributes']['data-id'])) {
       continue;
     }
+    $form['field_streams']['und'][$key]['_weight']['#type'] = 'textfield';
+    
     $id = $stream['target_id']['#attributes']['data-id'][0];
     $form['field_streams']['teasers'][$key] = array(
     	'#type' => 'markup',
@@ -943,7 +1297,20 @@ function multistream_form_multistream_node_form_alter(&$form, &$form_state) {
       'wrapper' => 'manage-form',
       'method' => 'html',
       'effect' => 'fade',
+  ); 
+
+  // Move delete to more settings
+  $form['delete'] = $form['actions']['delete'];
+  unset($form['actions']['delete']);
+  
+  $form['delete']['#ajax'] = array(
+      'event' => 'click',
+      'callback' => 'multistream_ajax_manage_delete_callback',
+      'wrapper' => 'manage-form',
+      'method' => 'html',
+      'effect' => 'fade',
   );  
+  $form['#group_children']['delete'] = 'group_settings';
   
 }
 
@@ -985,7 +1352,28 @@ function multistream_ajax_manage_form($nid) {
 }
 
 function multistream_ajax_manage_form_submit($form, &$form_state) {
+  $form = drupal_rebuild_form($form['#form_id'], $form_state, $form);
   return $form;
+}
+
+
+function multistream_ajax_manage_delete_callback($form, &$form_state) {
+  // Make sure the user has permission
+  $node = $form['#node'];
+  
+  if(!node_access('update', $node)) {
+    return;
+  }
+  
+  // Delete the node
+  node_delete($node->nid);
+  
+  // Send a command that refreshes all drop downs
+  $commands[] = ajax_command_remove('.node-multistream[data-nid="'.$node->nid.'"]');
+  // Close the manager
+  $commands[] = ajax_command_html('#manage-form', '');
+  
+  return array('#type'=>'ajax', '#commands'=>$commands);
 }
 
 function multistream_ajax_favorites() {
@@ -1011,7 +1399,8 @@ function multistream_ajax_favorites() {
   $s_total = $s_view->total_rows;
   
   //return $ms_view->render();
-  $commands['filter'] = ajax_command_invoke('#favorites-filter-wrapper', 'hide');
+  //$commands['filter'] = ajax_command_invoke('#favorites-filter-wrapper', 'hide');
+  $results = '';
   // If only one has results don't show filter
   if(!$ms_total || !$s_total) {
     if($s_total) {
@@ -1019,12 +1408,15 @@ function multistream_ajax_favorites() {
     } elseif($ms_total) {
       $results = $ms_total->render();
     } else {
-      die('blah');
+      exit;
     }
   } else {
-    $commands['filter'] = ajax_command_invoke('#favorites-filter-wrapper', 'show');
-    $results .= '<div id="favorites-results-streams">'.$s_view->render().'</div>';
-    $results .= '<div id="favorites-results-multistreams" style="display:none;">'.$ms_view->render().'</div>';
+    $filter = '<div id="favorites-filter-wrapper" class="filter-wrapper"><div id="favorites-filter-button" class="filter-button">Filter</div><div id="favorites-filter-options-wrapper" class="filter-options-wrapper" style="display:none;"><div>Filter By:</div><ul id="browse-filter-options" class="filter-options"><li class="multistreams">Multistreams</li><li class="streams">Streams</li></ul></div></div>';
+  
+    //$commands['filter'] = ajax_command_invoke('#favorites-filter-wrapper', 'show');
+    $results .= $filter;
+    $results .= '<div id="favorites-results-streams" class="results-streams">'.$s_view->render().'</div>';
+    $results .= '<div id="favorites-results-multistreams" class="results-multistreams" style="display:none;">'.$ms_view->render().'</div>';
   }
 
   
@@ -1033,4 +1425,61 @@ function multistream_ajax_favorites() {
   
   ajax_deliver(array('#type'=>'ajax', '#commands'=>$commands));
   exit;  
+}
+
+function multistream_block_add_channel_validate($form, &$form_state) {
+  
+}
+
+function multistream_block_add_channel_submit($form, &$form_state) {
+
+
+}
+
+function multistream_block_add_channel_callback($form, &$form_state) {
+  $channels = $form_state['values']['channel'];
+  $channels = trim($channels);
+  $channels = explode(' ', $channels);
+  $found = false;
+  
+  foreach($channels as $channel) {
+    if(!$stream = stream_import_twitch_stream($channel)) {
+      continue;
+    }
+    $found = true;
+        
+    $settings['multistream']['streams'][$stream->stream_id] = stream_get_stream_settings($stream, 'q');
+    
+    $commands[] = ajax_command_settings($settings);
+    $stream_render = drupal_render(entity_view('stream', array($stream)));
+    $commands[] = ajax_command_invoke('#queue', 'srInsertStream', array($stream_render, $stream->stream_id, 'q'));
+    
+  }
+  $commands[] = ajax_command_invoke('#add-channel-message', 'addClass', array('messages'));
+  if(!$found) {
+    $commands[] = ajax_command_html('#add-channel-message', 'Channel not found');
+    $commands[] = ajax_command_invoke('#add-channel-message', 'addClass', array('error'));
+    $commands[] = ajax_command_invoke('#add-channel-message', 'removeClass', array('status'));    
+  } else {
+    $commands[] = ajax_command_html('#add-channel-message', 'Channel(s) added');
+    $commands[] = ajax_command_invoke('#add-channel-message', 'addClass', array('status'));
+    $commands[] = ajax_command_invoke('#add-channel-message', 'removeClass', array('error'));            
+  }
+  
+  
+  return array('#type'=>'ajax', '#commands'=> $commands);
+}
+
+function multistream_ajax_add_stream_submit_callback(&$form, &$form_state) {
+  $channel = $form_state['values']['add_stream'];
+  
+  if($stream = stream_load_stream_by_channel($channel)) {
+    $teaser = entity_view('stream', array($stream));
+    $commands[] = ajax_command_invoke('div[id*="edit-field-streams"] .stream-wrapper[data-id="'.$stream->stream_id.'"]', 'remove');
+    $commands[] = ajax_command_prepend('div[id*="edit-field-streams"]', drupal_render($teaser));
+    $commands[] = ajax_command_invoke('div[id*="field-streams-add-more-wrapper"] .field-multiple-table tbody tr:last input.form-autocomplete', 'attr', array('value', $channel .' ('.$stream->stream_id.')'));
+    $commands[] = ajax_command_invoke('input[name="field_streams_add_more"]', 'trigger', array('mousedown'));
+  }
+  
+  return array('#type'=>'ajax', '#commands'=>$commands);
 }

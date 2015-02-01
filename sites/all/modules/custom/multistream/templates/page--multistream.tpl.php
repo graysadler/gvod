@@ -65,27 +65,21 @@
 <?php endif; ?>
 
 <div id="content-wrapper" class="fullwidth">
-    <div class="">
-        <div class="page row">
+  <div role="main" id="main-content">
 
-            <div role="main" id="main-content">
+      <?php if ($action_links): ?>
+          <ul class="action-links"><?php print render($action_links); ?></ul>
+      <?php endif; ?>
 
-                <?php if ($action_links): ?>
-                    <ul class="action-links"><?php print render($action_links); ?></ul>
-                <?php endif; ?>
+      <?php if (isset($tabs['#primary'][0]) || isset($tabs['#secondary'][0])): ?>
+          <nav class="tabs"><?php print render($tabs); ?></nav>
+      <?php endif; ?>
 
-                <?php if (isset($tabs['#primary'][0]) || isset($tabs['#secondary'][0])): ?>
-                    <nav class="tabs"><?php print render($tabs); ?></nav>
-                <?php endif; ?>
+      <?php print render($page['content_pre']); ?>
 
-                <?php print render($page['content_pre']); ?>
+      <?php print render($page['content']); ?>
 
-                <?php print render($page['content']); ?>
+      <?php print render($page['content_post']); ?>
 
-                <?php print render($page['content_post']); ?>
-
-            </div><!--/main-->
-
-        </div><!--/page-->
-    </div><!--/.container-->
+  </div><!--/main-->
 </div><!--/#content-wrapper-->

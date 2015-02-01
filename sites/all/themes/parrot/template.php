@@ -6,6 +6,10 @@
 
 function parrot_preprocess_html(&$vars) {
   //  kpr($vars['content']);
+
+  if(user_is_anonymous()) {
+    $vars['classes_array'][] = 'anon';
+  }
 }
 
 function parrot_preprocess_page(&$vars,$hook) {
@@ -283,20 +287,23 @@ function parrot_qt_quicktabs($variables) {
   $output = '<div '. drupal_attributes($element['#options']['attributes']) .'>';
 
   if($variables['element']['#options']['attributes']['id'] == 'quicktabs-player_menu') {
-    $block = multistream_block_view('multistream_panel_actions'); 
+    if(user_is_anonymous()) {
+      $block = multistream_block_view('multistream_panel_actions_anon');      
+    } else {
+      $block = multistream_block_view('multistream_panel_actions');      
+    }
     //$output .= $block['content'];       
     $element['container']['actions'] = array('#markup' => $block['content'], '#weight' => -100);
+    $element['tabs']['share'] = module_invoke('sharethis', 'block_view', 'sharethis_block');
+    $element['tabs']['more'] = '<div id="player-more-wrapper"><div class="button"></div><ul class="more-actions"><li class="new">New Multi-Stream</li><li class="open">Open Favorites</li><li class="save">Save</li></ul></div>';    
   }
   
   $output .= drupal_render($element['tabs']);
-
  
   $output .= drupal_render($element['container']);
   $output .= '<div class="handle"></div>';
   $output .= '</div>';
   
-  
-  //print_r($output);exit;
   return $output;
 }
 
@@ -324,7 +331,17 @@ function parrot_qt_quicktabs_tabset($vars) {
       $variables['items'][] = $item;
     }
   }
-  return theme('item_list', $variables);
+  $output = '<div class="quicktabs-tabs-wrapper">';
+  
+  if(isset($vars['tabset']['share'])) {
+    $output .= $vars['tabset']['share']['content'];
+  }
+  $output .= theme('item_list', $variables);
+  if(isset($vars['tabset']['more'])) {
+    $output .= $vars['tabset']['more'];
+  }
+  $output .= '</div>';
+  return $output;
 }
 
 /**

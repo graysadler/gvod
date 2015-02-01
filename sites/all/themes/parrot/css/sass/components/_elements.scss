@@ -1,7 +1,7 @@
-@import "compass/utilities/sprites";
-$images-sprite-dimensions: true;
-@import "sprite/images/*.png";
-@include all-images-sprites;
+$panel_menu_w: 55px;
+$panel_content_w: 324px;
+$panel_handle_w: 15px;
+$panel_width: $panel_menu_w + $panel_content_w + $panel_handle_w;
 
 * {
     outline: none;
@@ -879,7 +879,7 @@ ol li ol li {
                 background: $background-color;
                 .sharethis-wrapper {
                     float: left;
-                    width: 56px;
+                    width: 55px;
                     .stButton {
                         margin: 0;
                         .st-sharethis-counter {
@@ -2863,7 +2863,7 @@ p a {
             background: $background-color;
             .sharethis-wrapper {
                 float: left;
-                width: 56px;
+                width: 55px;
                 .stButton {
                     margin: 0;
                     .st-sharethis-counter {
@@ -3168,7 +3168,7 @@ p a {
 // Sharethis
 .sharethis-wrapper {
     float: left;
-    width: 56px;
+    width: 55px;
     .stButton {
         margin: 0;
         .st-sharethis-counter {
@@ -3176,6 +3176,9 @@ p a {
             width: 57px !important;
             height: 29px !important;
         }
+    }
+    #quicktabs-player_menu & {
+      margin: 3em 0;
     }
 }
   
@@ -3220,31 +3223,9 @@ body.node-type-blog {
   }  
 }
 
-.quicktabs-wrapper {
-  
-  .handle {
-    background-color: #a0aab4;
-    height: 100%;
-    display: table-cell;
-    cursor: pointer;
-    width: 15px;  
-    &:after {
-      @include images-sprite(Collapse);
-      content: "";
-      left: 25%;
-      top: 50%;
-      position: relative;
-      display: block;
-    }
-    &.closed {
-      &:after {
-        transform: rotate(180deg);
-      }
-    }
-  }
-}
-#mini-panel-player_menu {  
-  //width: 400px;
+#mini-panel-player_menu,
+#mini-panel-social_menu {  
+  max-width: $panel_width;
   h2,
   h2.title,
   h2.pane-title,
@@ -3253,73 +3234,95 @@ body.node-type-blog {
     font-size: 1.5em;
     font-weight: lighter;
     margin-bottom: .5em;
+    margin-top: 0;
   }
-  
-  .pane-quicktabs-player-menu {
+
+  #quicktabs-player_menu,
+  #quicktabs-social_menu {
+    & > .handle {
+      background-color: #a0aab4;
+      height: 100%;
+      display: table-cell;
+      cursor: pointer;
+      width: $panel_handle_w;  
+      position: absolute;
+      top: 0;
+      left: $panel_menu_w + $panel_content_w;
+      &:after {
+        @include images-sprite(Collapse);
+        content: "";
+        left: 25%;
+        top: 50%;
+        position: absolute;
+        display: block;
+      }
+      &.closed {
+        left: $panel_menu_w;
+        
+        &:after {
+          transform: rotate(180deg);
+        }
+      }
+    }   
+  }
+
+  & > .panel-flexible-inside {
 
     position: relative;
         
-    & > h2 {
+    & > div > div > div > h2 {
       display: none;
     }
-    #quicktabs-player_menu {     
-      display: table !important; 
-      min-height: 600px;
-      height:95vh;
+    .quicktabs-wrapper {     
+      //display: table !important; 
+      //min-height: 600px;
+      //height:95vh;
       position: relative;
       
       .quicktabs-tabpage {
         padding-left: 1em;
       }
-      
+
       &.docked {
-        & > ul.quicktabs-tabs {
-          li {
-            &.hover {
-              &:after {
-                background: none repeat scroll 0 0 white;
-                display: block;
-                font-size: 1.5em;
-                height: 100%;
-                left: 100%;
-                line-height: 3em;
-                padding-left: 1em;
-                position: absolute;
-                text-transform: uppercase;
-                top: 0;
-                vertical-align: top;
-                width: 315px;
-                z-index: 1000;    
-                color: $Active-bagColor;
-              }              
-              &:nth-child(1):after {content: "Now Playing"; }
-              &:nth-child(2):after {content: "Add Channel"; }              
-              &:nth-child(3):after {content: "Browse"; }   
-              &:nth-child(4):after {content: "Favorites"; }   
-              &:nth-child(5):after {content: "Manage"; }                                             
+        & > .quicktabs-tabs-wrapper {
+          & > ul.quicktabs-tabs {
+            display: block;
+            li {
+              &.hover {
+                &:after {
+                  background: none repeat scroll 0 0 white;
+                  display: block;
+                  font-size: 1.5em;
+                  height: 100%;
+                  left: 100%;
+                  line-height: 3em;
+                  padding-left: 1em;
+                  position: absolute;
+                  text-transform: uppercase;
+                  top: 0;
+                  vertical-align: top;
+                  width: 315px;
+                  z-index: 1000;    
+                  color: $Active-bagColor;
+                }              
+                &:nth-child(1):after {content: "Now Playing"; }
+                &:nth-child(2):after {content: "Add Channel"; }              
+                &:nth-child(3):after {content: "Browse"; }   
+                &:nth-child(4):after {content: "Favorites"; }   
+                &:nth-child(5):after {content: "Manage"; }                                             
+              }
             }
-          }
-        }  
+          }  
+        }
       }      
-      & > ul.quicktabs-tabs {
-        width: 56px;
-        float: none;
+      & > .quicktabs-tabs-wrapper {
+        width: $panel_menu_w;
         vertical-align: top;
-        
-        display: table-cell;
-        //overflow: hidden;    
-        //position: absolute;
-        //top: 0;
-        //bottom: 0;
-        //left: 0;
         background-color: #3c4650;
-        padding-top: 75px;
         
         li {
-          width: 56px;
+          width: 55px;
           clear:both;
-          //display: block;
-          //padding: 1em;
           position: relative;
           margin-bottom: 20px;
           background-color: transparent;
@@ -3348,24 +3351,67 @@ body.node-type-blog {
             &.browse:after { @include images-sprite(SearchLgDk); }
             &.favorites:after { @include images-sprite(Favorites); }
             &.manage:after { @include images-sprite(SRGear); }
+            &.chat:after { @include images-sprite(ChatSmDk); }
+            &.twitter:after { @include images-sprite(TwitterFeedDk); }
+            &.share:after { @include images-sprite(ShareDk); }
           }
           &.last a {
             background-image: none;
           }
         }
+        
+        #player-more-wrapper {
+          overflow: visible;
+          position: absolute;
+          bottom: 30px;
+          width: 55px;
+          .button {
+            @include images-sprite(MoreMenu);   
+            margin: auto;
+            cursor: pointer;         
+          }
+          .more-actions {
+            display: none;
+            background-color: $lightgray;
+            position: absolute;
+            bottom: 15px;
+            left: 10px;
+            z-index: 100;
+            margin: 0;
+            li:before {
+              content:"";
+              display:block;
+              position: absolute;;
+              top:15px;
+              left:15px;
+            }
+            li.new:before {@include images-sprite(CreateNew);}
+            li.open:before {@include images-sprite(OpenActive);}
+            li.save:before {@include images-sprite(SaveDk);}
+            li {
+              padding: 1em 2em 1em 50px;
+              width: 200px;
+              margin: 0;
+              &:hover {
+                background-color: $SRbabyblue;
+                font-weight: bold;
+                cursor: pointer;
+              }
+            }
+          }
+        }
       }
       
-      #quicktabs-container-player_menu {
+      .quicktabs_main {
+        padding-top: 10px;
+      }
+      
+      .quicktabs_main {
         clear: none;
-        max-width: 400px - 56px - 20px;
-        width: 400px - 56px - 20px;
+        width: $panel_content_w;
         vertical-align: top;
-        //position: absolute;
-        //top: 0;
-        //bottom: 0;
-        //right: 0;      
-        display: table-cell;
-        //padding-left: 1.25em;
+        position: absolute;
+        left: $panel_menu_w;
 
         .panel-actions-wrapper.quicktabs-hide {
           display: block;
@@ -3380,9 +3426,9 @@ body.node-type-blog {
         max-width: 295px;
         width: 295px;
         min-width: 295px;
-        max-height: 95vh;
+        max-height: 85vh;
         min-height: 500px;
-        overflow-y: scroll;
+        overflow-y: auto;
         overflow-x: hidden;
         //height: 100%;
         //display: table-cell;
@@ -3392,30 +3438,41 @@ body.node-type-blog {
     }
   } 
   
-  ul.panel-actions {
-    text-align: right;
-    margin-right: 20px;
-    
-    li {
-      display: inline;
-      cursor: pointer;
-      
-      &:after {
-        content: " | ";
-      }
-      
-      &:last-child {
-        &:after {
-          content: "";
-        }
-      }
+  .panel-actions-wrapper {
+    height: 100%;
+    pointer-events: none;
+    .panel-actions-popup {
+      pointer-events: auto;
     }
-  }
+    ul.panel-actions {
+      text-align: right;
+      margin-right: 20px;
+      pointer-events: auto;
+      
+      li {
+        display: inline;
+        cursor: pointer;
+        &, a {
+          color: $darkgray !important;
   
-  .minipanel-two-50-bottom {
-    position: relative;
-    top: 30px;  
-  }  
+        }
+        
+        &:hover, a:hover {
+          color: $SRblue!important;
+        }
+        &:before {
+          content: " | ";
+        }
+        
+        &:first-child {
+          &:before {
+            content: "";
+          }
+        }
+        
+      }
+    }  
+  }
 }
 
 // Streams 
@@ -3435,6 +3492,7 @@ body.node-type-blog {
   &.hover {
     .stream-actions {
       display: block;
+      opacity: .85;
     }
     .image {
       display: none;
@@ -3512,11 +3570,11 @@ body.node-type-blog {
       vertical-align: middle;
     }    
     
-    &:nth-child(1) .image:after {content: "1";} 
-    &:nth-child(2) .image:after {content: "2";} 
-    &:nth-child(3) .image:after {content: "3";} 
-    &:nth-child(4) .image:after {content: "4";} 
-    &:nth-child(5) .image:after {content: "5";} 
+    &[data-pos="1"] .image:after {content: "1";} 
+    &[data-pos="2"] .image:after {content: "2";} 
+    &[data-pos="3"] .image:after {content: "3";} 
+    &[data-pos="4"] .image:after {content: "4";} 
+    &[data-pos="5"] .image:after {content: "5";} 
   }  
 }
 
@@ -3553,18 +3611,37 @@ ul.register-icons {
   }
 }
 
+.panel-actions-popup {
+  background-color: $lightgray;  
+  
+  & > li {       
+    &.new, &.save {
+      padding: 1em;
+    }  
+  }
+}
+
 #manage-selection,
 .panel-actions-popup li.open {
   top: 50px;
-  background-color: $lightergray;
+  background-color: $lightgray;
   
   article {
     background: transparent;
-    
+
     &:hover {
-      background-color: $SRblue;
+      background-color: $SRblue;    
       
-      color: white;
+      &, a {
+        color: white;
+      }  
+    }
+    
+    a {
+      color: $charcoal;
+      a:hover {
+        color: white;
+      }
     }
   }
 }
@@ -3663,6 +3740,11 @@ ul.register-icons {
   #edit-field-twitter-feed:before {@include images-sprite(TwitterDk);}
 
   // Upload Images
+  div[id*="edit-field-player-background-und-0-ajax-wrapper"],
+  div[id*="edit-field-cover-und-0-ajax-wrapper"] {
+    position: relative;
+  }
+  
   .field-name-field-stream-image { display: none; }
   .field-name-field-player-background,
   .field-name-field-cover {
@@ -3731,11 +3813,11 @@ ul.register-icons {
       display: block;
     }
     
-    #edit-field-event-dates,
-    #edit-body,
-    #edit-field-game-category,
-    #edit-field-stream-category,
-    #edit-body-und-0-format {
+    div[id*="edit-field-event-dates"],
+    div[id*="edit-body"],
+    div[id*="edit-field-game-category"],
+    div[id*="edit-field-stream-category"],
+    div[id*="edit-body-und-0-format"] {
       display: none;
     }
     
@@ -3746,13 +3828,25 @@ ul.register-icons {
   }
 }
 
-article.node-multistream.selection {
+article.node-multistream.teaser {
   padding: 0;
+  margin-bottom: 1em;
+  padding-bottom: 1em;
+  overflow: hidden;
+  border-bottom: solid 1px $darkgray;
+
+  .field-type-image {
+    float: left;
+    margin-right: 1em;
+  }
+}
+article.node-multistream.selection {
+  padding: 1em;
   min-height: 40px;
   
   .content {
     margin-left: 40px;
-    font-weight: bold;
+    
     &:before {
       @include images-sprite(MultiStreamSmDk);
       content: "";
@@ -3761,12 +3855,20 @@ article.node-multistream.selection {
       margin-right: 5px;
       position: relative;
       top: 10px;
+      left: -5px;
       vertical-align: top;
     }
     a {
-      min-height: 40px;
+      //min-height: 40px;
       display: inline-block;
       width: 100%;
+      //padding: 1em;
+      font-weight: bold;
+      color: $charcoal;
+      
+      &:hover {
+        color: white;
+      }
     }
   }
   
@@ -3787,15 +3889,16 @@ article.node-multistream.selection {
 #now-playing .stream-wrapper:nth-child(5) .stream-actions .add-5:hover { color: $darkgray; cursor: default; }
 #queue .stream-wrapper .stream-actions .add-q:hover { color: $darkgray; cursor: default; }
 
-#browse-filter-wrapper {
+.filter-wrapper {
   position: relative;
-  
-  #browse-filter-button {
+  min-height: 30px;
+  margin-bottom: 1em;
+  .filter-button {
     display: block;
     position: absolute;
     right: 0px;
     top: 0;
-    background-color: $charcoal;
+    background-color: $darkgray;
     padding: 5px 15px;
     color: white;
     cursor: pointer;
@@ -3807,7 +3910,7 @@ article.node-multistream.selection {
     }
   }
   
-  #browse-filter-options-wrapper {
+  .filter-options-wrapper {
     position: absolute;
     top: 35px;
     right: 0px;
@@ -3820,7 +3923,7 @@ article.node-multistream.selection {
       margin-left: 2em;
     }
     
-    ul#browse-filter-options {
+    ul.filter-options {
       margin-left: 0;
       
       li {
@@ -3857,3 +3960,321 @@ article.node-multistream.selection {
   }    
 }
 
+#favorites-filter-wrapper {
+  position: absolute;
+  left: 280px;
+  top: 105px;
+}
+
+#browse-filter-wrapper {
+  position: absolute;
+  left: 280px;
+  top: 160px;  
+}
+
+input[value="Save"] {
+  text-indent: -1999px;
+  
+  //&:before {
+    @include images-sprite(SaveLt);
+    padding: 18px;
+    background-position: 7px -2581px;
+    //content: "";
+    //display: block;    
+  //}
+}
+
+
+.node-type-multistream,
+.page-multistream {
+  height: 100vh;
+  min-height: 650px; 
+  
+  #header-wrapper {
+    height: 60px;
+    padding: 0;
+    position: absolute;
+    
+    .siteinfo {
+      position: absolute;
+    }
+    
+    h1.page-title {
+      color: white;
+      font-size: 10pt;
+      text-align: center;
+      &:before {
+        content: "Now Playing: ";      
+      }
+    }    
+  }
+  
+  #content-wrapper {
+    height: 100%;
+    padding-top: 60px;
+    
+    #main-content {
+      height: 100%;
+      
+      article.node-multistream.full {
+        padding: 0;  
+        height: 100%;        
+        position: relative;
+      }      
+      
+      #mini-panel-player_menu,
+      #mini-panel-social_menu {
+        height: 100%;
+        & > div, 
+        & > div > div, 
+        & > div > div > div,
+        & > div > div > div > div,
+        & > div > div > div > div > nav,
+        & > div > div > div > div > nav {
+          height: 100%;          
+        }
+        
+        .quicktabs-wrapper {
+          min-height: 100%;   
+                 
+          & > .quicktabs-tabs-wrapper {
+            position: absolute;
+            min-height: 550px;   
+            height: 100%;       
+          }
+
+          & > .quicktabs_main {
+            height: 100%;
+            background: white;
+            
+            & > .quicktabs-tabpage {
+              height: 100%;
+              padding-top: 30px;
+              
+              & div {
+                //height: 100%;
+              }
+            }
+          }
+        }                
+      }
+    }
+  }
+}
+
+#mini-panel-player_menu {
+  float: left;
+}
+#mini-panel-social_menu {
+  float: right;
+  
+  #quicktabs-social_menu {
+    & > .quicktabs-tabs-wrapper {
+      right: 0;
+    }
+    
+    & > .quicktabs-tabs-wrapper {
+      & > ul {
+        margin-top: 80px;
+
+        li {
+          a {
+            text-indent: 1000px;
+            overflow: hidden;
+          }   
+        }
+      }
+    }
+    
+    & > .quicktabs_main {
+      right: $panel_menu_w;
+      left: auto;    
+      
+      .quicktabs-tabpage {
+        padding-top: 20px!important;
+      }
+      #block-panels-mini-player-twitter-feed {
+        height: 100%;
+        #mini-panel-player_twitter_feed {
+          height: 100%;
+          
+          h2 {
+            
+          }
+          & > div,
+          & > div > div,
+          & > div > div > div {
+            height: 100%;
+          }
+          & > div > div > div > div {
+            height: 90%;
+          }
+          iframe.twitter-timeline {
+            height: 100%;
+          }
+        }          
+      }
+      
+      #block-panels-mini-player-chat {
+        height: 100%;
+        #mini-panel-player_chat {
+          height: 100%;
+          
+          & > div,
+          & > div > div,
+          & > div > div > div {
+            height: 100%;
+          }
+          & > div > div > div > div {
+            height: 100%;
+          }
+          iframe {
+            height: 100%;
+          }        
+        }
+
+          
+        #chat-wrapper {
+          height: 100%;
+          position: relative;
+          
+          #chat-open {
+            cursor: pointer;
+            color: $darkgray;
+            //color: white;
+            display: inline-block;
+            margin-bottom: 0;
+            padding: 1em;
+            width: 100%;
+            padding-left: 60px;
+            font-size: 12pt;
+            &:before {
+              @include images-sprite(ChatLgDk);
+              content: "";
+              display: inline-block;
+              position: absolute;
+              left: 10px;
+              right: 0px;
+            }
+          }
+          
+          #chat-selection {
+            display: none;
+            cursor: pointer;
+            position: absolute;
+            top: 50px;
+            background-color: $darkgray;
+            color: white;
+            width: 100%;
+            max-height: 80%;
+            overflow-y: auto;
+            
+            .stream {            
+              padding: .2em 0.2em 0.2em 1em;
+              
+              &:hover {
+                color: $darkgray;
+                background-color: white;
+              }
+            } 
+          }
+          
+          #chat-rooms {
+            height: 90%;
+            .chat-iframe {
+              height: 100%;
+            }
+          }          
+        }
+      }
+
+    }
+    
+    & > .handle {
+      right: $panel_content_w + $panel_menu_w;
+      left: auto;
+      &:after {
+        transform: rotate(180deg);
+      }
+      &.closed {
+        right: $panel_menu_w;
+        left: auto;
+        &:after {
+          transform: none;
+        }
+      }
+    }
+  }
+}
+
+form[id*="multistream-form-new-multistream"] {
+  label {
+    display: block;
+  }
+  
+  p {
+    margin-bottom: 1em;
+    //font-size: 12pt;
+  }
+  
+  .clear-stage {
+    text-align: right;
+  }  
+}
+
+.player-background {
+  position: absolute;
+  width: 100%;
+  min-height: 100%;
+  background-size: cover;
+}
+
+// Twitter feed
+#twitter-feed {
+  overflow-y: auto;
+  height: 90%;
+  
+  .twitter-status {
+    margin-bottom: 10px;
+    margin-right: 10px;
+    padding-bottom: 10px;
+    border-bottom: solid 1px $lightgray;  
+    .avatar {
+      float: left;
+      
+      img {
+        height: 35px;
+        margin: 0 .5em .5em 0;
+      }
+    }
+    
+    .timestamp {
+      float: right;
+    }
+    
+    .text {
+      clear: left;
+    }
+    
+    .actions {
+      line-height: 0;
+      margin: 0;
+      li {
+        display: inline-block;
+        margin-right: 1em;
+        a {
+          height: 16px;
+          width: 17px;
+          text-indent: 1999px;
+          overflow: hidden;
+          background-image: url(../images/twitter-sprite.png);
+          display: block;
+        }
+        
+        &:nth-child(1) a {background-position: 121px center;}
+        &:nth-child(2) a {background-position: 37px center;}
+        &:nth-child(3) a {background-position: 89px center;}
+      }
+    }
+  }
+}

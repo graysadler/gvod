@@ -31,7 +31,10 @@
 ?>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css' />
 <!-- Go to www.addthis.com/dashboard to customize your tools -->
+
+<!-- 
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53fef73d0a5bef20"></script>
+--> 
 </head>
 <body class="<?php print $classes; ?>" <?php print $attributes;?>>
 <a href="#main-content" class="element-invisible element-focusable"><?php print t('Skip to main content'); ?></a>

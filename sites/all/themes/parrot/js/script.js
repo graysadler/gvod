@@ -108,7 +108,7 @@
       $('.quicktabs-wrapper .handle', context).click(function(e){
         $(this).siblings('.quicktabs_main').toggle();
         $(this).toggleClass('closed');
-        $(this).parents('.quicktabs-wrapper:first').toggleClass('docked');
+        $(this).closest('.quicktabs-wrapper').toggleClass('docked');
       });
       
       $('#quicktabs-player_menu ul.quicktabs-style-sky li').hover(
@@ -128,7 +128,35 @@
          $(this).siblings('.image-widget').find('.upload').trigger('click');
       });
 
-      
+      $('#player-more-wrapper .button:not(.processed)').each(function(){
+        $(this).addClass('processed');
+        var parent = $(this).closest('#player-more-wrapper');
+        
+        $(this).click(function(e){
+          $(this).siblings('.more-actions').toggle();
+        });
+        $(this).siblings('.more-actions:first').mouseleave(function(){
+          $(this).hide();
+          //$('.panel-actions-popup').attr('style','');
+        });
+        $(this).siblings('.more-actions').find('li').click(function(){
+          $(this).closest('.more-actions').hide();
+          //$('.panel-actions-popup').attr('style','');
+        });
+        
+        $(parent).find('.new').click(function(){
+          $('.panel-actions .new').trigger('click');
+          $('.panel-actions-popup').css({top: 'auto', bottom: '0'});
+        });
+        $(parent).find('.open').click(function(){
+          $('#quicktabs-player_menu a.favorites').trigger('click');
+        });
+        $(parent).find('.save').click(function(){
+          $('.panel-actions .fav:is(visible)').trigger('click');
+          $('.panel-actions .save:is(visible)').trigger('click');          
+        });
+        
+      });
     }
   }
   

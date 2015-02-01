@@ -22,6 +22,12 @@
 @import "components/sprites";
 @import "base/mixins";
 
+@import "compass/utilities/sprites";
+$images-sprite-dimensions: true;
+$images-spacing: 10px;
+@import "sprite/images/*.png";
+@include all-images-sprites;
+
 // Grid system and page structure.
 @import "layout/grid";
 @import "layout/scaffolding";
@@ -52,5 +58,6 @@
 
 // Components: Custom Elements.
 @import "components/elements";
+
 
 /* ---------------------------------------------------------------------------------------- */

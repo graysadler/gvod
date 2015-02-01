@@ -45,7 +45,15 @@ function sr_core_get_entities($type, $filter, $account = null) {
   }
 }
 
-function sr_core_node_presave($node) {
+function sr_core_node_insert($node) {
+  sr_core_node_save($node);
+}
+
+function sr_core_node_update($node) {
+  sr_core_node_save($node);  
+}
+
+function sr_core_node_save($node) {
   if($node->type != 'multistream') {
     return;
   }

@@ -56,9 +56,9 @@ if (arg(0) =="admin"){
     <h2><?php print $variables['display']->title; ?></h2>
     </header>
   <?php } ?>
-  <?php if(!empty($content['top']){ ?>
+  <?php if(!empty($content['top'])) { ?>
   <div class=""><?php print $content['top']; ?></div>
-  <?php } ?>
+  <?php }; ?>
   
   <div class=""><?php print $content['left']; ?></div>
   
@@ -66,7 +66,7 @@ if (arg(0) =="admin"){
   
   <div class=""><?php print $content['right']; ?></div>
 
-  <?php if(!empty($content['bottom']){ ?>
+  <?php if(!empty($content['bottom'])) { ?>
   <div class=""><?php print $content['bottom']; ?></div>
   <?php } ?>
 </article>

@@ -429,6 +429,7 @@ class StreamController extends EntityAPIController {
    * Overriding the buldContent function to add entity specific fields
    */
   public function buildContent($entity, $view_mode = 'full', $langcode = NULL, $content = array()) {
+   
     $content = parent::buildContent($entity, $view_mode, $langcode, $content);
     //$content['model_sample_data'] =  array(
       //'#markup' => theme('model_sample_data', array('model_sample_data' => check_plain($entity->data['sample_data']), 'model' => $entity)),
@@ -442,9 +443,16 @@ class StreamController extends EntityAPIController {
     $content['viewers'] = '<div class="viewers">' . number_format($entity->viewers, 0) . '</div>';
     //fav
     $content['favorite'] = flag_create_link('stream_favs', $entity->stream_id);
-    
+    $content['stream_id'] = $entity->stream_id;
+    $content['provider'] = $entity->provider;
+    $content['channel'] = $entity->channel;
     //remove
 
+    $content['position'] = '';
+    if(isset($entity->stream_pos)) {
+      $content['position'] = $entity->stream_pos;
+    }
+      
     return $content;
   }
   
@@ -483,4 +491,8 @@ class StreamProviderController extends EntityAPIControllerExportable {
 		$provider = parent::create($values);
 		return $provider;
 	}
+}
+
+function stream_preprocess_stream(&$vars) {
+  $vars['stream_id'] = $vars['stream']->stream_id;
 }

@@ -99,6 +99,10 @@ function multistream_strongarm() {
       'display' => array(
         'sharethis' => array(
           'default' => array(
+            'weight' => '12',
+            'visible' => FALSE,
+          ),
+          'teaser' => array(
             'weight' => '10',
             'visible' => FALSE,
           ),
