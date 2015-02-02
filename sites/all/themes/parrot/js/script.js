@@ -13,28 +13,6 @@
   Drupal.behaviors.StreamRiotTheme = {
       attach : function(context, settings) {
 
-        $("#block-block-1 .login-link .register,.rblock").live("mouseenter", (function(e) {
-          $("#block-block-1 .login-link .login").removeClass("active");
-          $(this).addClass("active");
-          $("#block-block-1 .login-block .lblock").hide();
-          $("#block-block-1 .login-block .otherblock").hide();
-     
-          $("#block-block-1 .login-block .rblock").show();
-         
-        
-      }));
-     
-     
-      
-      $("#block-block-1 .login-link .register,.rblock").live("mouseleave", (function() {
-         
-          $("#block-block-1 .login-link .login").removeClass("active");
-          $(this).addClass("active");
-          $("#block-block-1 .login-block .lblock").hide();
-          $("#block-block-1 .login-block .otherblock").hide();
-          $("#block-block-1 .login-block .rblock").hide();
-      }));
-
       $("#block-block-1 .login-link .login,.lblock").live("mouseenter", (function() {
           $(this).addClass("active");
           $("#block-block-1 .login-link .register").removeClass("active");
@@ -152,8 +130,9 @@
           $('#quicktabs-player_menu a.favorites').trigger('click');
         });
         $(parent).find('.save').click(function(){
-          $('.panel-actions .fav:is(visible)').trigger('click');
-          $('.panel-actions .save:is(visible)').trigger('click');          
+          $('.panel-actions .fav:visible').trigger('click');
+          
+          $('.panel-actions .save:visible').trigger('click');          
         });
         
       });

@@ -74,6 +74,12 @@ function sr_core_entity_view_alter(&$build, $type) {
   }
 }
 
+function sr_core_preprocess_page(&$vars) {
+  drupal_add_css(drupal_get_path('module', 'sr_core').'/css/sr_core.css');
+  drupal_add_js(drupal_get_path('module', 'sr_core').'/js/sr_core.js');  
+  drupal_add_library('system', 'ui.dialog');
+}
+
 function sr_core_form_user_register_form_alter(&$form, &$form_state) {
   drupal_add_css(drupal_get_path('module', 'sr_core').'/css/sr_core.css');
   drupal_add_js(drupal_get_path('module', 'sr_core').'/js/sr_core.js');  

@@ -1178,7 +1178,7 @@ function multistream_form_add_channel($form, $form_state) {
 			'#type' => 'textfield',
 			'#prefix' => '<small>'.t('Add Twitch Channels by name; add multiple channels by entering a space between each channel.').'</small>',
 	    '#id' => 'add-channel',
-	    '#size' => 27,
+	    '#size' => 28,
 	);
 
 	$form['channel_add'] = array(

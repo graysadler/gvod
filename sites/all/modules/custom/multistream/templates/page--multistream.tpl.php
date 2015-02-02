@@ -44,7 +44,7 @@
                 
                 <?php if ($page['header']): ?>
                     <div class="header-region">
-                        <?php //print render($page['header']); ?>
+                        <?php print render($page['header']); ?>
                     </div>
                 <?php endif; ?>
 

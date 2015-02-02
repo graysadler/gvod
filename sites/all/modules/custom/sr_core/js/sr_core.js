@@ -12,7 +12,7 @@
               modal : true,
               draggable : false,
               resizable : false,
-              width : 400,
+              width : 350,
               open : function() {
                 $('.ui-widget-overlay').live('click', function() {
                   $("#block-formblock-user-register:first").dialog('close');
@@ -20,8 +20,7 @@
               }
             });
           });
-        });
-        
+        });        
       }
   }
   
