@@ -11,6 +11,7 @@
   top: 2em;
   z-index: 1000;
   height: 300px;
+  overflow-y: auto;
 }
 #manage-selection article:hover {
   background: #efefef;
@@ -48,6 +49,10 @@
   pointer-events: auto;
 }
 
+.panel-actions-popup .open {
+  max-height: 400px;
+  overflow-y: auto;
+}
 .multistream-owner #mini-panel-player_menu ul.panel-actions li.fav {
   display: none;
 }
@@ -55,8 +60,14 @@
 body:not(.anon) .panel-actions .save {
   display: none!important;
 }
-body:not(.anon) .multistream-owner .panel-actions .save {
+body:not(.anon) .multistream-owner .panel-actions .save,
+body:not(.anon) .chained .panel-actions .save {
   display: inline!important;
+}
+
+body:not(.anon) .multistream-owner .panel-actions .fav,
+body:not(.anon) .chained .panel-actions .fav {
+  display: none!important; 
 }
 
 label[for*="edit-add-stream"] { display: block; }

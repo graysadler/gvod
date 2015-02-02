@@ -61,6 +61,13 @@ function multistream_menu() {
 	    'access arguments' => array('access content'),
 	    'type' => MENU_CALLBACK,
 	);			
+	$items['multistream/ajax/user-login-update'] = array(
+	    'title' => 'Update Blocks',
+	    'page callback' => 'multistream_ajax_user_login_update',
+	    'access arguments' => array('access content'),
+	    'type' => MENU_CALLBACK,
+	);
+	
 	return $items; 
 }
 
@@ -105,7 +112,7 @@ function multistream_view_multistream($context, $streams = array(), $node = null
 	drupal_add_css(drupal_get_path('module', 'multistream').'/css/multistream.css');
 	drupal_add_js(drupal_get_path('module', 'multistream').'/js/multistream.js');
 	
-
+  $vars['class'] = 'not-chained';
 		
 	// Depending on the context, the streams source will be different
 	switch($context) {
@@ -117,7 +124,7 @@ function multistream_view_multistream($context, $streams = array(), $node = null
 			// Streams will come from the path
 			// Get args and loop through each to load
 			$streams = multistream_get_streams_from_url();
-
+      $vars['class'] = 'chained';
 			break;
 		case 'riot':
 			// Streams will be passed through the $streams array	
@@ -256,12 +263,12 @@ function multistream_block_info() {
 
 	$blocks['browse_by_game'] = array(
 			'info' => t('Browse by Game'),
-			'cache' => DRUPAL_CACHE_GLOBAL,
+			'cache' => DRUPAL_CACHE_PER_ROLE,
 	);
 
 	$blocks['multistream_browse_results'] = array(
 	    'info' => t('Browse Results'),
-	    'cache' => DRUPAL_CACHE_GLOBAL,
+	    'cache' => DRUPAL_CACHE_PER_ROLE,
 	);
 	
 	
@@ -277,22 +284,24 @@ function multistream_block_info() {
 
 	$blocks['multistream_panel_actions'] = array(
 	    'info' => t('Multistream Panel Actions'),
-	    'cache' => DRUPAL_CACHE_GLOBAL,
+	    'cache' => DRUPAL_CACHE_PER_ROLEL,
 	);
 
 	$blocks['multistream_panel_actions_anon'] = array(
 	    'info' => t('Multistream Panel Actions Anon'),
-	    'cache' => DRUPAL_CACHE_GLOBAL,
+	    'cache' => DRUPAL_CACHE_PER_ROLE,
 	);
+	
 	$blocks['multistream_twitter_feed'] = array(
 	    'info' => t('Multistream Twitter Feed'),
-	    'cache' => DRUPAL_CACHE_GLOBAL,
+	    'cache' => DRUPAL_CACHE_PER_PAGE,
 	);	
 
 	$blocks['multistream_chat'] = array(
 	    'info' => t('Multistream Chat'),
-	    'cache' => DRUPAL_CACHE_GLOBAL,
+	    'cache' => DRUPAL_NO_CACHE,
 	);	
+	
 	return $blocks;
 }
 
@@ -351,7 +360,7 @@ function multistream_block_view($delta = '') {
 		  $vars['items'] = $links;
 		  $vars['attributes'] = array('class'=>'panel-actions');
 		  if($delta == 'multistream_panel_actions_anon') {
-		    $vars['attributes']['class'] .= ' anon';
+		    $vars['attributes']['class'] .= ' anon register-email';
 		  }
 		  $output = '<div class="panel-actions-wrapper">';
 		  $output .= theme('item_list', $vars);
@@ -411,33 +420,34 @@ function multistream_block_chat() {
 }
 
 function multistream_block_twitter_feed($node = null) {
-  $default = "streamriot";
   $tweets = null;
   $update = null;
-  
+
+  $search = 'streamriot';
+  $feeds_array = array('@streamriot', '#streamriot');
+    
   if(!$node) {
-    $search = $default;
+    $nid = 0;   
   } else {
-    // load cached statuses
-    // cache min life 30 seconds
-    $result = db_query('SELECT * FROM {multistream_twitter_feeds} WHERE nid = ' . $node->nid)->fetchAssoc();
-    if(!empty($result)) {
-      $time = time() - 30;
-      $update = true;      
-      if($result['updated'] >= $time) {
-        $tweets = unserialize($result['data']);
-      }
-    }
-    
-    
+    $nid = $node->nid; 
     $feeds = field_get_items('node', $node, 'field_twitter_feed');
-    if(empty($feeds)) {
-      $search = $default;
-    } else {
+    if(!empty($feeds)) {
       $feeds = check_plain($feeds[0]['value']);
       $feeds_array = explode(' ', $feeds);
       $feeds = str_replace(' ', ' OR ', $feeds);
-      $search = $feeds;
+      $feeds = str_replace('@', '', $feeds);
+      $search = $feeds;      
+    }
+  }
+  
+  // load cached statuses
+  // cache min life 30 seconds
+  $result = db_query('SELECT * FROM {multistream_twitter_feeds} WHERE nid = ' . $nid)->fetchAssoc();
+  if(!empty($result)) {
+    $time = time() - 30;
+    $update = true;      
+    if($result['updated'] >= $time) {
+      $tweets = unserialize($result['data']);
     }
   }
   
@@ -450,14 +460,14 @@ function multistream_block_twitter_feed($node = null) {
     $tweets = $twitter->call('search/tweets', $params);
   }
   
-  if($node) {
-    $record = array(
-        'nid' => $node->nid,
-        'updated' => time(),
-        'data' => $tweets,
-    );
-    drupal_write_record('multistream_twitter_feeds', $record, $update ? 'nid' : null);
-  }  
+  //if($node) {
+  $record = array(
+      'nid' => $nid,
+      'updated' => time(),
+      'data' => $tweets,
+  );
+  drupal_write_record('multistream_twitter_feeds', $record, $update ? 'nid' : null);
+  //}  
   //$tweets = $twitter->search_tweets($search, array('include_entities'=>'true'));
   $output .= '<div id="twitter-feed">';
   foreach($tweets['statuses'] as $tweet) {
@@ -493,7 +503,7 @@ function multistream_block_twitter_feed($node = null) {
     $via = implode(' ', $users);
   }
     
-  $output .= '<a href="https://twitter.com/intent/tweet?hashtags='.$hash.'&text='.$via.'">Send a Tweet</a>';
+  $output .= '<a href="https://twitter.com/intent/tweet?hashtags='.$hash.'&text='.$via.'" class="btn">Join the Conversation</a>';
   
   $output .= '' . //'<a class="twitter-timeline"  href="https://twitter.com/search?q='.$search.'" data-widget-id="">Tweets</a>'.
     '<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>';
@@ -591,6 +601,21 @@ function multistream_form_new_multistream_callback(&$form, &$form_state) {
   }
   $node = node_submit($node);
   node_save($node);
+  
+  $commands[] = ajax_command_invoke('.panel-overlay', 'trigger', array('click'));
+  
+  $message = '<div><strong>Multi-Stream Saved!</strong></div><div>Nice work! <strong>'.$title.'</strong> has been added to your <strong>Favorites.</strong></div>';
+  $commands[] = ajax_command_invoke('#player-messages', 'srDisplayPlayerMessage', array($message));  
+  
+  $settings['multistream']['is_owner'] = true;
+  $settings['multistream']['nid'] = $node->nid;
+  $settings['multistream']['title'] = check_plain($node->title);
+  $path = path_load('node/'.$node->nid);
+  $settings['multistream']['path'] = $path['alias'];
+  $commands[] = ajax_command_invoke(null, 'srUpdateURL', array($path['alias']));
+  
+  $commands[] = ajax_command_settings($settings);
+  return array('#type'=>'ajax', '#commands'=>$commands);
 }
 
 function multistream_form_manage($node = null) {
@@ -665,7 +690,7 @@ function multistream_form_browse_by_game() {
 	$form['keyword'] = array(
 		'#type' => 'textfield',
 		'#id' => 'browse-by-game',
-	  '#size' => 25,
+	  '#size' => 30,
 		//'#autocomplete_path' => 'game/autocomplete',	
 		'#prefix' => '<small> '. t('Search game titles, channels or by keyword:') .'</small>',
 	  '#attributes' => array('placeholder'=>'Enter Search'),
@@ -988,11 +1013,15 @@ function multistream_node_view($node, $view_mode) {
 	  
 	  $node->content['multistream']['#markup'] = multistream_view_multistream('riot', $streams, $node);	   
 	  $settings['multistream']['is_owner'] = false;
-	  
+	  $settings['multistream']['title'] = check_plain($node->title);
+	  if(!isset($node->path)) {
+	    $path = path_load('node/'.$node->nid);	    
+	  }
+	  $settings['multistream']['path'] = $path['alias'];
+	  	   
 	  if($user->uid == $node->uid) {
 	    $settings['multistream']['is_owner'] = true;
-	    $settings['multistream']['nid'] = $node->nid;
-	  
+	    $settings['multistream']['nid'] = $node->nid;  
 	  }
 	  
 	  drupal_add_js($settings, 'setting', 'footer', false, true, false);	  
@@ -1149,7 +1178,7 @@ function multistream_form_add_channel($form, $form_state) {
 			'#type' => 'textfield',
 			'#prefix' => '<small>'.t('Add Twitch Channels by name; add multiple channels by entering a space between each channel.').'</small>',
 	    '#id' => 'add-channel',
-	    '#size' => 20,
+	    '#size' => 27,
 	);
 
 	$form['channel_add'] = array(
@@ -1179,8 +1208,6 @@ function multistream_form_add_channel($form, $form_state) {
 }
 
 function multistream_preprocess_page($vars, $hook) {
-  $test = 'test';
-  
   if(!isset($vars['node'])) {
     return;
   }
@@ -1406,7 +1433,7 @@ function multistream_ajax_favorites() {
     if($s_total) {
       $results = $s_view->render();
     } elseif($ms_total) {
-      $results = $ms_total->render();
+      $results = $ms_view->render();
     } else {
       exit;
     }
@@ -1452,18 +1479,22 @@ function multistream_block_add_channel_callback($form, &$form_state) {
     
     $commands[] = ajax_command_settings($settings);
     $stream_render = drupal_render(entity_view('stream', array($stream)));
-    $commands[] = ajax_command_invoke('#queue', 'srInsertStream', array($stream_render, $stream->stream_id, 'q'));
-    
+    $commands[] = ajax_command_invoke('#queue', 'srInsertStream', array($stream_render, $stream->stream_id, 'q'));   
   }
+  
+  $channels_txt = implode(', ', $channels);
+  
   $commands[] = ajax_command_invoke('#add-channel-message', 'addClass', array('messages'));
+  
   if(!$found) {
     $commands[] = ajax_command_html('#add-channel-message', 'Channel not found');
     $commands[] = ajax_command_invoke('#add-channel-message', 'addClass', array('error'));
     $commands[] = ajax_command_invoke('#add-channel-message', 'removeClass', array('status'));    
   } else {
-    $commands[] = ajax_command_html('#add-channel-message', 'Channel(s) added');
-    $commands[] = ajax_command_invoke('#add-channel-message', 'addClass', array('status'));
-    $commands[] = ajax_command_invoke('#add-channel-message', 'removeClass', array('error'));            
+    $message = '<div>Channel Added</div><div><strong>'.$channels_txt.'</strong> has been added to your Favorites and Queue</div>';
+    $commands[] = ajax_command_invoke('#player-messages', 'srDisplayPlayerMessage', array($message));
+    $commands[] = ajax_command_invoke('#add-channel-message', 'removeClass', array('error messages'));    
+    $commands[] = ajax_command_html('#add-channel-message', '');
   }
   
   
@@ -1482,4 +1513,28 @@ function multistream_ajax_add_stream_submit_callback(&$form, &$form_state) {
   }
   
   return array('#type'=>'ajax', '#commands'=>$commands);
+}
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function multistream_ctools_plugin_directory($module, $type) {
+  if ($module == 'hybridauth' && $type == 'icon_pack') {
+    return 'plugins/icon_pack';
+  }
+}
+
+function multistream_ajax_user_login_update() {
+  // panel actions
+  $panel_actions = multistream_block_view('multistream_panel_actions');
+  $commands[] = ajax_command_replace('.panel-actions-wrapper', $panel_actions['content']);
+  // favorites
+  $favorites = module_invoke('panels_mini', 'block_view', 'favorites');
+  $commands[] = ajax_command_replace('#mini-panel-favorites', $favorites['content']);
+  // manage
+  $manage = module_invoke('panels_mini', 'block_view', 'player_manage');
+  $commands[] = ajax_command_replace('#mini-panel-player_manage', $manage['content']);
+  
+  ajax_deliver(array('#type'=>'ajax', '#commands'=>$commands));
+  exit; 
 }

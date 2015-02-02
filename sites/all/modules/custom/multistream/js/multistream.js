@@ -146,9 +146,8 @@
             });
             
             if($(link).hasClass('active')) {
-              $(link).removeClass('active');
-              $('.panel-overlay').remove();
-              $('.panel-actions-popup li').hide();              
+              
+             
             } else {
               $(link).addClass('active');
               var index = $(link).index();
@@ -162,7 +161,9 @@
       });
       
       $('.panel-overlay').live('click', function(){
-        $('.panel-actions li.active').click();
+        $('.panel-overlay').remove();
+        $('.panel-actions-popup li').hide(); 
+        $('.panel-actions li.active').removeClass('active');
       });
       
       $('#favorites-empty:not(.processed)').each(function(){
@@ -230,6 +231,11 @@
           
           $(this).unbind('click'); // Remove the click events.
           $(this).click(function (e) {
+            if($(this).hasClass('active')) {
+              $.each(events.click, function() {
+                this.handler(); // Invoke the mousedown handlers that was removed.
+              });
+            }
             // Check if we're in the manager
             var inManager = $('#quicktabs-player_menu ul.quicktabs-tabs li.manage').hasClass('active');
             if (inManager) {
@@ -244,8 +250,10 @@
                   url: '/multistream/update-streams',
                   dataType: 'json',
                   data: Drupal.settings.multistream,
-                  success : function(res) {
-                    console.log('streams updated');
+                  success : function(res) {                    
+                    var title = Drupal.settings.multistream.title;
+                    var message = '<div>Nice work! <strong>'+title+'</strong> has been <strong>Updated.</strong></div>';
+                    $('#player-messages').srDisplayPlayerMessage(message);
                   }
                 });
               } else {
@@ -254,10 +262,6 @@
                 });
               }                          
             }
-            
-            
-            // Prevent default action.
-            //return false;
           });
         });          
       }
@@ -499,4 +503,36 @@
     SR.updatePosition(stream, pos);
     SR.streamInit();
   }
+  
+  $.fn.srDisplayPlayerMessage = function (html) {
+    html = '<span class="message-img"></span>' + html;
+    $('#player-messages').html(html).animate({height: "show"}).delay(5000).animate({height: "hide"});
+  }  
+
+  $.fn.srUpdateURL = function (path) {
+    window.history.replaceState('Object', 'Title', '/'+path);
+  }  
+  
+  $.srUserLoginMultistream = function (path) {
+    $('body').removeClass('anon');
+    $.ajax({
+      url: '/multistream/ajax/user-login-update',
+      context: document.body,
+      //data: {'action':'copy_riot','r':id, 't':title},
+      success: function(data, textStatus, jqXHR){
+        var ajax = new Drupal.ajax({},{},{url:''});
+        
+        var response = data;
+        var status = textStatus;
+        if (typeof response == 'string') {
+          response = $.parseJSON(response);
+        }
+        ajax.success(response, status);
+        Drupal.attachBehaviors();
+      },
+      error: function(x, s, e) {
+        
+      }
+    });    
+  }      
 })(jQuery);

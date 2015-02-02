@@ -440,3 +440,45 @@ function parrot_preprocess_form_element(&$vars) {
   	  break;
   }
 }
+
+function parrot_preprocess_hybridauth_widget(&$vars, $hook) {
+  // Add normal email registration
+  $vars['providers'][] = '<a href="#" title="Email"><span class="register-email hybridauth-icon-multistream" title="Email"></span></a>';
+}
+
+/*
+ adds a comment field under the 2password
+
+*/
+function parrot_password($variables) {
+  $element = $variables['element'];
+  $element['#size'] = '30';
+  $element['#attributes']['type'] = 'password';
+
+  element_set_attributes($element, array('id', 'name', 'size', 'maxlength'));
+  //  element_set_attributes($element, array('id', 'name',  'maxlength'));
+  if(!theme_get_setting('mothership_classes_form_input')){
+    _form_set_class($element, array('form-text'));
+  }
+
+  //html5 plceholder love ? //substr(,0, 20);
+  if (!empty($element['#description']) AND theme_get_setting('mothership_classes_form_placeholder_description') ) {
+    $element['#attributes']['placeholder'] = $element['#description'];
+  }
+
+  if (!empty($element['#title']) AND theme_get_setting('mothership_classes_form_placeholder_label')) {
+    $element['#attributes']['placeholder'] = $element['#title'];
+  }
+
+
+
+
+  if($variables['element']['#id'] == "edit-pass-pass1"){
+    return '<input' . drupal_attributes($element['#attributes']) . ' />';
+  }elseif($variables['element']['#id'] == "edit-pass-pass2"){
+    return '<input' . drupal_attributes($element['#attributes']) . ' />';
+  }else{
+    return '<input' . drupal_attributes($element['#attributes']) . ' />' ;
+  }
+
+}

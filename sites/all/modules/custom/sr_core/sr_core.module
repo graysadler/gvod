@@ -73,3 +73,53 @@ function sr_core_entity_view_alter(&$build, $type) {
     }
   }
 }
+
+function sr_core_form_user_register_form_alter(&$form, &$form_state) {
+  drupal_add_css(drupal_get_path('module', 'sr_core').'/css/sr_core.css');
+  drupal_add_js(drupal_get_path('module', 'sr_core').'/js/sr_core.js');  
+
+  $form['message'] = array(
+  	'#markup' => '<div>Create and share multi-streams with gamers around the world! Join us, it\'s fast and free!</div>',
+    '#weight' => -100,
+  );
+  
+  unset($form['account']['name']['#description']);  
+  unset($form['account']['mail']['#description']);
+  unset($form['account']['pass']['#description']);
+  
+  $form['account']['pass']['#pre_render'][] = 'sr_core_register_password_pre_render';
+      
+  $form['account']['name']['#attributes'] = array('alt'=>'Enter a username');
+  $form['account']['mail']['#attributes'] = array('alt'=>'Enter E-mail address');
+  
+  $form['account']['name']['#size'] = 30;
+  $form['account']['mail']['#size'] = 30;
+  
+  $form['actions']['submit']['#ajax'] = array(
+      'event' => 'click',
+      'callback' => 'sr_core_ajax_register_form_callback',
+      'wrapper' => 'block-formblock-user-register',
+      'method' => 'html',
+      'effect' => 'fade',
+  );
+  $form['actions']['submit']['#id'] = 'user-register-submit';  
+}
+
+function sr_core_ajax_register_form_callback(&$form, &$form_state) {
+  if(!$form_state['executed']) {
+    return $form;
+  }
+
+  global $user;
+  $commands[] = ajax_command_invoke('#block-formblock-user-register', 'dialog', array('close'));
+  $commands[] = ajax_command_invoke(null, 'srUserLogin');
+  return array('#type'=>'ajax', '#commands'=>$commands);
+}
+
+function sr_core_register_password_pre_render($element) {
+  $element['pass1']['#attributes'] = array('alt'=>'Password');
+  $element['pass2']['#attributes'] = array('alt'=>'Confirm Password');
+  unset($element['pass1']['#description']);
+  unset($element['pass2']['#description']);
+  return $element;
+}
