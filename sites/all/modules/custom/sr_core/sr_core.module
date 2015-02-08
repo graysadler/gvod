@@ -80,6 +80,16 @@ function sr_core_preprocess_page(&$vars) {
   drupal_add_library('system', 'ui.dialog');
 }
 
+function sr_core_form_alter(&$form, &$form_state, $form_id) {
+  if (!user_is_logged_in() && user_access('use hybridauth') &&
+  in_array($form_id, array_filter(variable_get('hybridauth_forms', array('user_login', 'user_login_block'))))) {
+    $message = '<p><strong>Join us FREE!</strong> Sign up using social or email:</p>';
+    $form['hybridauth']['#prefix'] = $message;
+    $form['hybridauth']['#weight'] = -100;
+    //$form['actions']['#weight'] = 0;
+  }
+}
+
 function sr_core_form_user_register_form_alter(&$form, &$form_state) {
   drupal_add_css(drupal_get_path('module', 'sr_core').'/css/sr_core.css');
   drupal_add_js(drupal_get_path('module', 'sr_core').'/js/sr_core.js');  
@@ -128,4 +138,45 @@ function sr_core_register_password_pre_render($element) {
   unset($element['pass1']['#description']);
   unset($element['pass2']['#description']);
   return $element;
+}
+
+function sr_core_block_info() {
+  // This example comes from node.module.
+  $blocks['social_share'] = array(
+      'info' => t('Share to (Social)'),
+      'cache' => DRUPAL_CACHE_PER_PAGE,
+  );
+  
+  return $blocks;
+}  
+
+function sr_core_block_view($delta = '') {
+  // This example is adapted from node.module.
+  $block = array();
+
+  switch ($delta) {
+  	case 'social_share':
+  	  $block['subject'] = t('Share to');
+  	  $block['content'] = sr_core_block_social_share();
+  	  break;
+  }
+  return $block;
+}
+
+function sr_core_block_social_share() {
+  drupal_add_js(drupal_get_path('module', 'sr_core').'/js/sr_core.js');
+  
+  $url = url(current_path(), array('absolute'=>true));
+  
+  $output = '
+    <ul class="share-to">
+      <li><a href="https://twitter.com/intent/tweet?url='.$url.'"><span class="twitter popup"></span></a>
+      <li><a href="http://www.facebook.com/share.php?u='.$url.'"><span class="facebook popup"></span></a>
+      <li><a href="https://plus.google.com/share?url='.$url.'"><span class="google popup"></span></a>
+      <li><a href="http://www.reddit.com/submit?url='.$url.'"><span class="reddit popup"></span></a>
+      <li><a href="#"><span class="copy"></span></a>          
+    </ul>
+  ';
+  
+  return $output;
 }

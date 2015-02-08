@@ -73,3 +73,25 @@ body:not(.anon) .chained .panel-actions .fav {
 label[for*="edit-add-stream"] { display: block; }
 
 div[id*="edit-field-streams"] .flag-stream-favs { display: none; }
+
+#mini-panel-player_menu,
+#mini-panel-social_menu {
+  width: 25%;
+}
+
+#riot-player-wrapper {
+  float: left;
+  height: 100%;
+  width: 50%;  
+  overflow: visible;
+  position:relative;
+}
+
+#riot-player {
+  width:100%;
+  height: 100%;  
+  overflow:visible;
+  position: absolute;
+  top:0;
+  left: 0;
+}

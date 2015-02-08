@@ -359,7 +359,8 @@
     SR.sortQueue();
     
     // Update the player stage
-    
+    var swf = getFlashMovie("riot-player");
+    swf.updateStream(strPlayer, strStream); 
   }
   
   SR.sortQueue = function() {
@@ -437,6 +438,11 @@
     if(Drupal.settings.multistream.debug == true) {
       return;
     }
+    
+    if(Drupal.settings.multistream.streams.length == 0) {
+      return;
+    }
+    
     var rooms = $('#chat-rooms');
     var stream_id = Drupal.settings.multistream.stream_pos[1];   
     var stream = Drupal.settings.multistream.streams[stream_id];

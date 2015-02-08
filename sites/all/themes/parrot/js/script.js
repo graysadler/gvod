@@ -13,7 +13,7 @@
   Drupal.behaviors.StreamRiotTheme = {
       attach : function(context, settings) {
 
-      $("#block-block-1 .login-link .login,.lblock").live("mouseenter", (function() {
+        $("#block-block-1 .login-link .login,.lblock").live("mouseenter", (function() {
           $(this).addClass("active");
           $("#block-block-1 .login-link .register").removeClass("active");
           $("#block-block-1 .login-block .rblock").hide();
@@ -39,8 +39,33 @@
           $("#block-block-1 .login-block .lblock").hide();
           $("#block-block-1 .login-block .otherblock").hide();
       }));
+      //
+      $("#block-menu-menu-login a[href*='login']").live("mouseenter", (function() {
+        $(this).addClass("active");
+        //$("#block-panels-mini-header-mega-menu").show();
+      }));
+    $("#block-panels-mini-header-mega-menu").live("mouseleave", (function() {
+        //$(this).removeClass("active");
+        $(this).hide();
+    }));
+    
+    $("#block-menu-menu-login a[href*='login']:not(.processed)").once(function() {
+      $(this).addClass('processed');
+      $(this).click(function(e){
+        e.preventDefault();
+        $("#block-panels-mini-header-mega-menu").toggle();        
+      });
+      
+            
+    });
 
-
+    $("#block-menu-menu-login a[href*='register']").once(function(){
+      $(this).click(function(e){
+        e.preventDefault();
+        $.srRegisterDialog();
+      });
+    });
+    
       $(".contact-form").addClass("test2");
 
       $(".tags .tag-content").hide();

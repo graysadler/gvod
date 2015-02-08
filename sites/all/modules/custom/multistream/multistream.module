@@ -207,21 +207,21 @@ function multistream_view_player($streams) {
 		$streams = array();
 	}
 
-	$player = $base_url . variable_get('multistream_player_src', '/StreamRiotPlayer_v1_9.swf');
-
+	//$player = $base_url . variable_get('multistream_player_src', '/StreamRiotPlayer_v1_9_11.swf');
+	$player = $base_url . variable_get('multistream_player_src', '/StreamRiotPlayer_v2.swf');
+	
 	$scale = 645 / 836;
 	$width = 836 * $scale;
 	$height = 600;
 	$width = 570;
-	if(!variable_get('disable_riot_player', 1)) {
-		drupal_add_js(drupal_get_path('module', 'multistream').'/lib/swfobject/src/swfobject.js');
-		$script = 'var flashvars = {};var params = {allowScriptAccess: "always", allowFullScreen: "true", allowNetworking: "all", wmode: "transparent"};var attributes = {};';
-		$script .= 'swfobject.embedSWF("'.$player.'", "riot-player", "'.$width.'", "'.$height.'", "9.0.0", "expressInstall.swf", flashvars, params, attributes)';
+	if(!variable_get('disable_riot_player', 0)) {
+		drupal_add_js(drupal_get_path('module', 'multistream').'/js/player.js');
+	  drupal_add_js(drupal_get_path('module', 'multistream').'/js/swfobject/src/swfobject.js');
+	  $settings['multistream']['playerSwf'] = $player;
 		$settings['multistream']['debug'] = false;
 	} else {
 	  $settings['multistream']['debug'] = true;
 	}
-
 	$count = 0;
 
 
@@ -302,6 +302,21 @@ function multistream_block_info() {
 	    'cache' => DRUPAL_NO_CACHE,
 	);	
 	
+	$blocks['multistream_share_link'] = array(
+	    'info' => t('Multistream Share Link'),
+	    'cache' => DRUPAL_CACHE_PER_PAGE,
+	);
+	
+	$blocks['multistream_share_teaser'] = array(
+	    'info' => t('Multistream Share Teaser'),
+	    'cache' => DRUPAL_CACHE_PER_PAGE,
+	);
+	
+	$blocks['multistream_share_social'] = array(
+	    'info' => t('Multistream Share Social'),
+	    'cache' => DRUPAL_CACHE_PER_PAGE,
+	);	
+		
 	return $blocks;
 }
 
@@ -399,8 +414,77 @@ function multistream_block_view($delta = '') {
       $block['subject'] = t('');
       $block['content'] = multistream_block_chat();
       break;
+    case 'multistream_share_link':
+        $block['subject'] = t('Share the link');
+        $block['content'] = multistream_block_share_link();
+      break;      
+    case 'multistream_share_teaser':
+        $block['subject'] = '';
+        $block['content'] = multistream_block_share_teaser();
+    break;  
+    case 'multistream_share_social':
+      $block['subject'] = '';
+      $block['content'] = multistream_block_share_social();
+    break;        
 	}
 	return $block;
+}
+
+function multistream_block_share_social() {
+  if(!$node = menu_get_object()) {
+    return;
+  }
+  $has_social = false;
+  $vars['items'] = array();
+  
+  $items = field_get_items('node', $node, 'field_twitter');
+  if(!empty($items)) {
+    $value = str_replace('@', '', $items[0]['value']);    
+    $vars['items'][] = l('<span class="icon"></span><span class="text">Follow ' .$items[0]['value'].'</span>', 'http://twitter.com/'.$value, array('html'=>true,'attributes'=>array('class'=>'twitter')));
+  }
+  $items = field_get_items('node', $node, 'field_facebook');
+  if(!empty($items)) {
+    $vars['items'][] = l('<span class="icon"></span><span class="text">Like our page'.'</span>', 'http://facebook.com/'.$items[0]['value'], array('html'=>true,'attributes'=>array('class'=>'facebook')));
+  }
+  $items = field_get_items('node', $node, 'field_youtube');
+  if(!empty($items)) {
+    $vars['items'][] = l('<span class="icon"></span><span class="text">Subscribe: '.$items[0]['value'].'</span>', 'http://youtube.com/'.$items[0]['value'], array('html'=>true,'attributes'=>array('class'=>'youtube')));
+  }
+  $items = field_get_items('node', $node, 'field_facebook');
+  if(!empty($items)) {
+    $vars['items'][] = l('<span class="icon"></span><span class="text">Visit us</span>', 'http://reddit.com/'.$items[0]['value'], array('html'=>true,'attributes'=>array('class'=>'reddit')));
+  }
+  $items = field_get_items('node', $node, 'field_facebook');
+  if(!empty($items)) {
+    $vars['items'][] = l('<span class="icon"></span><span class="text">'.$items[0]['value'].'</span>', $items[0]['value'], array('html'=>true,'attributes'=>array('class'=>'website')));
+  }
+  
+  if(!empty($vars['items'])) {
+    $vars['attributes']['class'][] = 'social-share';
+    
+    $output = '<h2 class="title">'.t('Follow the casters').'</h2>';
+    $output .= '<p>Connect directly with the casters and follow their social networks!</p>';
+    $output .= drupal_render(node_view($node, 'teaser_large'));
+    $output .= theme('item_list', $vars);
+  } else {
+    drupal_render(node_view($node, 'teaser_large'));
+  }
+  
+  return $output;
+}
+
+function multistream_block_share_teaser() {
+  if(!$node = menu_get_object()) {
+    return;
+  }
+  
+  return drupal_render(node_view($node, 'teaser_large'));
+  
+}
+function multistream_block_share_link() {
+  $url = url(current_path(), array('absolute'=>true));
+
+  return '<span class="share-link">'.$url.'</span><span class="share-link-btn" class="btn"></span>';
 }
 
 function multistream_block_chat() {
@@ -875,9 +959,10 @@ function stream_get_stream_settings($stream, $n) {
 	$return = new stdClass;
 	
 	$return->position = $n;
+	$return->player_num = $n;
 	$return->stream_id = $stream->stream_id;
 	$return->channel = $stream->channel;
-	$return->provider = $stream->provider;
+	$return->channel_name = $stream->channel;
 	
 	//return $return;
 	
@@ -896,6 +981,8 @@ function stream_get_stream_settings($stream, $n) {
 	$chat = str_replace('[stream:channel]', $stream->channel, $chat);
 
 	$return->src = $player;
+	$return->provider = strtolower($provider->name);
+	
 	//$return->channel = $node->field_channel['und'][0]['value'];
 	//->channel_name = $node->field_channel_name['und'][0]['value'];
 	//$return->player_num = $n;
@@ -998,6 +1085,10 @@ function multistream_node_view($node, $view_mode) {
 	  //$node->content['thumb'] = $thumb;
 	}
 	
+	if($view_mode == 'teaser_large') {
+	  $node->content['title'] = array('#markup'=>'<div class="title">'.check_plain($node->title).'</div>');
+	  return;
+	}
 	if($view_mode != 'full') {
 	  $node->content['title'] = array('#markup' => l($node->title, 'node/'.$node->nid));	   
 	  //$node->content['title'] = array('#markup' => '<div class="title">'.l($node->title, 'node/'.$node->nid).'</div>');
@@ -1537,4 +1628,11 @@ function multistream_ajax_user_login_update() {
   
   ajax_deliver(array('#type'=>'ajax', '#commands'=>$commands));
   exit; 
+}
+
+function multistream_entity_info_alter(&$entity_info) {
+  $entity_info['node']['view modes']['teaser_large'] = array(
+  	'label' => t('Teaser - Large'),
+    'custom settings' => true,
+  );
 }
