@@ -322,6 +322,10 @@ form[id*="user-login-form"] input[name*="pass"] {
     @include at-breakpoint($computer) {
         display: block;
     }
+    li {
+      list-style: none;
+    }
+
     footer {
         .container {
             .footer-nav {
@@ -1052,6 +1056,8 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                     box-shadow: none;
                     max-width: 701px;
                     margin: 0 auto;
+                    padding-bottom: 50px;
+                    
                     .views-field-title {
                         background-color: $inActive-bagColor;
                         h3 {
@@ -1064,25 +1070,33 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                             cursor: pointer;
                         }
                     }
-                    .flex-direction-nav {
+                    //.flex-direction-nav {
+                    .flex-control-nav {
                         display: none;
                     }
-                    .flex-control-nav a {
+                    .flex-direction-nav a {
                         background-image: url(../img/sprite/sprite.png);
                     }
-                    .flex-control-nav {
-                        bottom: -70px;
+                    .flex-direction-nav {
+                        bottom: 0px;
                         left: 0;
                         li {
                             margin: 0 17px;
                             a {
                                 height: 43px;
                                 width: 43px;
-                                display: inline-block;
+                                display: inline-block!important;
                                 background-color: transparent;
                                 box-shadow: none;
                                 border-radius: 0;
                                 cursor: pointer;
+                                bottom: 0;
+                                top: auto;
+                                //left: 25px;
+                                
+                                &:before {
+                                  display: none;
+                                }
                             }
                             a.flex-active {
                             }
@@ -1287,6 +1301,7 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
                     margin-bottom: 73px;
                     margin-left: 0px;
                     padding-right: 12%;
+                    list-style: none;
                     li {
                         font-size: 6 + $baseFontSize;
                         line-height: 30px;
@@ -1520,7 +1535,8 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
             @include at-breakpoint($computer) {
                 display: block;
             }
-            .blog-slider-home {
+            .blog-slider-home,
+            #blog-slider {
                 @include container;
                 .pane-content {
                     padding: 77px 16% 13px;
@@ -3028,8 +3044,6 @@ body.node-type-blog {
 
 #mini-panel-player_menu,
 #mini-panel-social_menu {  
-  //max-width: $panel_width;
-  max-width: 25%;
   h2,
   h2.title,
   h2.pane-title,
@@ -3051,7 +3065,7 @@ body.node-type-blog {
       width: $panel_handle_w;  
       position: absolute;
       top: 0;
-      left: $panel_menu_w + $panel_content_w;
+      //left: $panel_menu_w + $panel_content_w;
       &:after {
         @include images-sprite(CollapseInactive);
         content: "";
@@ -3066,7 +3080,7 @@ body.node-type-blog {
         }
       }
       &.closed {
-        left: $panel_menu_w;
+        //left: $panel_menu_w;
         
         &:after {
           transform: rotate(180deg);
@@ -3090,35 +3104,30 @@ body.node-type-blog {
       
       .quicktabs-tabpage {
         padding-left: 1em;
-      }
 
+      }
+      
+      #mini-panel-300x250_ad {
+        position: absolute;
+        bottom: 0;
+        height: auto;
+        width: 300px;
+        left: 1em;
+        
+      }
+      width: $panel_menu_w + $panel_content_w + $panel_handle_w;
+      
       &.docked {
+        width: $panel_menu_w + $panel_handle_w;
+        & > .quicktabs_main {
+          display: none;
+        }
         & > .quicktabs-tabs-wrapper {
           & > ul.quicktabs-tabs {
             display: block;
             li {
               &.hover {
-                &:after {
-                  background: none repeat scroll 0 0 $lightgray;
-                  display: block;
-                  font-size: 1.5em;
-                  height: 100%;
-                  left: 100%;
-                  line-height: 3em;
-                  padding-left: 1em;
-                  position: absolute;
-                  text-transform: uppercase;
-                  top: 0;
-                  vertical-align: top;
-                  width: 315px;
-                  z-index: 1000;    
-                  color: $Active-bagColor;
-                }              
-                &:nth-child(1):after {content: "Now Playing"; }
-                &:nth-child(2):after {content: "Add Channel"; }              
-                &:nth-child(3):after {content: "Browse"; }   
-                &:nth-child(4):after {content: "Favorites"; }   
-                &:nth-child(5):after {content: "Manage"; }                                             
+                                                      
               }
             }
           }  
@@ -3142,7 +3151,7 @@ body.node-type-blog {
               &.now-playing:after { @include images-sprite(NowPlayingSm); }
               &.add-channel:after { @include images-sprite(AddChannelLt); }
               &.browse:after { @include images-sprite(BrowseActive); }
-              &.favorites:after { @include images-sprite(Favorites); }
+              &.favorites:after { @include images-sprite(FavActive); }
               &.manage:after { @include images-sprite(ManageActive); }
               &.chat:after { @include images-sprite(ChatActive); }
               &.twitter:after { @include images-sprite(TwitterFeedActive); }
@@ -3207,17 +3216,22 @@ body.node-type-blog {
               top:15px;
               left:15px;
             }
-            li.new:before {@include images-sprite(CreateNew);}
-            li.open:before {@include images-sprite(OpenActive);}
+            li.new:before {@include images-sprite(CreateNewDk);}
+            li.open:before {@include images-sprite(OpenDk);}
             li.save:before {@include images-sprite(SaveDk);}
             li {
               padding: 1em 2em 1em 50px;
               width: 200px;
               margin: 0;
               &:hover {
-                background-color: $SRbabyblue;
-                font-weight: bold;
+                background-color: $SRblue;
+                //font-weight: bold;
                 cursor: pointer;
+                color: white;
+                &.new:before {@include images-sprite(CreateNewLt);}
+                &.open:before {@include images-sprite(OpenLt);}
+                &.save:before {@include images-sprite(SaveLt);}
+
               }
             }
           }
@@ -3235,7 +3249,9 @@ body.node-type-blog {
         position: absolute;
         left: $panel_menu_w;
 
-        .panel-actions-wrapper.quicktabs-hide {
+        // quicktabs hides everything
+        .panel-actions-wrapper.quicktabs-hide,
+        #mini-panel-300x250_ad.quicktabs-hide {
           display: block;
         }
         .panel-pane {
@@ -3245,25 +3261,25 @@ body.node-type-blog {
       
       .minipanel-two-50-bottom {
         float: none;
-        max-height: 85vh;
-        min-height: 450px;
-        overflow-y: auto;
-        overflow-x: hidden;
+        //max-height: 85vh;
+        //min-height: 450px;
+        //overflow-y: auto;
+        //overflow-x: hidden;
         display: block;
         clear: both;
         width: 98%;
 
         &::-webkit-scrollbar {
-          width: 5px;
+          //width: 5px;
         }
          
         &::-webkit-scrollbar-track {
-          -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+          //-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
         }
          
         &::-webkit-scrollbar-thumb {
-          background-color: darkgrey;
-          outline: 1px solid slategrey;
+          //background-color: darkgrey;
+          //outline: 1px solid slategrey;
         }
         .minipanel-two-50-bottom {
           overflow-y: hidden;
@@ -3311,9 +3327,74 @@ body.node-type-blog {
   }
 }
 
+#quicktabs-player_menu.docked {
+  & > .quicktabs-tabs-wrapper {
+    & > ul.quicktabs-tabs {
+      li {
+        &.hover {
+                &:after {
+                  background: none repeat scroll 0 0 $lightgray;
+                  display: block;
+                  font-size: 1.5em;
+                  height: 100%;
+                  left: 100%;
+                  line-height: 3em;
+                  padding-left: 1em;
+                  position: absolute;
+                  text-transform: uppercase;
+                  top: 0;
+                  vertical-align: top;
+                  width: 315px;
+                  z-index: 1000;    
+                  color: $Active-bagColor;
+                }         
+                &:nth-child(1):after {content: "Now Playing"; }
+                &:nth-child(2):after {content: "Add Channel"; }              
+                &:nth-child(3):after {content: "Browse"; }   
+                &:nth-child(4):after {content: "Favorites"; }   
+                &:nth-child(5):after {content: "Manage"; }    
+        }
+      }
+    }
+  }  
+}
+
+#quicktabs-social_menu.docked {
+  & > .quicktabs-tabs-wrapper {
+    & > ul.quicktabs-tabs {
+      li {
+        &.hover {
+                &:after {
+                  background: none repeat scroll 0 0 $lightgray;
+                  display: block;
+                  font-size: 1.5em;
+                  height: 100%;
+                  right: 100%;
+                  line-height: 3em;
+                  padding-left: 1em;
+                  position: absolute;
+                  text-transform: uppercase;
+                  top: 0;
+                  vertical-align: top;
+                  width: 315px;
+                  z-index: 1000;    
+                  color: $Active-bagColor;
+                  text-align: right;
+                  padding-right: 2em;
+                }         
+                &:nth-child(1):after {content: "Twitter Feed"; }
+                &:nth-child(2):after {content: "Chat"; }              
+                &:nth-child(3):after {content: "Share"; }   
+        }
+      }
+    }
+  }  
+}
+
+
 // Streams 
 .stream-wrapper {
-  border-bottom: solid 2px #e7e7e7;
+  border-bottom: solid 2px $lightgray;
   position: relative;
 
   //height: 46px;
@@ -3438,6 +3519,9 @@ ul.register-icons {
   display: inline-block;
   width: 100%;
   
+  &:hover {
+    background-color: $SRblue;
+  }
   &:after {
     @include images-sprite(ArrowDownSmLt);
     content: "";
@@ -3484,9 +3568,13 @@ ul.register-icons {
 }
 
 #manage-form {  
+  label.required {
+    color: black;
+  }
   fieldset {
     border: none;
     padding: 0;
+    height: auto;
     legend {
       margin-bottom: 1em;
     }
@@ -3532,7 +3620,7 @@ ul.register-icons {
         
         .btn {
           float: right;
-          background-color: $SRgreen;
+          background-color: $darkgray;
           background-image: none;
           border-radius: 0;
           border: none;
@@ -3543,6 +3631,9 @@ ul.register-icons {
           font-size: 8pt;
           margin-top: -15px;
           
+          &:hover {
+            background-color: $SRgreen;
+          }
         }
       }
       
@@ -3574,8 +3665,38 @@ ul.register-icons {
   #edit-field-reddit:before {@include images-sprite(RedditInactive);}
   #edit-field-website:before {@include images-sprite(WebsiteInactive);}
   #edit-field-google-plus:before {@include images-sprite(GoogleInactive);}
-  #edit-field-twitter-feed:before {@include images-sprite(TwitterFeedFieldDk);}
+  #edit-field-twitter-feed {
+    position: relative;
+    
+    &:before {
+      @include images-sprite(TwitterFeedFieldDk);
+    }
+    .form-textarea-wrapper {
+      width: 60%;    
+    }
+    
+    .btn {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
+  }
 
+  .has-value {
+    &#edit-field-twitter:before {@include images-sprite(TwitterSm);}
+    &#edit-field-facebook:before {@include images-sprite(FacebookSm);}
+    &#edit-field-youtube:before {@include images-sprite(YoutubeSm);}
+    &#edit-field-reddit:before {@include images-sprite(RedditSm);}
+    &#edit-field-website:before {@include images-sprite(WebsiteSm);}
+    &#edit-field-google-plus:before {@include images-sprite(GoogleSm);}
+    &#edit-field-twitter-feed:before {@include images-sprite(TwitterFeedSm);}
+  }
+
+  // Streams
+  input[type="image"] {
+    padding: 8px;
+  }
+  
   // Upload Images
   div[id*="edit-field-player-background-und-0-ajax-wrapper"],
   div[id*="edit-field-cover-und-0-ajax-wrapper"] {
@@ -3627,6 +3748,12 @@ ul.register-icons {
           display: none;
         }
         
+        .ajax-progress-throbber {
+          position: relative;
+          top: 15px;
+          left: 140px;
+        }
+        
         .remove-button {
           position: absolute;
           right: 0;
@@ -3672,6 +3799,10 @@ ul.register-icons {
   .vertical-tabs-panes {
     display: none;
   }
+  
+  #manage-form-submit {
+    float: right;
+  }
 }
 
 article.node-multistream.teaser {
@@ -3679,7 +3810,7 @@ article.node-multistream.teaser {
   margin-bottom: 1em;
   padding-bottom: 1em;
   overflow: hidden;
-  border-bottom: solid 1px $darkgray;
+  border-bottom: solid 2px $lightgray;
 
   .field-type-image {
     float: left;
@@ -3814,29 +3945,33 @@ article.node-multistream.selection {
 }
 
 #favorites-filter-wrapper {
-  position: absolute;
-  left: 280px;
-  top: 105px;
+  position: relative;
+  right: 0px;
+  top: 95px;
+  margin-top: -95px;
 }
 
 #browse-filter-wrapper {
-  position: absolute;
-  left: 280px;
-  top: 160px;  
+  position: relative;
+  right: 0px;
+  top: 40px;  
+  margin-top: -40px;
 }
-
+/*
 input[value="Save"] {
   text-indent: -1999px;
-  
-  //&:before {
     @include images-sprite(SaveLt);
     padding: 18px;
     background-position: 7px -2581px;
-    //content: "";
-    //display: block;    
-  //}
 }
 
+input[value="Add"] {
+  text-indent: -1999px;
+    @include images-sprite(AddChannelSmLt);
+    padding: 18px;
+    background-position: 7px -2581px;
+}
+*/
 .page-multistream h1.page-title:before {content:""!important;}
 .node-type-multistream,
 .page-multistream {
@@ -3916,8 +4051,8 @@ input[value="Save"] {
             background: white;
             
             & > .quicktabs-tabpage {
-              height: 100%;
-              padding-top: 40px;
+              //height: 100%;
+              //padding-top: 40px;
               
               & div {
                 //height: 100%;
@@ -3932,6 +4067,53 @@ input[value="Save"] {
 
 #mini-panel-player_menu {
   float: left;
+  
+  .handle.closed {
+    left: $panel_menu_w;
+  }
+
+  .quicktabs-wrapper {
+      &.docked {      
+        & > .handle {
+          left: $panel_menu_w;
+          right: auto;
+          &:after {
+            transform: none;
+          }
+        }      
+      }
+      & > .handle {
+        left: $panel_content_w + $panel_menu_w;
+        right: auto;
+        &:after {
+          transform: rotate(180deg);
+        }
+      }     
+  }
+  
+  .quicktabs-tabpage {
+        //padding-top: 40px;
+        width: 98%;
+        
+        // for the ad below
+        position: absolute;
+        top: 40px;
+        bottom: 260px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        &::-webkit-scrollbar {
+          width: 5px;
+        }
+         
+        &::-webkit-scrollbar-track {
+          -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        }
+         
+        &::-webkit-scrollbar-thumb {
+          background-color: darkgrey;
+          outline: 1px solid slategrey;
+        }        
+  }
 }
 #mini-panel-social_menu {
   float: right;
@@ -3959,8 +4141,26 @@ input[value="Save"] {
       left: auto;    
       
       .quicktabs-tabpage {
-        padding-top: 20px!important;
+        margin-top: 20px!important;
+        //height: 100%!important;
+        overflow-y: auto;
+        overflow-x: hidden;
+        width: 98%;
+        height: 96%;
+        &::-webkit-scrollbar {
+          width: 5px;
+        }
+         
+        &::-webkit-scrollbar-track {
+          -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        }
+         
+        &::-webkit-scrollbar-thumb {
+          background-color: darkgrey;
+          outline: 1px solid slategrey;
+        }         
       }
+      
       #block-panels-mini-player-twitter-feed {
         height: 100%;
         #mini-panel-player_twitter_feed {
@@ -4031,18 +4231,32 @@ input[value="Save"] {
             cursor: pointer;
             position: absolute;
             top: 50px;
-            background-color: $darkgray;
-            color: white;
+            background-color: $lightgray;
+            color: $charcoal;
             width: 100%;
             max-height: 80%;
             overflow-y: auto;
             
             .stream {            
-              padding: .2em 0.2em 0.2em 1em;
+              padding: .5em;
+              display: block;
               
+              &:before {
+                @include images-sprite(StreamDk);
+                content: "";
+                display: block;
+                float: left;
+                margin: 1em;
+                clear: both;
+                
+              }
               &:hover {
-                color: $darkgray;
-                background-color: white;
+                color: white;
+                background-color: $SRblue;
+                
+                &:before {
+                  @include images-sprite(StreamLt);
+                }
               }
             } 
           }
@@ -4057,21 +4271,24 @@ input[value="Save"] {
       }
 
     }
-    
-    & > .handle {
-      right: $panel_content_w + $panel_menu_w;
-      left: auto;
-      &:after {
-        transform: rotate(180deg);
+      
+      &.docked {      
+        & > .handle {
+          right: $panel_menu_w;
+          left: auto;
+          &:after {
+            transform: none;
+          }
+        }      
       }
-      &.closed {
-        right: $panel_menu_w;
+      & > .handle {
+        right: $panel_content_w + $panel_menu_w;
         left: auto;
         &:after {
-          transform: none;
+          transform: rotate(180deg);
         }
-      }
-    }
+      }   
+    
   }
 }
 
@@ -4102,14 +4319,11 @@ form[id*="multistream-form-new-multistream"] {
   .btn {
     display: block;
     text-align: center;
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
   }
 }
 #twitter-feed {
   overflow-y: auto;
-  height: 90%;
+  max-height: 95%;
   &::-webkit-scrollbar {
     width: 5px;
   }
@@ -4175,6 +4389,13 @@ form[id*="multistream-form-new-multistream"] {
   text-align: center;
   color: white;
   display: none;
+  padding-top: 1em; 
+  
+  .message {
+    margin-left: 1em;
+    vertical-align: top;
+    margin-top: 1em;  
+  }
 }
 
 // Modal Dialog
@@ -4569,6 +4790,8 @@ ul.social-share {
       width: 100%;
       display: block;
       background-color: transparent;
+      overflow: hidden;
+      
       .text {
         display: inline-block;
         margin-left: 2em;
@@ -4598,6 +4821,80 @@ ul.social-share {
     .icon {
       display: block;
       float: left;
+    }
+  }
+}
+
+#queue {
+  margin-top: 1em;
+}
+
+#player-messages {
+  .message-img {
+    @include images-sprite(PlayerMessage);
+    display: inline-block;
+    margin-top: 1em;
+    margin-right: 1em;
+  }  
+  
+  .message {
+    display: inline-block;
+  }
+  
+}
+
+#player-wrapper {
+  min-width: 1200px; 
+}
+
+iframe {
+  border: none;  
+}
+
+.share-link {
+  background-color: $darkgray;
+  color: white;
+  padding: 1em;
+  width: 200px;  
+  display: block;
+  float: left;
+  margin-right: 1em;
+  overflow: hidden;
+}
+
+.share-link-btn {
+  background-color: $darkgray;
+  position: relative;
+  height: 44px;
+  width: 44px;
+  display: inline-block;
+  cursor: pointer;
+  &:before {
+    @include images-sprite(LinkSaveLt);
+    content: "";
+    display: block;
+    position: absolute;
+    top: 12px;
+    left: 12px;
+  }
+  
+  &:hover {
+    background-color: $SRblue;
+  }
+}
+
+.node.node-multistream {
+  background-color: transparent;
+}
+
+#blog-slider {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  .slides {
+    li {
+      background: white;
+      margin-right: 50px
     }
   }
 }

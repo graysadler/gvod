@@ -39,27 +39,40 @@
   list-style: none;  
 }
 
-.panel-overlay {
+.panel-overlay, 
+.overlay {
   height: 100%;
   width: 100%;
-  background-color: white;
+  background-color: black;
   opacity: .5;
   position: absolute;
   z-index: 100;
   pointer-events: auto;
 }
 
-.panel-actions-popup .open {
+.panel-actions-popup .open,
+.overlay-content {
   max-height: 400px;
   overflow-y: auto;
 }
+
+.overlay-content {
+  position: absolute;
+  top: 50%;
+  z-index: 101;
+  background-color: white;
+  width: 100%;
+  padding: 1em;
+}
+
 .multistream-owner #mini-panel-player_menu ul.panel-actions li.fav {
   display: none;
 }
 
 body:not(.anon) .panel-actions .save {
-  display: none!important;
+
 }
+
 body:not(.anon) .multistream-owner .panel-actions .save,
 body:not(.anon) .chained .panel-actions .save {
   display: inline!important;
@@ -74,10 +87,6 @@ label[for*="edit-add-stream"] { display: block; }
 
 div[id*="edit-field-streams"] .flag-stream-favs { display: none; }
 
-#mini-panel-player_menu,
-#mini-panel-social_menu {
-  width: 25%;
-}
 
 #riot-player-wrapper {
   float: left;
@@ -86,7 +95,9 @@ div[id*="edit-field-streams"] .flag-stream-favs { display: none; }
   overflow: visible;
   position:relative;
 }
-
+#player-messages {
+  z-index: 2;
+}
 #riot-player {
   width:100%;
   height: 100%;  
@@ -94,4 +105,15 @@ div[id*="edit-field-streams"] .flag-stream-favs { display: none; }
   position: absolute;
   top:0;
   left: 0;
+  z-index: 1;
+}
+
+.stream-wrapper .stream-actions .remove {
+  display: none;
+}
+
+#block-panels-mini-now-playing .stream-wrapper .stream-actions .remove,
+#block-panels-mini-player-manage .stream-wrapper .stream-actions .remove
+ {
+  display: block;
 }

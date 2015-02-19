@@ -283,10 +283,18 @@ function parrot_textfield($variables) {
  * @ingroup themeable
  */
 function parrot_qt_quicktabs($variables) {
+  global $multistream;
+  
   $element = $variables['element'];
-  $output = '<div '. drupal_attributes($element['#options']['attributes']) .'>';
+    
 
   if($variables['element']['#options']['attributes']['id'] == 'quicktabs-player_menu') {
+    if(is_array($multistream)) {
+      if($multistream['streams_collapsed']) {
+        $element['#options']['attributes']['class'] .= ' docked';
+      }
+    }
+    
     if(user_is_anonymous()) {
       $block = multistream_block_view('multistream_panel_actions_anon');      
     } else {
@@ -296,7 +304,22 @@ function parrot_qt_quicktabs($variables) {
     $element['container']['actions'] = array('#markup' => $block['content'], '#weight' => -100);
     $element['tabs']['share'] = module_invoke('sharethis', 'block_view', 'sharethis_block');
     $element['tabs']['more'] = '<div id="player-more-wrapper"><div class="button"></div><ul class="more-actions"><li class="new">New Multi-Stream</li><li class="open">Open Favorites</li><li class="save">Save</li></ul></div>';    
+    
+    // Ad block
+    $block = module_invoke('panels_mini', 'block_view', '300x250_ad');
+    $element['container']['ad'] = array('#markup' => $block['content'], '#weight' => 100);
+    
   }
+  
+  if($variables['element']['#options']['attributes']['id'] == 'quicktabs-social_menu') {
+    if(is_array($multistream)) {
+      if($multistream['chat_collapsed']) {
+        $element['#options']['attributes']['class'] .= ' docked';
+      }
+    }    
+  }
+  
+  $output = '<div '. drupal_attributes($element['#options']['attributes']) .'>';
   
   $output .= drupal_render($element['tabs']);
  

@@ -1,11 +1,16 @@
+var SR = SR || {};
+
 (function ($) {
 
   Drupal.behaviors.MultiStreamManager = {
     attach : function(context, settings) {
-      $('#manage-open:not(.processed)', context).click(function(e) {
-        $(this).addClass('processed');
+      $('#manage-open').once('open', function(){
+        $(this).click(function(e) {
+          $(this).addClass('processed');
 
-        $('#manage-selection').toggle();
+          $('#manage-selection').toggle();
+        });
+        
       });
       
       $('#manage-selection article:not(.processed)', context).each(function(){
@@ -42,23 +47,38 @@
       
       $('#manage-form div[id*="edit-field-streams"] .stream-wrapper:not(.action-processed)').each(function(){
         $(this).addClass('action-processed');
-        
         $(this).find('div.remove').click(function(){
           var id = $(this).closest('.stream-wrapper').attr('data-id');
-          SR.removeManageStream(id);    
+          SR.confirm('#quicktabs-container-player_menu', 'Are you sure you want to remove this stream?', SR.removeManageStream, id);
+          //SR.removeManageStream(id);                  
         });
       });      
 
       $('.btn.connect').click(function(){
         $(this).closest('.form-wrapper').find('input').prop('disabled', function(idx, oldProp) {
+          if(oldProp) {
+            $(this).closest('.form-wrapper').find('.btn.connect').html('Save');
+          } else {
+            $(this).closest('.form-wrapper').find('.btn.connect').html('Edit');
+          }
           return !oldProp;
         });
+        if($(this).siblings('input').val()) {
+          $(this).closest('.form-wrapper').addClass('has-value');
+        } else {
+          $(this).closest('.form-wrapper').removeClass('has-value');            
+        }        
       });
       
       $('.field-type-text-long .btn.connect').click(function(){
         $(this).closest('.form-wrapper').find('textarea').prop('disabled', function(idx, oldProp) {
           return !oldProp;
         });
+        if($(this).siblings('.form-textarea-wrapper').find('textarea').val()) {
+          $(this).closest('.form-wrapper').addClass('has-value');
+        } else {
+          $(this).closest('.form-wrapper').removeClass('has-value');            
+        }        
       });
       
       $('.noclick input, .noclick textarea').attr('disabled', 'disabled');
@@ -81,7 +101,7 @@
         $('.noclick input, .noclick textarea').removeAttr('disabled');
       });
       
-      $('#edit-field-website-und-0-url').attr('size', '12');
+      $('input[id*="edit-field-website"').attr('size', '12');
       
       $('#manage-selection:not(.processed)', context).each(function(){
         $(this).addClass('processed');
@@ -181,6 +201,7 @@
                 response = $.parseJSON(response);
               }
               ajax.success(response, status);
+              Drupal.attachBehaviors();
             },
             error: function(x, s, e) {
               
@@ -188,13 +209,7 @@
           });
       });
       
-      $('#block-panels-mini-now-playing .stream-actions .remove:not(.processed)').each(function(){
-        $(this).addClass('processed');
-        $(this).click(function() {
-          var stream_id = $(this).closest('.stream-wrapper').attr('data-id');
-          SR.removeStream(stream_id);          
-        });
-      });
+
       
       $('#chat-rooms:not(.sr-processed)').each(function(){
         $(this).addClass('sr-processed');
@@ -209,17 +224,23 @@
   
   Drupal.behaviors.confirmDelete = {
       attach: function(context, settings) {
+       
         var events =  $('#edit-delete').clone(true).data('events');// Get the jQuery events.
         $('#edit-delete').unbind('mousedown'); // Remove the click events.
         $('#edit-delete').mousedown(function () {
+          
+          SR.confirm('#quicktabs-container-player_menu', 'Are you sure you want to delete this multistream?', events.click[1].handler);
+          //    
+          /*
           if (confirm('Are you sure you want to delete that?')) {
             $.each(events.click, function() {
               this.handler(); // Invoke the mousedown handlers that was removed.
             });
-          }
+          } */
           // Prevent default action.
           return false;
         });
+        
       }
   }
   
@@ -270,6 +291,7 @@
   Drupal.behaviors.autoUpload = {
       attach: function (context, settings) {
         $('input[type="file"]:not(.processed)').each(function(){
+          $(this).addClass('processed');
           $(this).change(function(){
             $(this).next('input[type="submit"]').mousedown();            
           });
@@ -277,23 +299,59 @@
       }
   }  
   
-  var SR = SR || {};
+
   
-  SR.updatePosition = function(stream, pos) {
-    var stream_id = $(stream).attr('data-id');
+  SR.updatePosition = function(stream, pos, tellFlash) {
+    var stream_id;
     var from = '';
-    $(stream).removeClass('hover');
+    
+    if(typeof(tellFlash) == 'undefined') {
+      tellFlash = true;
+    }
+    
+    if($.isNumeric(stream)) {
+      stream_id = stream;
+    } else {
+      stream_id = $(stream).attr('data-id');
+      $(stream).removeClass('hover');
+    }
     
     // Check if stream exists
     if(!(stream_id in Drupal.settings.multistream.streams)) {
-      console.log('not in streams object');
+      //console.log('not in streams object');
       // If stream doesn't exist in streams obj, add it
-      Drupal.settings.multistream.streams[stream_id] = {
-          position: pos,
-          stream_id: stream_id,
-          channel: $(stream).attr('data-channel'),
-          provider: $(stream).attr('data-provider')
-      }
+
+      $.ajax({
+        url: '/multistream/ajax/stream-settings/'+stream_id+'/'+pos,
+        context: document.body,
+        //data: {'action':'copy_riot','r':id, 't':title},
+        success: function(data, textStatus, jqXHR){
+          var ajax = new Drupal.ajax({},{},{url:''});
+          
+          var response = data;
+          var status = textStatus;
+          if (typeof response == 'string') {
+            response = $.parseJSON(response);
+          }
+          ajax.success(response, status);
+          
+          if((pos in Drupal.settings.multistream.stream_pos) && pos != 'q') {
+            // Move the current stream in this position to the queue
+            if(Drupal.settings.multistream.stream_pos[pos] != stream_id) {
+              SR.moveStream(Drupal.settings.multistream.stream_pos[pos], pos, 'q', tellFlash);
+            }
+          } 
+          SR.moveStream(stream_id, from, 'q', tellFlash);
+          SR.moveStream(stream_id, 'q', pos, tellFlash);
+          
+          return;
+          
+        },
+        error: function(x, s, e) {
+          
+        }
+      });
+      return;
     } else {
       from = Drupal.settings.multistream.streams[stream_id].position;
     }
@@ -302,18 +360,18 @@
     if((pos in Drupal.settings.multistream.stream_pos) && pos != 'q') {
       // Move the current stream in this position to the queue
       if(Drupal.settings.multistream.stream_pos[pos] != stream_id) {
-        SR.moveStream(Drupal.settings.multistream.stream_pos[pos], pos, 'q');
+        SR.moveStream(Drupal.settings.multistream.stream_pos[pos], pos, 'q', tellFlash);
       }
     } 
-    SR.moveStream(stream_id, from, pos);
+    SR.moveStream(stream_id, from, pos, tellFlash);
   }
   
-  SR.moveStream = function(stream_id, from, to) {
+  SR.moveStream = function(stream_id, from, to, tellFlash) {
     if(stream_id == '') {
       return;
     }
-    // Update streams obj    
-    Drupal.settings.multistream.streams[stream_id].position = to;
+
+    
     // Update streams_pos object
     if(from != 'q' && from != '') {
       Drupal.settings.multistream.stream_pos[from] = '';
@@ -328,6 +386,7 @@
       case '':
         // Not in now playing panel
         stream = $('.stream-wrapper[data-id="'+stream_id+'"]:first').clone(true, true);
+        $(stream).find('.processed').removeClass('processed');
         break;
       case 'q':
         stream = $('#queue .stream-wrapper[data-id="'+stream_id+'"]:first');
@@ -349,8 +408,8 @@
     
     // Re-order Now-Playing
     for (var pos in Drupal.settings.multistream.stream_pos) {
-      var stream_id = Drupal.settings.multistream.stream_pos[pos];
-      $('#now-playing .stream-wrapper[data-id="'+stream_id+'"]').appendTo('#now-playing');
+      var id = Drupal.settings.multistream.stream_pos[pos];
+      $('#now-playing .stream-wrapper[data-id="'+id+'"]').appendTo('#now-playing');
     }
     
     Drupal.settings.multistream.updated = true;
@@ -358,9 +417,21 @@
     // Sort the streams
     SR.sortQueue();
     
+    // attach events
+    SR.streamInit();
+    
     // Update the player stage
-    var swf = getFlashMovie("riot-player");
-    swf.updateStream(strPlayer, strStream); 
+
+    if(stream_id != '' && tellFlash == true) {
+      updatePlayerStream(to, stream_id);       
+    }
+    
+    
+    // Update streams obj    
+    Drupal.settings.multistream.streams[stream_id].position = to;
+    Drupal.settings.multistream.streams[stream_id].player_num = to;
+    
+    updatePlayerStreams();
   }
   
   SR.sortQueue = function() {
@@ -409,6 +480,7 @@
     Drupal.settings.multistream.updated = true;
     
     // Update the player stage
+    removeStream(pos);
   }
   
   SR.updateManageStreamOrder = function() {
@@ -475,7 +547,7 @@
   }
   
   SR.streamInit = function() {
-    $('.stream-wrapper').once('image-overlay-processed', function () {
+    $('.stream-wrapper').once('image-overlay', function () {
       var $teaser = $(this);
 
       $teaser.hover(
@@ -496,6 +568,14 @@
         }
         SR.updatePosition(stream, pos);
       });
+    });  
+    
+    $('#block-panels-mini-now-playing .stream-actions .remove:not(.processed)').each(function(){
+      $(this).addClass('processed');
+      $(this).click(function() {
+        var stream_id = $(this).closest('.stream-wrapper').attr('data-id');
+        SR.confirm('#quicktabs-container-player_menu', 'Are you sure you want to remove this stream?', SR.removeStream, stream_id);          
+      });
     });    
   }
   
@@ -511,8 +591,8 @@
   }
   
   $.fn.srDisplayPlayerMessage = function (html) {
-    html = '<span class="message-img"></span>' + html;
-    $('#player-messages').html(html).animate({height: "show"}).delay(5000).animate({height: "hide"});
+    $('#player-messages .message').html(html);
+    $('#player-messages').animate({height: "show"}).delay(5000).animate({height: "hide"});
   }  
 
   $.fn.srUpdateURL = function (path) {
@@ -540,5 +620,35 @@
         
       }
     });    
-  }      
+  }  
+  
+  Drupal.behaviors.RiotPlayer = {
+      attach: function(context, settings) {
+        $.ResizePlayer();
+        $(window, context).resize(function(){ $.ResizePlayer()});        
+        var client = new ZeroClipboard( document.getElementById("share-link-btn") );
+      }
+  }
+
+  $.ResizePlayer = function() {
+    var lw = $('#quicktabs-player_menu').width();
+    var rw = $('#quicktabs-social_menu').width();
+    var windowW = $(window).width();
+    
+    $('#riot-player-wrapper').width(windowW-lw-rw);
+  }  
+  
+  SR.confirm = function(insertAt, message, callback, arg1, arg2) {
+    $('.confirm-overlay').remove();
+
+    $(insertAt).prepend('<div class="confirm-overlay"><div class="overlay"></div><div class="overlay-content"><p>'+message+'</p><div class="confirm-yes btn">Yes</div><div class="confirm-no btn">No</div></div></div>');
+    $('.overlay').click(function() { $(this).closest('.confirm-overlay').remove(); });
+    $(insertAt).find('.confirm-yes').click(function() {
+      callback(arg1, arg2);
+      $('.confirm-overlay').remove();
+    });
+    $(insertAt).find('.confirm-no').click(function() {
+      $('.confirm-overlay').remove();
+    });
+  }
 })(jQuery);

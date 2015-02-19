@@ -79,13 +79,38 @@ function stream_import_twitch_stream($channel) {
   return $stream;
 }
 
+function stream_import_get_games($delete = false) {
+  $vocab = taxonomy_vocabulary_machine_name_load('stream_category');
+  $games = db_query('SELECT tid, name FROM {taxonomy_term_data} WHERE vid = '.$vocab->vid)->fetchAllKeyed();
+  
+  if($delete) {
+    foreach($games as $tid => $game) {
+      taxonomy_term_delete($tid);
+    }
+  }
+  
+  return $games;
+}
+
+function stream_import_save_game($game, $vid) {
+  $term = new stdClass();
+  $term->name = $game;
+  $term->vid = $vid;
+  $term = taxonomy_term_save($term);
+  return $term;
+}
+
 function stream_import_get_twitch_streams() {
 	//$vocab = taxonomy_vocabulary_machine_name_load('stream_category');
-	//$provider_vocab = taxonomy_vocabulary_machine_name_load('provider');
-	//$twitch = taxonomy_term_lookup_term_by_name('twitch.tv', $provider_vocab->vid);
+	$provider_vocab = taxonomy_vocabulary_machine_name_load('provider');
+	$twitch = array_shift(taxonomy_get_term_by_name('twitch.tv', 'provider'));
+
+  // load the category taxonomy
+  $vocab = taxonomy_vocabulary_machine_name_load('stream_category');
+  $games = stream_import_get_games();
 
 	//get all games from twitch
-	$limit = 100;
+	$limit = variable_get('stream_import_limit', 1000);
 	$headers = array('Accept: application/vnd.twitchtv.v3+json');
 	
 	$streams = array();
@@ -132,6 +157,11 @@ function stream_import_get_twitch_streams() {
 		debug(time_diff($t1, $t2));
 		$t1 = time();
 		foreach($results['streams'] as $item) {
+		  if(!$tid = array_search($item['game'], $games)) {
+		    // save the game
+		    $tid = stream_import_save_game($item['game'], $vocab->vid);
+		    $games = stream_import_get_games();
+		  }
 			$stream = array(
 				'channel' 	=> $item['channel']['name'],
 				'thumbnail' => $item['channel']['logo'],
@@ -139,8 +169,8 @@ function stream_import_get_twitch_streams() {
 				'url' 			=> $item['channel']['url'],
 				'viewers'		=> $item['viewers'],
 				'is_live'		=> true,
-				'category'	=> 1,
-				'provider'	=> 1,		
+				'category'	=> $tid,
+				'provider'	=> $twitch->tid,		
 				'created' 	=> $now,
 				'changed' 	=> $now,				
 			);

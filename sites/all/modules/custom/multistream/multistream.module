@@ -67,6 +67,13 @@ function multistream_menu() {
 	    'access arguments' => array('access content'),
 	    'type' => MENU_CALLBACK,
 	);
+	$items['multistream/ajax/stream-settings/%/%'] = array(
+	    'title' => 'Ajax Get Stream Settings',
+	    'page callback' => 'multistream_ajax_get_stream_settings',
+	    'page arguments' => array(3, 4),
+	    'access arguments' => array('access content'),
+	    'type' => MENU_CALLBACK,
+	);	
 	
 	return $items; 
 }
@@ -112,17 +119,23 @@ function multistream_view_multistream($context, $streams = array(), $node = null
 	drupal_add_css(drupal_get_path('module', 'multistream').'/css/multistream.css');
 	drupal_add_js(drupal_get_path('module', 'multistream').'/js/multistream.js');
 	
+	drupal_add_js(drupal_get_path('module', 'views') . "/js/base.js");
+	drupal_add_js(drupal_get_path('module', 'views') . "/js/ajax_view.js");
+	//drupal_add_js(drupal_get_path('module', 'views') . "/js/ajax.js");
+	
   $vars['class'] = 'not-chained';
 		
-	// Depending on the context, the streams source will be different
+	// Depending on the context, the streams source will be different	
 	switch($context) {
 		case 'queue':
 			// Streams will come from the user's $_SESSION
-			
+			$chat_collapsed = true;
+      $vars['class'] = 'chained';
 			break;
 		case 'chain':
 			// Streams will come from the path
 			// Get args and loop through each to load
+			$chat_collapsed = true;
 			$streams = multistream_get_streams_from_url();
       $vars['class'] = 'chained';
 			break;
@@ -137,8 +150,15 @@ function multistream_view_multistream($context, $streams = array(), $node = null
 	multistream_cache_streams($streams);
 	
 	$vars['streams'] = $streams;
-	
+		
 	// Load quicktabs both left and right
+	global $multistream;
+	
+	$multistream = array(
+		'chat_collapsed' => $chat_collapsed,
+	  'streams_collapsed' => $streams_collapsed,
+	);
+	
 	$player_menu = module_invoke('panels_mini', 'block_view', 'player_menu');
 	$vars['player_menu'] = $player_menu['content'];
 	
@@ -148,6 +168,8 @@ function multistream_view_multistream($context, $streams = array(), $node = null
 	$vars['riot'] = multistream_view_player($streams);
 
 	$vars['background'] = '';
+	$vars['chat_collapsed'] = $chat_collapsed;
+	$vars['streams_collapsed'] = $streams_collapsed;
 	
 	if($node) {
 	  $background = field_view_field('node', $node, 'field_player_background', 'full');
@@ -444,19 +466,19 @@ function multistream_block_share_social() {
   }
   $items = field_get_items('node', $node, 'field_facebook');
   if(!empty($items)) {
-    $vars['items'][] = l('<span class="icon"></span><span class="text">Like our page'.'</span>', 'http://facebook.com/'.$items[0]['value'], array('html'=>true,'attributes'=>array('class'=>'facebook')));
+    $vars['items'][] = l('<span class="icon"></span><span class="text">Like '.$items[0]['value'].'</span>', 'http://facebook.com/'.$items[0]['value'], array('html'=>true,'attributes'=>array('class'=>'facebook')));
   }
   $items = field_get_items('node', $node, 'field_youtube');
   if(!empty($items)) {
-    $vars['items'][] = l('<span class="icon"></span><span class="text">Subscribe: '.$items[0]['value'].'</span>', 'http://youtube.com/'.$items[0]['value'], array('html'=>true,'attributes'=>array('class'=>'youtube')));
+    $vars['items'][] = l('<span class="icon"></span><span class="text">Subscribe to '.$items[0]['value'].'</span>', 'http://youtube.com/'.$items[0]['value'], array('html'=>true,'attributes'=>array('class'=>'youtube')));
   }
-  $items = field_get_items('node', $node, 'field_facebook');
+  $items = field_get_items('node', $node, 'field_reddut');
   if(!empty($items)) {
-    $vars['items'][] = l('<span class="icon"></span><span class="text">Visit us</span>', 'http://reddit.com/'.$items[0]['value'], array('html'=>true,'attributes'=>array('class'=>'reddit')));
+    $vars['items'][] = l('<span class="icon"></span><span class="text">Visit '.$items[0]['value'].'</span>', 'http://reddit.com/'.$items[0]['value'], array('html'=>true,'attributes'=>array('class'=>'reddit')));
   }
-  $items = field_get_items('node', $node, 'field_facebook');
+  $items = field_get_items('node', $node, 'field_website');
   if(!empty($items)) {
-    $vars['items'][] = l('<span class="icon"></span><span class="text">'.$items[0]['value'].'</span>', $items[0]['value'], array('html'=>true,'attributes'=>array('class'=>'website')));
+    $vars['items'][] = l('<span class="icon"></span><span class="text">'.$items[0]['url'].'</span>', $items[0]['value'], array('html'=>true,'attributes'=>array('class'=>'website')));
   }
   
   if(!empty($vars['items'])) {
@@ -482,9 +504,11 @@ function multistream_block_share_teaser() {
   
 }
 function multistream_block_share_link() {
+  drupal_add_js(drupal_get_path('module', 'multistream').'/js/zeroclipboard/dist/ZeroClipboard.min.js');
+  
   $url = url(current_path(), array('absolute'=>true));
 
-  return '<span class="share-link">'.$url.'</span><span class="share-link-btn" class="btn"></span>';
+  return '<span class="share-link">'.$url.'</span><span id="share-link-btn" class="share-link-btn" class="btn" data-clipboard-text="'.$url.'"></span>';
 }
 
 function multistream_block_chat() {
@@ -494,7 +518,7 @@ function multistream_block_chat() {
   $output .= '<div id="chat-open">Open Chat</div>';
   $output .= '<div id="chat-selection">';
   foreach($streams as $stream) {
-    $output .= '<div class="stream" data-id="'.$stream->stream_id.'">'.$stream->channel.'</div>';
+    $output .= '<div class="stream" data-id="'.$stream->stream_id.'"><div class="stream-channel">'.$stream->channel.'</div><div class="stream-viewers">'.number_format($stream->viewers).' viewers</div></div>';
   }
   $output .= '</div>'; // chat-selection
   $output .= '<div id="chat-rooms"></div>';
@@ -597,10 +621,14 @@ function multistream_block_twitter_feed($node = null) {
 
 function multistream_form_new_multistream($form, $form_state, $save = false) {
   // are we in an existing node?
+  $node = null;
+  
   if(arg(0) == 'node') {
     $node = menu_get_object();
   }
 
+  $form['#node'] = $node;
+  
   $form_id = $save ? 'multistream-form-new-multistream-save' : 'multistream-form-new-multistream-new';
   $form['#id'] = $form_id;
   $form['#prefix'] = '<div id="'.$form_id.'-wrapper">';
@@ -617,14 +645,16 @@ function multistream_form_new_multistream($form, $form_state, $save = false) {
     );    
   }
 
-  $form['title'] = array(
-    '#type' => 'textfield',
-    '#size' => 30,
-    //'#title' => t('Save Multi-Stream'),
-    //'#prefix' => '<strong>New Multi-Stream</strong><br/><small>Creating a new multi-stream will clear the player stage.</small>',
-    '#suffix' => '',    
-    '#attributes' => array('placeholder'=>'Enter Multi-Stream Title'),
-  );
+  if(!$node) {
+    $form['title'] = array(
+      '#type' => 'textfield',
+      '#size' => 30,
+      //'#title' => t('Save Multi-Stream'),
+      //'#prefix' => '<strong>New Multi-Stream</strong><br/><small>Creating a new multi-stream will clear the player stage.</small>',
+      '#suffix' => '',    
+      '#attributes' => array('placeholder'=>'Enter Multi-Stream Title'),
+    );
+  }
   
   $submit_id = $save ? 'save-multistream-button-save' : 'save-multistream-button-new';
 
@@ -655,6 +685,10 @@ function multistream_form_new_multistream($form, $form_state, $save = false) {
 }
 
 function multistream_form_new_multistream_validate(&$form, &$form_state) {
+  if($form['#node']) {
+    return;
+  }
+  
   if(!$title = $form_state['values']['title']) {
     form_set_error('title', 'You must enter a title');
   }
@@ -663,22 +697,32 @@ function multistream_form_new_multistream_validate(&$form, &$form_state) {
 function multistream_form_new_multistream_callback(&$form, &$form_state) {
   global $user;
 
+  $is_new = true;
+  
   if(!$form_state['executed']) {
     return $form;
   }
   
-  $title = $form_state['values']['title'];
+  if($form['#node']) {
+    $is_new = false;
+    $node = $form['#node'];
+    $node = node_load($node->nid);
+    unset($node->field_streams);
+  } else {
+    $title = $form_state['values']['title'];
+    
+    $node = new stdClass();
+    $node->type = 'multistream';
+    $node->title = $title;
+    node_object_prepare($node);
+    $node->language = 'und'; // Or e.g. 'en' if locale is enabled
+    $node->uid = $user->uid;
+    $node->status = 1; //(1 or 0): published or not
+    $node->promote = 0; //(1 or 0): promoted to front page
+    $node->comment = 0; // 0 = comments disabled, 1 = read only, 2 = read/write
+    $node->is_new = true;
+  }  
   
-  $node = new stdClass();
-  $node->type = 'multistream';
-  $node->title = $title;
-  node_object_prepare($node);
-  $node->language = 'und'; // Or e.g. 'en' if locale is enabled
-  $node->uid = $user->uid;
-  $node->status = 1; //(1 or 0): published or not
-  $node->promote = 0; //(1 or 0): promoted to front page
-  $node->comment = 0; // 0 = comments disabled, 1 = read only, 2 = read/write
-  $node->is_new = true;
   
   foreach($form_state['values']['streams'] as $id => $stream_id) {
     $node->field_streams['und'][]['target_id'] = $id;
@@ -686,19 +730,24 @@ function multistream_form_new_multistream_callback(&$form, &$form_state) {
   $node = node_submit($node);
   node_save($node);
   
-  $commands[] = ajax_command_invoke('.panel-overlay', 'trigger', array('click'));
-  
-  $message = '<div><strong>Multi-Stream Saved!</strong></div><div>Nice work! <strong>'.$title.'</strong> has been added to your <strong>Favorites.</strong></div>';
-  $commands[] = ajax_command_invoke('#player-messages', 'srDisplayPlayerMessage', array($message));  
-  
-  $settings['multistream']['is_owner'] = true;
-  $settings['multistream']['nid'] = $node->nid;
-  $settings['multistream']['title'] = check_plain($node->title);
-  $path = path_load('node/'.$node->nid);
-  $settings['multistream']['path'] = $path['alias'];
-  $commands[] = ajax_command_invoke(null, 'srUpdateURL', array($path['alias']));
-  
-  $commands[] = ajax_command_settings($settings);
+  if(!$is_new) {
+    module_load_include('inc', 'ctools', 'includes/ajax');
+    $commands[] = ctools_ajax_command_redirect('multistream');
+  } else {
+    $commands[] = ajax_command_invoke('.panel-overlay', 'trigger', array('click'));
+    
+    $message = '<div><strong>Multi-Stream Saved!</strong></div><div>Nice work! <strong>'.$title.'</strong> has been added to your <strong>Favorites.</strong></div>';
+    $commands[] = ajax_command_invoke('#player-messages', 'srDisplayPlayerMessage', array($message));  
+    
+    $settings['multistream']['is_owner'] = true;
+    $settings['multistream']['nid'] = $node->nid;
+    $settings['multistream']['title'] = check_plain($node->title);
+    $path = path_load('node/'.$node->nid);
+    $settings['multistream']['path'] = $path['alias'];
+    $commands[] = ajax_command_invoke(null, 'srUpdateURL', array($path['alias']));
+    
+    $commands[] = ajax_command_settings($settings);
+  }
   return array('#type'=>'ajax', '#commands'=>$commands);
 }
 
@@ -774,7 +823,7 @@ function multistream_form_browse_by_game() {
 	$form['keyword'] = array(
 		'#type' => 'textfield',
 		'#id' => 'browse-by-game',
-	  '#size' => 30,
+	  '#size' => 25,
 		//'#autocomplete_path' => 'game/autocomplete',	
 		'#prefix' => '<small> '. t('Search game titles, channels or by keyword:') .'</small>',
 	  '#attributes' => array('placeholder'=>'Enter Search'),
@@ -792,6 +841,7 @@ function multistream_form_browse_by_game() {
 				'effect' => 'fade',
 				'speed' => 'slow',
 				'method' => 'replace',
+		    'progress' => array('message'=>null),
 		),
 		'#suffix' => '<div id="browse-filter-wrapper" class="filter-wrapper" style="display:none;"><div id="browse-filter-button" class="filter-button">Filter</div><div id="browse-filter-options-wrapper" class="filter-options-wrapper" style="display:none;"><div>Filter By:</div><ul id="browse-filter-options" class="filter-options"><li class="multistreams">Multistreams</li><li class="streams">Streams</li></ul></div></div>',
 				
@@ -1269,7 +1319,7 @@ function multistream_form_add_channel($form, $form_state) {
 			'#type' => 'textfield',
 			'#prefix' => '<small>'.t('Add Twitch Channels by name; add multiple channels by entering a space between each channel.').'</small>',
 	    '#id' => 'add-channel',
-	    '#size' => 28,
+	    '#size' => 25,
 	);
 
 	$form['channel_add'] = array(
@@ -1286,6 +1336,7 @@ function multistream_form_add_channel($form, $form_state) {
 					'effect' => 'fade',
 					'speed' => 'slow',
 					'method' => 'append',
+			    'progress' => array('message' => null),
 			),
 			//'#suffix' => '<div id="add-channel-message"></div>',
 	);
@@ -1343,20 +1394,25 @@ function multistream_form_multistream_node_form_alter(&$form, &$form_state) {
     return;
   }
   
+  $form['title']['#size'] = 30;
+  
   $form['changed']['#default_value'] = time() + 300; // gives the user 5 minutes to modify this form
   
   // Add autocomplete to add new streams
   $form['add_stream'] = array(
   	'#type' => 'textfield',
     '#title' => t('Add Channel'),
-    '#size' => 10,
+    '#size' => 20,
     '#autocomplete_path' => 'multistream/stream-autocomplete',
     '#weight' => -10,
   );
   
   $form['add_stream_submit'] = array(
-  	'#type' => 'button',
-    '#value' => t('Add'),
+  	'#type' => 'image_button',
+    '#src' => drupal_get_path('module', 'multistream') . '/images/AddChannelSmLt.png',
+    //'#value' => t('Add'),
+    '#id' => 'add-stream-manage-submit',
+    '#name' => 'add-stream-manage-submit',
     '#ajax' => array(
   	 'callback' => 'multistream_ajax_add_stream_submit_callback',
     ),
@@ -1385,7 +1441,27 @@ function multistream_form_multistream_node_form_alter(&$form, &$form_state) {
   
   $form['field_website']['und'][0]['url']['#size'] = 6;
   
+  $fields = array(
+  	'field_twitter',
+    'field_facebook',
+    'field_reddit',
+    'field_website',
+    'field_google_plus',
+    'field_youtube',
+    'field_twitter_feed'      
+  );
+  
+  foreach($fields as $field) {
+    $form[$field]['#attributes']['class'][] = 'noclick';
+    $form[$field]['und'][0]['#suffix'] = '<div class="btn connect">Edit</div>';
+    
+    if($form[$field]['und'][0]['value']['#default_value']) {
+      $form[$field]['#attributes']['class'][] = 'has-value';
+    }
+  }
+
   // Make socials disabled by default
+  /*
   $form['field_twitter']['#attributes']['class'][] = 'noclick';
   $form['field_facebook']['#attributes']['class'][] = 'noclick';
   $form['field_reddit']['#attributes']['class'][] = 'noclick';
@@ -1393,9 +1469,11 @@ function multistream_form_multistream_node_form_alter(&$form, &$form_state) {
   $form['field_google_plus']['#attributes']['class'][] = 'noclick';
   $form['field_youtube']['#attributes']['class'][] = 'noclick';
   $form['field_twitter_feed']['#attributes']['class'][] = 'noclick';
+  */
   
   
   // Edit buttons
+  /*
   $form['field_twitter']['und'][0]['#suffix'] = '<div class="btn connect">Edit</div>';
   $form['field_facebook']['und'][0]['#suffix'] = '<div class="btn connect">Edit</div>';
   $form['field_reddit']['und'][0]['#suffix'] = '<div class="btn connect">Edit</div>';
@@ -1403,8 +1481,12 @@ function multistream_form_multistream_node_form_alter(&$form, &$form_state) {
   $form['field_google_plus']['und'][0]['#suffix'] = '<div class="btn connect">Edit</div>';
   $form['field_youtube']['und'][0]['#suffix'] = '<div class="btn connect">Edit</div>';
   $form['field_twitter_feed']['und'][0]['#suffix'] = '<div class="btn connect">Edit</div>';
-  
+  */
   $form['field_twitter_feed']['#prefix'] = '<h2>Twitter Feed</h2><small>Viewers can reply, retweet and favorite your tweets directly from StreamRiot. Add friends and hashtags too!</small>';
+  //$form['actions']['submit']['#type'] = 'image_button';
+  //$form['actions']['submit']['#src'] = drupal_get_path('module', 'multistream') . '/images/SaveLt.png';
+  //unset($form['actions']['submit']['#value']);
+  $form['actions']['submit']['#value'] = 'Save Multistream';
   
   $form['actions']['submit']['#id'] = 'manage-form-submit';
   $form['actions']['submit']['#name'] = 'manage-form-submit';
@@ -1420,7 +1502,10 @@ function multistream_form_multistream_node_form_alter(&$form, &$form_state) {
   // Move delete to more settings
   $form['delete'] = $form['actions']['delete'];
   unset($form['actions']['delete']);
-  
+  $form['delete'] = array(
+  	'#id' => 'manage-form-delete',
+  	'#name' => 'manage-form-delete',
+  );
   $form['delete']['#ajax'] = array(
       'event' => 'click',
       'callback' => 'multistream_ajax_manage_delete_callback',
@@ -1522,9 +1607,9 @@ function multistream_ajax_favorites() {
   // If only one has results don't show filter
   if(!$ms_total || !$s_total) {
     if($s_total) {
-      $results = $s_view->render();
+      $results = views_embed_view('favorite_streams', 'default');
     } elseif($ms_total) {
-      $results = $ms_view->render();
+      $results = views_embed_view('favorite_multistreams', 'default');
     } else {
       exit;
     }
@@ -1533,10 +1618,9 @@ function multistream_ajax_favorites() {
   
     //$commands['filter'] = ajax_command_invoke('#favorites-filter-wrapper', 'show');
     $results .= $filter;
-    $results .= '<div id="favorites-results-streams" class="results-streams">'.$s_view->render().'</div>';
-    $results .= '<div id="favorites-results-multistreams" class="results-multistreams" style="display:none;">'.$ms_view->render().'</div>';
+    $results .= '<div id="favorites-results-streams" class="results-streams">'.views_embed_view('favorite_streams', 'default'). '</div>';
+    $results .= '<div id="favorites-results-multistreams" class="results-multistreams" style="display:none;">'.views_embed_view('favorite_multistreams', 'default').'</div>';
   }
-
   
   $commands[] = ajax_command_html('#favorites-empty', $results);
   //return $output;
@@ -1635,4 +1719,15 @@ function multistream_entity_info_alter(&$entity_info) {
   	'label' => t('Teaser - Large'),
     'custom settings' => true,
   );
+}
+
+function multistream_ajax_get_stream_settings($stream_id, $n) {
+  $stream = stream_load($stream_id);
+  
+  $config = stream_get_stream_settings($stream, 'q');
+  $settings['multistream']['streams'][$stream_id] = $config;
+  
+  $commands[] = ajax_command_settings($settings, true);
+  ajax_deliver(array('#type'=>'ajax', '#commands'=>$commands));
+  exit;
 }

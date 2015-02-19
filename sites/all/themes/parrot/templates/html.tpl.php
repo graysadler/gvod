@@ -25,9 +25,9 @@
 <![endif]-->
 <?php print $selectivizr; ?>
 <?php
-  if(!theme_get_setting('mothership_script_place_footer')) {
+  //if(!theme_get_setting('mothership_script_place_footer')) {
     print $scripts;
-  }
+  //}
 ?>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css' />
 <!-- Go to www.addthis.com/dashboard to customize your tools -->
@@ -42,7 +42,7 @@
 <?php print $page; // uses the page.tpl ?>
 <?php
   if(theme_get_setting('mothership_script_place_footer')) {
-    print $scripts;
+    //print $scripts;
   }
 ?>
 <?php print $page_bottom; //stuff from modules always render last ?>
