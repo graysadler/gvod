@@ -496,3 +496,25 @@ class StreamProviderController extends EntityAPIControllerExportable {
 function stream_preprocess_stream(&$vars) {
   $vars['stream_id'] = $vars['stream']->stream_id;
 }
+
+function stream_search_api_index_items_alter(array &$items, SearchApiIndex $index) {
+  if($index->item_type != 'stream') {
+    return;
+  }
+  
+  $cats = stream_import_get_games();
+  foreach ($items as $id => &$item) {
+    $item->category = $cats[$item->category];
+  }
+}
+
+
+function stream_load_stream_by_channel($channel) {
+  $controller = new StreamController('stream');
+  $streams = $controller->load(false, array('channel'=>$channel));
+  if(empty($streams)) {
+    return false;
+  }
+
+  return array_shift($streams);
+}

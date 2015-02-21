@@ -9,6 +9,10 @@ function stream_import_menu() {
 	return $items; 
 }
 
+function stream_import_cron() {
+  stream_import_get_twitch_streams();
+}
+
 function stream_import_page_import() {
 	$streams = stream_import_get_twitch_streams();
 	
@@ -57,7 +61,21 @@ function stream_import_twitch_stream($channel) {
     if(!array_key_exists('stream', $parsed)) {
       return false;
     }
+    
+  	$provider_vocab = taxonomy_vocabulary_machine_name_load('provider');
+  	$twitch = array_shift(taxonomy_get_term_by_name('twitch.tv', 'provider'));
+  
+    // load the category taxonomy
+    $vocab = taxonomy_vocabulary_machine_name_load('stream_category');
+    $games = stream_import_get_games();    
+    
     $item = $parsed['stream'];
+    
+    if(!$tid = array_search($item['game'], $games)) {
+      // save the game
+      $tid = stream_import_save_game($item['game'], $vocab->vid);    
+    }
+    
     $stream = new Stream();
     
     $stream->channel 	= $channel;
@@ -66,8 +84,8 @@ function stream_import_twitch_stream($channel) {
     $stream->url = $item ? $item['channel']['url'] : '';
     $stream->viewers = $item ? $item['viewers'] : '';
     $stream->is_live = $item ? true : false;
-    $stream->category	= 1;
-    $stream->provider	= 1;
+    $stream->category	= $tid;
+    $stream->provider	= $twitch->tid;
     $stream->created = $now;
     $stream->changed = $now;
   
@@ -240,9 +258,31 @@ function stream_import_get_twitch_streams() {
 		LEFT JOIN {stream_tmp} st ON
 			s.channel		= st.channel AND
 			s.provider	= st.provider
-		SET s.is_live = 0
+		SET s.is_live = 0, s.viewers = 0
 		WHERE IsNull(st.channel);	
 	");
+	
+	$index = search_api_index_load('streams');
+	db_query("
+		INSERT INTO {search_api_item}
+			(item_id, index_id, changed)
+			SELECT
+				s.stream_id as item_id,
+	      $index->id as index_id,
+	      $now as changed
+			FROM {stream} s
+	    INNER JOIN {stream_tmp} st ON st.channel = s.channel AND s.provider = st.provider
+	    LEFT JOIN {search_api_item} sai ON sai.item_id = s.stream_id AND sai.index_id = $index->id
+	    WHERE isNull(sai.item_id)
+	");	
+	
+	// update search index
+	db_query("
+	  UPDATE {search_api_db_streams} as i
+	    INNER JOIN {stream} as s on s.stream_id = i.item_id
+	    SET i.viewers = s.viewers, i.is_live = s.is_live
+	");
+		
 	/*
 	$update_query = db_update('stream')
 		->condition('stream.stream_id', $exists_query, 'IN')
@@ -267,6 +307,7 @@ function stream_import_get_twitch_streams() {
 		//->execute();
 	
 	$time_end = time();
+	
 	
 	debug(time_diff($time_start, $time_end));
 	return $streams;

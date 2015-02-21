@@ -492,7 +492,7 @@ function sr_core_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'Blog-Right-side-block';
+  $handler->display->display_options['title'] = 'Keep Up With StreamRiot';
   $handler->display->display_options['css_class'] = 'view-blog-behind-scenes';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
@@ -724,10 +724,9 @@ function sr_core_views_default_views() {
   $handler->display->display_options['style_options']['widgets']['bottom']['views_slideshow_slide_counter']['weight'] = '1';
   $handler->display->display_options['style_options']['views_slideshow_cycle']['effect'] = 'scrollHorz';
   $handler->display->display_options['style_options']['views_slideshow_cycle']['transition_advanced'] = 1;
-  $handler->display->display_options['style_options']['views_slideshow_cycle']['timeout'] = '5000';
+  $handler->display->display_options['style_options']['views_slideshow_cycle']['timeout'] = '0';
   $handler->display->display_options['style_options']['views_slideshow_cycle']['speed'] = '700';
   $handler->display->display_options['style_options']['views_slideshow_cycle']['delay'] = '1000';
-  $handler->display->display_options['style_options']['views_slideshow_cycle']['pause'] = 0;
   $handler->display->display_options['style_options']['views_slideshow_cycle']['action_advanced'] = 1;
   $handler->display->display_options['style_options']['views_slideshow_cycle']['start_paused'] = 0;
   $handler->display->display_options['style_options']['views_slideshow_cycle']['remember_slide_days'] = '1';
@@ -1060,23 +1059,9 @@ return $nide;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['pager']['options']['items_per_page'] = '2';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
-  /* Field: Taxonomy term: Game image */
-  $handler->display->display_options['fields']['field_game_image']['id'] = 'field_game_image';
-  $handler->display->display_options['fields']['field_game_image']['table'] = 'field_data_field_game_image';
-  $handler->display->display_options['fields']['field_game_image']['field'] = 'field_game_image';
-  $handler->display->display_options['fields']['field_game_image']['label'] = '';
-  $handler->display->display_options['fields']['field_game_image']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_game_image']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_game_image']['alter']['text'] = '[field_game_image]
-<div class="term-image-link"><a href="#" class="icon-term-image"></a></div>';
-  $handler->display->display_options['fields']['field_game_image']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_game_image']['click_sort_column'] = 'fid';
-  $handler->display->display_options['fields']['field_game_image']['settings'] = array(
-    'image_style' => 'multistream-term',
-    'image_link' => 'content',
-  );
   /* Field: Taxonomy term: Name */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
@@ -1087,34 +1072,43 @@ return $nide;
   $handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
   $handler->display->display_options['fields']['name']['element_type'] = 'h3';
   $handler->display->display_options['fields']['name']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['name']['link_to_taxonomy'] = TRUE;
+  /* Field: Taxonomy term: Image */
+  $handler->display->display_options['fields']['field_image_url']['id'] = 'field_image_url';
+  $handler->display->display_options['fields']['field_image_url']['table'] = 'field_data_field_image_url';
+  $handler->display->display_options['fields']['field_image_url']['field'] = 'field_image_url';
+  $handler->display->display_options['fields']['field_image_url']['label'] = '';
+  $handler->display->display_options['fields']['field_image_url']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_image_url']['element_label_colon'] = FALSE;
   /* Field: Global: Custom text */
   $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['label'] = '';
-  $handler->display->display_options['fields']['nothing']['alter']['text'] = '<div class="term-slide-home">
-<div class="term-image">[field_game_image]</div>
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = '<a href="/multistream?browse=[name]">
+<div class="term-slide-home">
+<div class="term-image"><img src="[field_image_url]" /></div>
 <div class="term-name">[name]</div>
-</div>';
+</div></a>';
   $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
+  /* Sort criterion: Taxonomy term: Viewers (field_viewers) */
+  $handler->display->display_options['sorts']['field_viewers_value']['id'] = 'field_viewers_value';
+  $handler->display->display_options['sorts']['field_viewers_value']['table'] = 'field_data_field_viewers';
+  $handler->display->display_options['sorts']['field_viewers_value']['field'] = 'field_viewers_value';
+  $handler->display->display_options['sorts']['field_viewers_value']['order'] = 'DESC';
   /* Filter criterion: Taxonomy vocabulary: Machine name */
   $handler->display->display_options['filters']['machine_name']['id'] = 'machine_name';
   $handler->display->display_options['filters']['machine_name']['table'] = 'taxonomy_vocabulary';
   $handler->display->display_options['filters']['machine_name']['field'] = 'machine_name';
   $handler->display->display_options['filters']['machine_name']['value'] = array(
-    'game_category' => 'game_category',
+    'stream_category' => 'stream_category',
   );
-  /* Filter criterion: Taxonomy term: Term ID */
-  $handler->display->display_options['filters']['tid_raw']['id'] = 'tid_raw';
-  $handler->display->display_options['filters']['tid_raw']['table'] = 'taxonomy_term_data';
-  $handler->display->display_options['filters']['tid_raw']['field'] = 'tid_raw';
-  $handler->display->display_options['filters']['tid_raw']['operator'] = 'between';
-  $handler->display->display_options['filters']['tid_raw']['value']['min'] = '2';
-  $handler->display->display_options['filters']['tid_raw']['value']['max'] = '3';
 
   /* Display: Right term */
   $handler = $view->new_display('block', 'Right term', 'block');
+  $handler->display->display_options['defaults']['pager'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '2';
+  $handler->display->display_options['pager']['options']['offset'] = '2';
   $handler->display->display_options['block_description'] = 'home-silder-right-term';
 
   /* Display: Left term */
@@ -1126,15 +1120,8 @@ return $nide;
   $handler->display->display_options['filters']['machine_name']['table'] = 'taxonomy_vocabulary';
   $handler->display->display_options['filters']['machine_name']['field'] = 'machine_name';
   $handler->display->display_options['filters']['machine_name']['value'] = array(
-    'game_category' => 'game_category',
+    'stream_category' => 'stream_category',
   );
-  /* Filter criterion: Taxonomy term: Term ID */
-  $handler->display->display_options['filters']['tid_raw']['id'] = 'tid_raw';
-  $handler->display->display_options['filters']['tid_raw']['table'] = 'taxonomy_term_data';
-  $handler->display->display_options['filters']['tid_raw']['field'] = 'tid_raw';
-  $handler->display->display_options['filters']['tid_raw']['operator'] = 'between';
-  $handler->display->display_options['filters']['tid_raw']['value']['min'] = '4';
-  $handler->display->display_options['filters']['tid_raw']['value']['max'] = '5';
   $handler->display->display_options['block_description'] = 'home-silder-left-term';
   $export['home_page_term'] = $view;
 
@@ -1196,17 +1183,14 @@ return $nide;
   $handler->display->display_options['row_plugin'] = 'fields';
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Stream image */
-  $handler->display->display_options['fields']['field_stream_image']['id'] = 'field_stream_image';
-  $handler->display->display_options['fields']['field_stream_image']['table'] = 'field_data_field_stream_image';
-  $handler->display->display_options['fields']['field_stream_image']['field'] = 'field_stream_image';
-  $handler->display->display_options['fields']['field_stream_image']['label'] = '';
-  $handler->display->display_options['fields']['field_stream_image']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_stream_image']['alter']['text'] = '[field_stream_image]
-<div class="term-image-link"><a href="#" class="icon-term-image"></a></div>';
-  $handler->display->display_options['fields']['field_stream_image']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_stream_image']['click_sort_column'] = 'fid';
-  $handler->display->display_options['fields']['field_stream_image']['settings'] = array(
+  /* Field: Content: Cover Image */
+  $handler->display->display_options['fields']['field_cover']['id'] = 'field_cover';
+  $handler->display->display_options['fields']['field_cover']['table'] = 'field_data_field_cover';
+  $handler->display->display_options['fields']['field_cover']['field'] = 'field_cover';
+  $handler->display->display_options['fields']['field_cover']['label'] = '';
+  $handler->display->display_options['fields']['field_cover']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_cover']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_cover']['settings'] = array(
     'image_style' => 'stream-slider',
     'image_link' => '',
   );
@@ -1220,6 +1204,21 @@ return $nide;
   $handler->display->display_options['fields']['title']['element_type'] = 'h3';
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+  /* Field: Content: Stream image */
+  $handler->display->display_options['fields']['field_stream_image']['id'] = 'field_stream_image';
+  $handler->display->display_options['fields']['field_stream_image']['table'] = 'field_data_field_stream_image';
+  $handler->display->display_options['fields']['field_stream_image']['field'] = 'field_stream_image';
+  $handler->display->display_options['fields']['field_stream_image']['label'] = '';
+  $handler->display->display_options['fields']['field_stream_image']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_stream_image']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_stream_image']['alter']['text'] = '[field_stream_image]
+<div class="term-image-link"><a href="#" class="icon-term-image"></a></div>';
+  $handler->display->display_options['fields']['field_stream_image']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_stream_image']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_stream_image']['settings'] = array(
+    'image_style' => 'stream-slider',
+    'image_link' => '',
+  );
   $handler->display->display_options['block_description'] = 'stream-slider-home';
   $export['slider_stream_home'] = $view;
 

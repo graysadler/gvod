@@ -5,6 +5,7 @@
  */
 
 include_once 'multistream.features.inc';
+include_once 'processor_stream_category.inc';
 
 define('PLAYER_MAX_DEFAULT', 4);
 define('PLAYER_MAX_NOW_PLAYING', 5);
@@ -24,9 +25,16 @@ function multistream_menu() {
 			'title' => 'Riot Player',
 			'type' => MENU_CALLBACK,
 	);
-	$items['game/autocomplete'] = array(
-			'title' => 'Autocomplete Game',
-			'page callback' => 'multistream_autocomplete_game',
+	$items['multistream/browse/%'] = array(
+	    'page callback' => 'multistream_view_multistream',
+	    'page arguments' => array('browse', array(), null, false, true, 2),
+	    'access callback' => true,
+	    'title' => 'Riot Player',
+	    'type' => MENU_CALLBACK,
+	);	
+	$items['browse/autocomplete'] = array(
+			'title' => 'Autocomplete Browse',
+			'page callback' => 'multistream_autocomplete_browse',
 			'access arguments' => array('access content'),
 			'type' => MENU_CALLBACK,
 	);	
@@ -107,7 +115,7 @@ function multistream_ajax_update_streams() {
   return true;
 }
 
-function multistream_view_multistream($context, $streams = array(), $node = null, $streams_collapsed = false, $chat_collapsed = false) {
+function multistream_view_multistream($context, $streams = array(), $node = null, $streams_collapsed = true, $chat_collapsed = true, $browse = '') {
 	drupal_add_library('system', 'drupal.ajax');
 	drupal_add_library('system', 'drupal.autocomplete');
 	drupal_add_library('system', 'effects.blind');
@@ -124,7 +132,11 @@ function multistream_view_multistream($context, $streams = array(), $node = null
 	//drupal_add_js(drupal_get_path('module', 'views') . "/js/ajax.js");
 	
   $vars['class'] = 'not-chained';
-		
+  global $multistream;
+  if(isset($_GET['browse'])) {
+    $multistream['browse'] = urldecode(check_plain($_GET['browse']));
+    
+  }		
 	// Depending on the context, the streams source will be different	
 	switch($context) {
 		case 'queue':
@@ -142,6 +154,10 @@ function multistream_view_multistream($context, $streams = array(), $node = null
 		case 'riot':
 			// Streams will be passed through the $streams array	
 			break;
+		case 'browse':
+		  $multistream['browse'] = urldecode($browse);
+		  $chat_collapsed = true;
+		  $vars['class'] = 'chained';		  
 	}
 	
 	// Order the streams
@@ -152,12 +168,10 @@ function multistream_view_multistream($context, $streams = array(), $node = null
 	$vars['streams'] = $streams;
 		
 	// Load quicktabs both left and right
-	global $multistream;
+
 	
-	$multistream = array(
-		'chat_collapsed' => $chat_collapsed,
-	  'streams_collapsed' => $streams_collapsed,
-	);
+	$multistream['chat_collapsed'] = $chat_collapsed;
+	$multistream['streams_collapsed'] = $streams_collapsed;
 	
 	$player_menu = module_invoke('panels_mini', 'block_view', 'player_menu');
 	$vars['player_menu'] = $player_menu['content'];
@@ -285,12 +299,12 @@ function multistream_block_info() {
 
 	$blocks['browse_by_game'] = array(
 			'info' => t('Browse by Game'),
-			'cache' => DRUPAL_CACHE_PER_ROLE,
+			'cache' => DRUPAL_NO_CACHE,
 	);
 
 	$blocks['multistream_browse_results'] = array(
 	    'info' => t('Browse Results'),
-	    'cache' => DRUPAL_CACHE_PER_ROLE,
+	    'cache' => DRUPAL_NO_CACHE,
 	);
 	
 	
@@ -306,7 +320,7 @@ function multistream_block_info() {
 
 	$blocks['multistream_panel_actions'] = array(
 	    'info' => t('Multistream Panel Actions'),
-	    'cache' => DRUPAL_CACHE_PER_ROLEL,
+	    'cache' => DRUPAL_CACHE_PER_ROLE,
 	);
 
 	$blocks['multistream_panel_actions_anon'] = array(
@@ -425,6 +439,13 @@ function multistream_block_view($delta = '') {
 		case 'multistream_browse_results' :
 		  $block['subject'] = t('Results');
 		  $block['content'] = '<div id="browse-results"></div>';
+		  global $multistream;
+		  if(isset($multistream['browse'])) {
+		    $keyword = $multistream['browse'];
+		    $results = multistream_get_browse_results($keyword);
+		    $block['content'] = '<div id="browse-results">'.$results['html'].'</div>';		    
+		  }
+		  
 		  break;
 		case 'multistream_twitter_feed':
 		  $block['subject'] = t('Twitter Feed');
@@ -820,13 +841,21 @@ function multistream_block_manage_filter_callback() {
 }
 
 function multistream_form_browse_by_game() {
-	$form['keyword'] = array(
+	global $multistream;
+	if(isset($multistream['browse'])) {
+	  $default = $multistream['browse'];
+	} else {
+	  $default = '';
+	}
+	
+  $form['keyword'] = array(
 		'#type' => 'textfield',
 		'#id' => 'browse-by-game',
 	  '#size' => 25,
-		//'#autocomplete_path' => 'game/autocomplete',	
+		'#autocomplete_path' => 'browse/autocomplete',	
 		'#prefix' => '<small> '. t('Search game titles, channels or by keyword:') .'</small>',
 	  '#attributes' => array('placeholder'=>'Enter Search'),
+	  '#default_value' => $default,
 	);
 	
 	$form['search'] = array(
@@ -840,7 +869,7 @@ function multistream_form_browse_by_game() {
 				'wrapper' => 'browse-results',
 				'effect' => 'fade',
 				'speed' => 'slow',
-				'method' => 'replace',
+				//'method' => 'replace',
 		    'progress' => array('message'=>null),
 		),
 		'#suffix' => '<div id="browse-filter-wrapper" class="filter-wrapper" style="display:none;"><div id="browse-filter-button" class="filter-button">Filter</div><div id="browse-filter-options-wrapper" class="filter-options-wrapper" style="display:none;"><div>Filter By:</div><ul id="browse-filter-options" class="filter-options"><li class="multistreams">Multistreams</li><li class="streams">Streams</li></ul></div></div>',
@@ -850,9 +879,10 @@ function multistream_form_browse_by_game() {
 	return $form;
 }
 
-function multistream_form_browse_by_game_callback($form, &$form_state) {
-  $keyword = $form_state['values']['keyword'];
-  $commands = array();
+function multistream_get_browse_results($keyword) {
+  $s_total = 0;
+  $m_total = 0;
+  $results = '';
   
   // Execute multistream and streams browse
   $ms_view = views_get_view('browse_multistreams');
@@ -872,40 +902,47 @@ function multistream_form_browse_by_game_callback($form, &$form_state) {
   $s_view->pre_execute();
   $s_view->execute();
   $s_total = $s_view->total_rows;
-    
-  //return $ms_view->render();  
-  $commands['filter'] = ajax_command_invoke('#browse-filter-wrapper', 'hide');
-  // If only one has results don't show filter
+
   if(!$ms_total || !$s_total) {
     if($s_total) {
       $results = $s_view->render();
     } elseif($ms_total) {
-      $results = $ms_total->render();
+      $results = $ms_view->render();
     } else {
       $delta = 'browse_no_results';
       $panel_mini = panels_mini_load($delta);
-      
-      //ctools_include('context');
-      //$context = ctools_context_create('entity:node', $node);
-      //$contexts = ctools_context_match_required_contexts($panel_mini->requiredcontexts, array($context));
-      //$panel_mini->context = $panel_mini->display->context =  ctools_context_load_contexts($panel_mini, FALSE, $contexts);
       $panel_mini->display->css_id = panels_mini_get_id($panel_mini->name);
-      
+  
       // Here is the markup, to with with whatever you wish.
-      $results = panels_render_display($panel_mini->display);        
+      $results = panels_render_display($panel_mini->display);
     }
-  } else {   
-    $commands['filter'] = ajax_command_invoke('#browse-filter-wrapper', 'show');
+  } else {
+    
     $results .= '<div id="browse-results-streams" class="results-streams">'.$s_view->render().'</div>';
     $results .= '<div id="browse-results-multistreams" style="display:none;" class="results-multistreams">'.$ms_view->render().'</div>';
   }
-  
-  //$output = '<div id="browse-results">';
-  //$output .= $results;
-  //$output .= '</div>';
+    
+  return array(
+  	'html' => $results,
+    's_total' => $s_total,
+    'ms_total' => $ms_total,
+  );
+}
 
-  $commands[] = ajax_command_html('#browse-results', $results);
-  //return $output;
+function multistream_form_browse_by_game_callback($form, &$form_state) {
+  $keyword = $form_state['values']['keyword'];
+  $commands = array();
+  $form_state['rebuild'] = false;
+  $results = multistream_get_browse_results($keyword);
+
+  // If only one has results don't show filter
+  if($results['s_total'] && $results['ms_total']) {
+    $commands['filter'] = ajax_command_invoke('#browse-filter-wrapper', 'show');
+  } else {
+    $commands['filter'] = ajax_command_invoke('#browse-filter-wrapper', 'hide');    
+  }
+
+  $commands[] = ajax_command_html('#browse-results', $results['html']);
   
   return array('#type'=>'ajax', '#commands'=>$commands);
 }
@@ -992,16 +1029,6 @@ function multistream_sort_riot_streams($nodes = array()) {
 	}
 
 	return $streams;
-}
-
-function stream_load_stream_by_channel($channel) {
-  $controller = new StreamController('stream');
-  $streams = $controller->load(false, array('channel'=>$channel));
-  if(empty($streams)) {
-    return false;
-  } 
-  
-  return array_shift($streams);
 }
 
 function stream_get_stream_settings($stream, $n) {
@@ -1202,68 +1229,18 @@ function multistream_autocomplete_stream($keyword) {
   drupal_json_output($matches);
 }
 
-function multistream_autocomplete_game() {
-	// If the request has a '/' in the search text, then the menu system will have
-	// split it into multiple arguments, recover the intended $tags_typed.
-	$args = func_get_args();
+function multistream_autocomplete_browse($keys) {
+  $vocab = taxonomy_vocabulary_machine_name_load('stream_category');
+    
+  $keys = check_plain($keys);
+  
+  $matches = db_query("SELECT LOWER(name) as name1, LOWER(name) as name2 FROM {taxonomy_term_data} WHERE vid = $vocab->vid AND name LIKE('$keys%') ORDER BY name ASC LIMIT 5")->fetchAllKeyed();
 
-	$tags_typed = implode('/', $args);
-
-	$field_name = 'field_stream_category';
-	// Make sure the field exists and is a taxonomy field.
-	if (!($field = field_info_field($field_name)) || $field['type'] !== 'taxonomy_term_reference') {
-		// Error string. The JavaScript handler will realize this is not JSON and
-		// will display it as debugging information.
-		print t('Taxonomy field @field_name not found.', array('@field_name' => $field_name));
-		exit;
-	}
-
-	// The user enters a comma-separated list of tags. We only autocomplete the last tag.
-	$tags_typed = drupal_explode_tags($tags_typed);
-	$tag_last = drupal_strtolower(array_pop($tags_typed));
-
-	$term_matches = array();
-	if ($tag_last != '') {
-
-		// Part of the criteria for the query come from the field's own settings.
-		$vids = array();
-		$vocabularies = taxonomy_vocabulary_get_names();
-		foreach ($field['settings']['allowed_values'] as $tree) {
-			$vids[] = $vocabularies[$tree['vocabulary']]->vid;
-		}
-
-		$query = db_select('taxonomy_term_data', 't');
-		$query->addTag('translatable');
-		$query->addTag('term_access');
-
-		// Do not select already entered terms.
-		if (!empty($tags_typed)) {
-			$query->condition('t.name', $tags_typed, 'NOT IN');
-		}
-		// Select rows that match by term name.
-		$tags_return = $query
-		->fields('t', array('tid', 'name'))
-		->condition('t.vid', $vids)
-		->condition('t.name', '' . db_like($tag_last) . '%', 'LIKE')
-		->range(0, 10)
-		->execute()
-		->fetchAllKeyed();
-
-		$prefix = count($tags_typed) ? drupal_implode_tags($tags_typed) . ', ' : '';
-
-		foreach ($tags_return as $tid => $name) {
-			$n = $name;
-			// Term names containing commas or quotes must be wrapped in quotes.
-			if (strpos($name, ',') !== FALSE || strpos($name, '"') !== FALSE) {
-				$n = '"' . str_replace('"', '""', $name) . '"';
-			}
-			$term_matches[$prefix . $n] = check_plain($name);
-			//$term = taxonomy_term_load($tid);
-			//$term_matches[$prefix . $n] = drupal_render(entity_view('taxonomy_term', array($term), 'teaser_sm'));
-		}
-	}
-
-	drupal_json_output($term_matches);
+  if(empty($matches)) {
+    $matches = db_query("SELECT LOWER(channel) as name1, LOWER(channel) as name2 FROM {stream} WHERE channel LIKE('$keys%') ORDER BY channel ASC LIMIT 5")->fetchAllKeyed();    
+  }
+  
+	drupal_json_output($matches);
 }
 
 function multistream_form_riot_node_form_alter(&$form, &$form_state) {
@@ -1730,4 +1707,44 @@ function multistream_ajax_get_stream_settings($stream_id, $n) {
   $commands[] = ajax_command_settings($settings, true);
   ajax_deliver(array('#type'=>'ajax', '#commands'=>$commands));
   exit;
+}
+
+function multistream_quicktabs_alter($info) {
+  if($info->machine_name == 'player_menu') {
+    global $multistream;
+    
+    if(isset($multistream['browse'])) {
+      $info->default_tab = 2; // browse tab
+    }
+  }
+}
+
+/**
+ * Implements hook_search_api_processor_info().
+ */
+function multistream_search_api_processor_info() {
+  $processors['multistream_stream_category'] = array(
+    'name' => t('Use game stream name'),
+    'description' => t('This processor will convert tid to game name on stream category'),
+    'class' => 'SearchApiStreamCategory',
+  );
+
+
+  return $processors;
+}
+
+/**
+ * Lets modules alter a search query before executing it.
+ *
+ * @param SearchApiQueryInterface $query
+ *   The search query being executed.
+ */
+function multistream_search_api_query_alter(SearchApiQueryInterface $query) {
+  $test = 'test';
+  
+  return;
+  if ($query->getIndex()->getEntityType()) {
+    $info = entity_get_info($query->getIndex()->getEntityType());
+    $query->condition($info['entity keys']['id'], 0, '!=');
+  }
 }

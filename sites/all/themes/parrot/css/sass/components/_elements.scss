@@ -1023,18 +1023,18 @@ ul.quicktabs-tabs.quicktabs-style-sky li.last a {
 
                     .term-name {
                         text-align: right;
-                        a {
+                        //a {
                             font-size: 1.167 * $baseFontSize;
                             color: $white;
                             padding: 12px 23px;
                             background-color: $inActive-bagColor;
                             display: block;
-                        }
+                        //}
                     }
                 }
                 .term-slide-home {
                     &:hover {
-                        .term-name a {
+                        .term-name {
                             background-color: $SRblue-with-opcity;
                             //font-weight: 700;
                         }
@@ -2286,6 +2286,10 @@ a.contextual-links-trigger {
 }
 .term-image {
     position: relative;
+    
+    img {
+      width: 100%;
+    }
 }
 .field-content .icon-term-image {
     //height: 103px;

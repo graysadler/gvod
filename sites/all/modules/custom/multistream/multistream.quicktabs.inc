@@ -112,25 +112,25 @@ function multistream_quicktabs_default_quicktabs() {
   $quicktabs->machine_name = 'social_menu';
   $quicktabs->ajax = 0;
   $quicktabs->hide_empty_tabs = FALSE;
-  $quicktabs->default_tab = 999999;
+  $quicktabs->default_tab = 0;
   $quicktabs->title = 'Social Menu';
   $quicktabs->tabs = array(
     0 => array(
-      'bid' => 'comment_delta_recent',
+      'bid' => 'panels_mini_delta_player_twitter_feed',
       'hide_title' => 1,
       'title' => 'Twitter',
       'weight' => '-100',
       'type' => 'block',
     ),
     1 => array(
-      'bid' => 'comment_delta_recent',
+      'bid' => 'panels_mini_delta_player_chat',
       'hide_title' => 1,
       'title' => 'Chat',
       'weight' => '-99',
       'type' => 'block',
     ),
     2 => array(
-      'bid' => 'panels_mini_delta_multistream_share',
+      'bid' => 'panels_mini_delta_player_share',
       'hide_title' => 1,
       'title' => 'Share',
       'weight' => '-98',
@@ -138,7 +138,7 @@ function multistream_quicktabs_default_quicktabs() {
     ),
   );
   $quicktabs->renderer = 'quicktabs';
-  $quicktabs->style = 'nostyle';
+  $quicktabs->style = 'Sky';
   $quicktabs->options = array();
 
   // Translatables

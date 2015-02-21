@@ -117,3 +117,26 @@ div[id*="edit-field-streams"] .flag-stream-favs { display: none; }
  {
   display: block;
 }
+
+#player-wrapper .pager li {
+  border: none;
+  background-color: transparent;
+  display: none;
+}
+
+#player-wrapper .pager li {
+  background-color: transparent;  
+}
+
+#player-wrapper .pager li.previous,
+#player-wrapper .pager li.next {
+  display: inline-block;
+}
+
+#player-wrapper .pager li a:hover {
+  background-color: transparent;
+}
+
+#player-wrapper .pager .ajax-progress {
+  display: none;
+}

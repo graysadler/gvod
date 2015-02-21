@@ -13,6 +13,79 @@ function multistream_default_panels_mini() {
   $mini = new stdClass();
   $mini->disabled = FALSE; /* Edit this to true to make a default mini disabled initially */
   $mini->api_version = 1;
+  $mini->name = '300x250_ad';
+  $mini->category = '';
+  $mini->admin_title = '300x250 Ad';
+  $mini->admin_description = '';
+  $mini->requiredcontexts = array();
+  $mini->contexts = array();
+  $mini->relationships = array();
+  $display = new panels_display();
+  $display->layout = 'one_mp';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'default' => NULL,
+      'minipanel_one_main' => NULL,
+    ),
+  );
+  $display->cache = array();
+  $display->title = '';
+  $display->uuid = 'bb5ddd43-4374-49f3-8437-657c54f4cee9';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-a9a81272-7cf4-4077-9851-1ac7b99a5706';
+    $pane->panel = 'minipanel_one_main';
+    $pane->type = 'block';
+    $pane->subtype = 'block-11';
+    $pane->shown = FALSE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = 'a9a81272-7cf4-4077-9851-1ac7b99a5706';
+    $display->content['new-a9a81272-7cf4-4077-9851-1ac7b99a5706'] = $pane;
+    $display->panels['minipanel_one_main'][0] = 'new-a9a81272-7cf4-4077-9851-1ac7b99a5706';
+    $pane = new stdClass();
+    $pane->pid = 'new-79ce0cf3-ce66-4877-8c6f-01a292d4d64f';
+    $pane->panel = 'minipanel_one_main';
+    $pane->type = 'block';
+    $pane->subtype = 'simpleads-ad_groups_318';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = '79ce0cf3-ce66-4877-8c6f-01a292d4d64f';
+    $display->content['new-79ce0cf3-ce66-4877-8c6f-01a292d4d64f'] = $pane;
+    $display->panels['minipanel_one_main'][1] = 'new-79ce0cf3-ce66-4877-8c6f-01a292d4d64f';
+  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->title_pane = 'new-a9a81272-7cf4-4077-9851-1ac7b99a5706';
+  $mini->display = $display;
+  $export['300x250_ad'] = $mini;
+
+  $mini = new stdClass();
+  $mini->disabled = FALSE; /* Edit this to true to make a default mini disabled initially */
+  $mini->api_version = 1;
   $mini->name = 'add_new_channel';
   $mini->category = '';
   $mini->admin_title = 'Add Channel';
@@ -174,6 +247,28 @@ function multistream_default_panels_mini() {
     $display->content['new-c3bdbbe3-8f90-46fd-b840-dbc7e46ab420'] = $pane;
     $display->panels['minipanel_two_50_bottom'][0] = 'new-c3bdbbe3-8f90-46fd-b840-dbc7e46ab420';
     $pane = new stdClass();
+    $pane->pid = 'new-8008e50e-3f52-47c2-ad02-384be262ff7a';
+    $pane->panel = 'minipanel_two_50_bottom';
+    $pane->type = 'block';
+    $pane->subtype = 'views-whats_hot-block';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = '8008e50e-3f52-47c2-ad02-384be262ff7a';
+    $display->content['new-8008e50e-3f52-47c2-ad02-384be262ff7a'] = $pane;
+    $display->panels['minipanel_two_50_bottom'][1] = 'new-8008e50e-3f52-47c2-ad02-384be262ff7a';
+    $pane = new stdClass();
     $pane->pid = 'new-92a3fa92-1305-4f2e-9dcd-c53de26dea1a';
     $pane->panel = 'minipanel_two_50_top';
     $pane->type = 'block';
@@ -250,50 +345,6 @@ function multistream_default_panels_mini() {
     $pane->uuid = '2be2885c-1df5-488e-9c07-888bab0d473c';
     $display->content['new-2be2885c-1df5-488e-9c07-888bab0d473c'] = $pane;
     $display->panels['center'][0] = 'new-2be2885c-1df5-488e-9c07-888bab0d473c';
-    $pane = new stdClass();
-    $pane->pid = 'new-26b8ed26-06e0-4f1b-aa86-a1d53ec91dbf';
-    $pane->panel = 'center';
-    $pane->type = 'block';
-    $pane->subtype = 'multistream-multistream_add_channel';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'override_title' => 0,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 1;
-    $pane->locks = array();
-    $pane->uuid = '26b8ed26-06e0-4f1b-aa86-a1d53ec91dbf';
-    $display->content['new-26b8ed26-06e0-4f1b-aa86-a1d53ec91dbf'] = $pane;
-    $display->panels['center'][1] = 'new-26b8ed26-06e0-4f1b-aa86-a1d53ec91dbf';
-    $pane = new stdClass();
-    $pane->pid = 'new-3b207856-9d8f-4f50-a584-c0bb9eb569ca';
-    $pane->panel = 'center';
-    $pane->type = 'block';
-    $pane->subtype = 'views-streams-block';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'override_title' => 0,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 2;
-    $pane->locks = array();
-    $pane->uuid = '3b207856-9d8f-4f50-a584-c0bb9eb569ca';
-    $display->content['new-3b207856-9d8f-4f50-a584-c0bb9eb569ca'] = $pane;
-    $display->panels['center'][2] = 'new-3b207856-9d8f-4f50-a584-c0bb9eb569ca';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $mini->display = $display;
@@ -369,7 +420,18 @@ function multistream_default_panels_mini() {
     $pane->subtype = 'favorites_empty';
     $pane->shown = TRUE;
     $pane->access = array(
-      'plugins' => array(),
+      'plugins' => array(
+        0 => array(
+          'name' => 'role',
+          'settings' => array(
+            'rids' => array(
+              0 => 2,
+            ),
+          ),
+          'context' => 'logged-in-user',
+          'not' => FALSE,
+        ),
+      ),
     );
     $pane->configuration = array(
       'override_title' => 1,
@@ -405,12 +467,18 @@ function multistream_default_panels_mini() {
   $mini->contexts = array();
   $mini->relationships = array();
   $display = new panels_display();
-  $display->layout = 'flexible';
+  $display->layout = 'two_50_mp';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
       'default' => NULL,
       'center' => NULL,
+      'minipanel_one_main_fw' => NULL,
+      'minipanel_one_main' => NULL,
+      'minipanel_two_50_top' => NULL,
+      'minipanel_two_50_first' => NULL,
+      'minipanel_two_50_second' => NULL,
+      'minipanel_two_50_bottom' => NULL,
     ),
   );
   $display->cache = array();
@@ -420,7 +488,7 @@ function multistream_default_panels_mini() {
   $display->panels = array();
     $pane = new stdClass();
     $pane->pid = 'new-bb6caf7a-0643-4355-96f2-cd4313b248b4';
-    $pane->panel = 'center';
+    $pane->panel = 'minipanel_two_50_bottom';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
     $pane->shown = TRUE;
@@ -429,15 +497,9 @@ function multistream_default_panels_mini() {
       'admin_title' => 'Intro',
       'title' => '',
       'body' => '<p>Your favorite multi-streams and channels will appear here.</p>
-<p>Start your own faves and sign up free!</p>
-<ul class="register-icons">
-<li class="twitter"></li>
-<li class="facebook"></li>
-<li class="twitch"></li>
-<li class="email"></li>
-</ul>
 
-<img src="/sites/all/modules/custom/multistream/images/favorites-preview.png" alt="favorites preview" title="favorites preview" />',
+<p>Start your own faves and sign up free!</p>
+',
       'format' => 'full_html',
       'substitute' => TRUE,
     );
@@ -451,7 +513,54 @@ function multistream_default_panels_mini() {
     $pane->locks = array();
     $pane->uuid = 'bb6caf7a-0643-4355-96f2-cd4313b248b4';
     $display->content['new-bb6caf7a-0643-4355-96f2-cd4313b248b4'] = $pane;
-    $display->panels['center'][0] = 'new-bb6caf7a-0643-4355-96f2-cd4313b248b4';
+    $display->panels['minipanel_two_50_bottom'][0] = 'new-bb6caf7a-0643-4355-96f2-cd4313b248b4';
+    $pane = new stdClass();
+    $pane->pid = 'new-8e277e8c-f83f-48f4-918d-5ea1d8913ed9';
+    $pane->panel = 'minipanel_two_50_bottom';
+    $pane->type = 'block';
+    $pane->subtype = 'hybridauth-hybridauth';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = '8e277e8c-f83f-48f4-918d-5ea1d8913ed9';
+    $display->content['new-8e277e8c-f83f-48f4-918d-5ea1d8913ed9'] = $pane;
+    $display->panels['minipanel_two_50_bottom'][1] = 'new-8e277e8c-f83f-48f4-918d-5ea1d8913ed9';
+    $pane = new stdClass();
+    $pane->pid = 'new-d3046143-256d-4620-8332-f5f4f3c358e4';
+    $pane->panel = 'minipanel_two_50_bottom';
+    $pane->type = 'custom';
+    $pane->subtype = 'custom';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'admin_title' => 'Preview',
+      'title' => '',
+      'body' => '<p><img alt="favorites preview" src="/sites/all/modules/custom/multistream/images/favorites-preview.png" title="favorites preview" /></p>',
+      'format' => 'full_html',
+      'substitute' => TRUE,
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 2;
+    $pane->locks = array();
+    $pane->uuid = 'd3046143-256d-4620-8332-f5f4f3c358e4';
+    $display->content['new-d3046143-256d-4620-8332-f5f4f3c358e4'] = $pane;
+    $display->panels['minipanel_two_50_bottom'][2] = 'new-d3046143-256d-4620-8332-f5f4f3c358e4';
   $display->hide_title = PANELS_TITLE_NONE;
   $display->title_pane = '0';
   $mini->display = $display;
@@ -684,6 +793,57 @@ Import channels you follow on twitch
   $mini = new stdClass();
   $mini->disabled = FALSE; /* Edit this to true to make a default mini disabled initially */
   $mini->api_version = 1;
+  $mini->name = 'player_chat';
+  $mini->category = '';
+  $mini->admin_title = 'Player Chat';
+  $mini->admin_description = '';
+  $mini->requiredcontexts = array();
+  $mini->contexts = array();
+  $mini->relationships = array();
+  $display = new panels_display();
+  $display->layout = 'one_mp';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'default' => NULL,
+      'minipanel_one_main' => NULL,
+    ),
+  );
+  $display->cache = array();
+  $display->title = '';
+  $display->uuid = '240cd457-29c0-470c-9c2d-8ea0cb5756bd';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-0a4aa1c5-4b4b-4218-8928-6cc918c183d4';
+    $pane->panel = 'minipanel_one_main';
+    $pane->type = 'block';
+    $pane->subtype = 'multistream-multistream_chat';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '0a4aa1c5-4b4b-4218-8928-6cc918c183d4';
+    $display->content['new-0a4aa1c5-4b4b-4218-8928-6cc918c183d4'] = $pane;
+    $display->panels['minipanel_one_main'][0] = 'new-0a4aa1c5-4b4b-4218-8928-6cc918c183d4';
+  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->title_pane = '0';
+  $mini->display = $display;
+  $export['player_chat'] = $mini;
+
+  $mini = new stdClass();
+  $mini->disabled = FALSE; /* Edit this to true to make a default mini disabled initially */
+  $mini->api_version = 1;
   $mini->name = 'player_manage';
   $mini->category = '';
   $mini->admin_title = 'Player Manage';
@@ -732,19 +892,9 @@ Import channels you follow on twitch
     $pane->configuration = array(
       'admin_title' => 'Anonymous Content',
       'title' => 'Customize',
-      'body' => '<p>Link your social networks, add Twitter feeds and upload cover images & backgrounds!</p>
+      'body' => '<p>Link your social networks, add Twitter feeds and upload cover images &amp; backgrounds!</p>
 
-<p>Get started and register for a free account using social or sign up by email:</p>
-
-<ul class="register-icons">
-	<li class="twitter">&nbsp;</li>
-	<li class="facebook">&nbsp;</li>
-	<li class="twitch">&nbsp;</li>
-	<li class="email">&nbsp;</li>
-</ul>
-
-<p><img alt="favorites preview" src="/sites/all/modules/custom/multistream/images/favorites-preview.png" title="favorites preview" /></p>
-',
+<p>Get started and register for a free account using social or sign up by email:</p>',
       'format' => 'full_html',
       'substitute' => TRUE,
     );
@@ -759,6 +909,77 @@ Import channels you follow on twitch
     $pane->uuid = 'fdcf8f85-6f05-4eb5-985c-8156b592396c';
     $display->content['new-fdcf8f85-6f05-4eb5-985c-8156b592396c'] = $pane;
     $display->panels['minipanel_two_50_bottom'][0] = 'new-fdcf8f85-6f05-4eb5-985c-8156b592396c';
+    $pane = new stdClass();
+    $pane->pid = 'new-6a819e53-680d-4a12-bfd4-36534c3ecba9';
+    $pane->panel = 'minipanel_two_50_bottom';
+    $pane->type = 'block';
+    $pane->subtype = 'hybridauth-hybridauth';
+    $pane->shown = TRUE;
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'role',
+          'settings' => array(
+            'rids' => array(),
+          ),
+          'context' => 'logged-in-user',
+          'not' => TRUE,
+        ),
+      ),
+    );
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = '6a819e53-680d-4a12-bfd4-36534c3ecba9';
+    $display->content['new-6a819e53-680d-4a12-bfd4-36534c3ecba9'] = $pane;
+    $display->panels['minipanel_two_50_bottom'][1] = 'new-6a819e53-680d-4a12-bfd4-36534c3ecba9';
+    $pane = new stdClass();
+    $pane->pid = 'new-305ef337-5573-407a-91bf-1681f7aa1b5f';
+    $pane->panel = 'minipanel_two_50_bottom';
+    $pane->type = 'custom';
+    $pane->subtype = 'custom';
+    $pane->shown = TRUE;
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'role',
+          'settings' => array(
+            'rids' => array(
+              0 => 2,
+            ),
+          ),
+          'context' => 'logged-in-user',
+          'not' => TRUE,
+        ),
+      ),
+    );
+    $pane->configuration = array(
+      'admin_title' => 'Preview (Anonymous)',
+      'title' => '',
+      'body' => '<p><img alt="favorites preview" src="/sites/all/modules/custom/multistream/images/favorites-preview.png" title="favorites preview" /></p>',
+      'format' => 'full_html',
+      'substitute' => TRUE,
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 2;
+    $pane->locks = array();
+    $pane->uuid = '305ef337-5573-407a-91bf-1681f7aa1b5f';
+    $display->content['new-305ef337-5573-407a-91bf-1681f7aa1b5f'] = $pane;
+    $display->panels['minipanel_two_50_bottom'][2] = 'new-305ef337-5573-407a-91bf-1681f7aa1b5f';
     $pane = new stdClass();
     $pane->pid = 'new-9e598516-03d4-4382-9d96-2d38ae382804';
     $pane->panel = 'minipanel_two_50_bottom';
@@ -789,11 +1010,11 @@ Import channels you follow on twitch
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 3;
     $pane->locks = array();
     $pane->uuid = '9e598516-03d4-4382-9d96-2d38ae382804';
     $display->content['new-9e598516-03d4-4382-9d96-2d38ae382804'] = $pane;
-    $display->panels['minipanel_two_50_bottom'][1] = 'new-9e598516-03d4-4382-9d96-2d38ae382804';
+    $display->panels['minipanel_two_50_bottom'][3] = 'new-9e598516-03d4-4382-9d96-2d38ae382804';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $mini->display = $display;
@@ -849,6 +1070,182 @@ Import channels you follow on twitch
   $display->title_pane = '0';
   $mini->display = $display;
   $export['player_menu'] = $mini;
+
+  $mini = new stdClass();
+  $mini->disabled = FALSE; /* Edit this to true to make a default mini disabled initially */
+  $mini->api_version = 1;
+  $mini->name = 'player_share';
+  $mini->category = '';
+  $mini->admin_title = 'Player Share';
+  $mini->admin_description = '';
+  $mini->requiredcontexts = array();
+  $mini->contexts = array();
+  $mini->relationships = array();
+  $display = new panels_display();
+  $display->layout = 'two_50_mp';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'default' => NULL,
+      'minipanel_one_main' => NULL,
+      'minipanel_two_50_top' => NULL,
+      'minipanel_two_50_first' => NULL,
+      'minipanel_two_50_second' => NULL,
+      'minipanel_two_50_bottom' => NULL,
+    ),
+  );
+  $display->cache = array();
+  $display->title = '';
+  $display->uuid = '86c2828a-c471-4c58-a90b-ba42b024d9ea';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-811e7dda-9750-4e63-b58e-33e2338a1ee0';
+    $pane->panel = 'minipanel_two_50_bottom';
+    $pane->type = 'block';
+    $pane->subtype = 'multistream-multistream_share_social';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '811e7dda-9750-4e63-b58e-33e2338a1ee0';
+    $display->content['new-811e7dda-9750-4e63-b58e-33e2338a1ee0'] = $pane;
+    $display->panels['minipanel_two_50_bottom'][0] = 'new-811e7dda-9750-4e63-b58e-33e2338a1ee0';
+    $pane = new stdClass();
+    $pane->pid = 'new-5bc69b2a-91c4-4b40-9286-af497aa3f5da';
+    $pane->panel = 'minipanel_two_50_bottom';
+    $pane->type = 'custom';
+    $pane->subtype = 'custom';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'admin_title' => 'Spread the word',
+      'title' => 'Spread the word',
+      'body' => '<p>Like what you\'re watching? Spread the word and show what gaming is all about.</p>
+',
+      'format' => 'full_html',
+      'substitute' => TRUE,
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = '5bc69b2a-91c4-4b40-9286-af497aa3f5da';
+    $display->content['new-5bc69b2a-91c4-4b40-9286-af497aa3f5da'] = $pane;
+    $display->panels['minipanel_two_50_bottom'][1] = 'new-5bc69b2a-91c4-4b40-9286-af497aa3f5da';
+    $pane = new stdClass();
+    $pane->pid = 'new-649b435e-e294-43ba-b9e7-663a0c2bfcee';
+    $pane->panel = 'minipanel_two_50_bottom';
+    $pane->type = 'block';
+    $pane->subtype = 'sr_core-social_share';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 2;
+    $pane->locks = array();
+    $pane->uuid = '649b435e-e294-43ba-b9e7-663a0c2bfcee';
+    $display->content['new-649b435e-e294-43ba-b9e7-663a0c2bfcee'] = $pane;
+    $display->panels['minipanel_two_50_bottom'][2] = 'new-649b435e-e294-43ba-b9e7-663a0c2bfcee';
+    $pane = new stdClass();
+    $pane->pid = 'new-58157560-e1d4-4467-aa52-6582a24dd895';
+    $pane->panel = 'minipanel_two_50_bottom';
+    $pane->type = 'block';
+    $pane->subtype = 'multistream-multistream_share_link';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 3;
+    $pane->locks = array();
+    $pane->uuid = '58157560-e1d4-4467-aa52-6582a24dd895';
+    $display->content['new-58157560-e1d4-4467-aa52-6582a24dd895'] = $pane;
+    $display->panels['minipanel_two_50_bottom'][3] = 'new-58157560-e1d4-4467-aa52-6582a24dd895';
+  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->title_pane = '0';
+  $mini->display = $display;
+  $export['player_share'] = $mini;
+
+  $mini = new stdClass();
+  $mini->disabled = FALSE; /* Edit this to true to make a default mini disabled initially */
+  $mini->api_version = 1;
+  $mini->name = 'player_twitter_feed';
+  $mini->category = '';
+  $mini->admin_title = 'Player Twitter Feed';
+  $mini->admin_description = '';
+  $mini->requiredcontexts = array();
+  $mini->contexts = array();
+  $mini->relationships = array();
+  $display = new panels_display();
+  $display->layout = 'one_mp';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'default' => NULL,
+      'minipanel_one_main' => NULL,
+    ),
+  );
+  $display->cache = array();
+  $display->title = '';
+  $display->uuid = '8ab793ae-27a5-40ca-afa0-005acc7c18e0';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-bcccd7de-421f-4150-91fc-db967b90970e';
+    $pane->panel = 'minipanel_one_main';
+    $pane->type = 'block';
+    $pane->subtype = 'multistream-multistream_twitter_feed';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = 'bcccd7de-421f-4150-91fc-db967b90970e';
+    $display->content['new-bcccd7de-421f-4150-91fc-db967b90970e'] = $pane;
+    $display->panels['minipanel_one_main'][0] = 'new-bcccd7de-421f-4150-91fc-db967b90970e';
+  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->title_pane = '0';
+  $mini->display = $display;
+  $export['player_twitter_feed'] = $mini;
 
   $mini = new stdClass();
   $mini->disabled = FALSE; /* Edit this to true to make a default mini disabled initially */

@@ -69,7 +69,7 @@ function multistream_strongarm() {
         'custom_settings' => TRUE,
       ),
       'full' => array(
-        'custom_settings' => FALSE,
+        'custom_settings' => TRUE,
       ),
       'rss' => array(
         'custom_settings' => FALSE,
@@ -104,6 +104,10 @@ function multistream_strongarm() {
           ),
           'teaser' => array(
             'weight' => '10',
+            'visible' => FALSE,
+          ),
+          'full' => array(
+            'weight' => '12',
             'visible' => FALSE,
           ),
         ),
