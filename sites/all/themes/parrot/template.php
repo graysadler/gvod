@@ -306,7 +306,7 @@ function parrot_qt_quicktabs($variables) {
     $element['tabs']['more'] = '<div id="player-more-wrapper"><div class="button"></div><ul class="more-actions"><li class="new">New Multi-Stream</li><li class="open">Open Favorites</li><li class="save">Save</li></ul></div>';    
     
     // Ad block
-    $block = module_invoke('panels_mini', 'block_view', '300x250_ad');
+    $block = module_invoke('panels_mini', 'block_view', '200x200_ad');
     $element['container']['ad'] = array('#markup' => $block['content'], '#weight' => 100);
     
   }
@@ -317,6 +317,10 @@ function parrot_qt_quicktabs($variables) {
         $element['#options']['attributes']['class'] .= ' docked';
       }
     }    
+    // Ad block
+    $block = module_invoke('panels_mini', 'block_view', '300x250_ad');
+    $element['container']['ad'] = array('#markup' => $block['content'], '#weight' => 100);
+    
   }
   
   $output = '<div '. drupal_attributes($element['#options']['attributes']) .'>';

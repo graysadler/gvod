@@ -107,7 +107,7 @@ function multistream_field_default_field_instances() {
     'required' => 0,
     'settings' => array(
       'alt_field' => 0,
-      'default_image' => 114,
+      'default_image' => 116,
       'file_directory' => 'cover',
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',

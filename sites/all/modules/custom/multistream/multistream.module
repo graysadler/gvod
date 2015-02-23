@@ -82,7 +82,14 @@ function multistream_menu() {
 	    'access arguments' => array('access content'),
 	    'type' => MENU_CALLBACK,
 	);	
-	
+	$items['multistream/ajax/twitter-feed/%'] = array(
+	    'title' => 'Reload Twitter Feed',
+	    'page callback' => 'multistream_ajax_twitter_feed_callback',
+	    'page arguments' => array(3),
+	    'access arguments' => array('access content'),
+	    'type' => MENU_CALLBACK,
+	);
+		
 	return $items; 
 }
 
@@ -133,6 +140,9 @@ function multistream_view_multistream($context, $streams = array(), $node = null
 	
   $vars['class'] = 'not-chained';
   global $multistream;
+  
+  $multistream['nid'] = $node ? $node->nid : null;
+  
   if(isset($_GET['browse'])) {
     $multistream['browse'] = urldecode(check_plain($_GET['browse']));
     
@@ -237,6 +247,8 @@ function multistream_cache_streams($cache = array()) {
 function multistream_view_player($streams) {
 	global $base_url;
 	global $conf;
+	global $multistream;
+	
 	$settings = array();
 	
 	if(!is_array($streams)) {
@@ -259,7 +271,8 @@ function multistream_view_player($streams) {
 	  $settings['multistream']['debug'] = true;
 	}
 	$count = 0;
-
+	
+	$settings['multistream']['nid'] = $multistream['nid'];
 
 	for($i=1;$i<=PLAYER_MAX_NOW_PLAYING;$i++) {
 	  $settings['multistream']['stream_pos'][$i] = '';	  
@@ -548,6 +561,17 @@ function multistream_block_chat() {
   return $output;
 }
 
+function multistream_ajax_twitter_feed_callback($nid = null) {
+  if(is_numeric($nid)) {
+    $node = node_load($nid);
+  } else {
+    $node = null;
+  }
+  
+  $output = multistream_block_twitter_feed($node);
+  die($output);
+}
+
 function multistream_block_twitter_feed($node = null) {
   $tweets = null;
   $update = null;
@@ -581,6 +605,8 @@ function multistream_block_twitter_feed($node = null) {
   }
   
   if(!$tweets) {
+    module_load_include('inc', 'twitter', 'twitter');
+    
     $accounts = twitter_load_authenticated_accounts();
     $account = array_shift($accounts);
     
@@ -589,15 +615,13 @@ function multistream_block_twitter_feed($node = null) {
     $tweets = $twitter->call('search/tweets', $params);
   }
   
-  //if($node) {
   $record = array(
       'nid' => $nid,
       'updated' => time(),
       'data' => $tweets,
   );
   drupal_write_record('multistream_twitter_feeds', $record, $update ? 'nid' : null);
-  //}  
-  //$tweets = $twitter->search_tweets($search, array('include_entities'=>'true'));
+
   $output .= '<div id="twitter-feed">';
   foreach($tweets['statuses'] as $tweet) {
     $tweet['twitter_id'] = $tweet['id'];
@@ -611,9 +635,8 @@ function multistream_block_twitter_feed($node = null) {
     $vars['author'] = (object)$tweet['user'];
     $output .= theme('twitter_status', $vars);
   }
-  $output .= '</div>';
-  
-  //return $output;
+
+
   $hashtags = array();
   foreach($feeds_array as $item) {
     if(strpos($item, '#') !== false) {
@@ -634,9 +657,10 @@ function multistream_block_twitter_feed($node = null) {
     
   $output .= '<a href="https://twitter.com/intent/tweet?hashtags='.$hash.'&text='.$via.'" class="btn">Join the Conversation</a>';
   
-  $output .= '' . //'<a class="twitter-timeline"  href="https://twitter.com/search?q='.$search.'" data-widget-id="">Tweets</a>'.
+  $output .= '' . 
     '<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>';
-    
+  $output .= '</div>';
+      
   return $output;
 }
 
@@ -1050,6 +1074,7 @@ function stream_get_stream_settings($stream, $n) {
 	$field_player_url = field_get_items('taxonomy_term', $provider, 'field_player_source');
 	$field_params 		= field_get_items('taxonomy_term', $provider, 'field_params');
 	$field_vars 			= field_get_items('taxonomy_term', $provider, 'field_vars');
+	
 	$field_chat_url 	= field_get_items('taxonomy_term', $provider, 'field_chat_url');
 
 	$player = $field_player_url[0]['value'];
@@ -1066,7 +1091,7 @@ function stream_get_stream_settings($stream, $n) {
 	//$return->stream_num = $n;
 	//$return->stream_id = $node->nid;
 	//$items = field_get_items('node', $node, 'field_current_viewers');
-	//$return->num_viewers = $items ? $items[0] : 0;
+	$return->num_viewers = number_format($stream->viewers);
 	$return->chat = $chat;
 	//$return->provider = strtolower($provider->name);
 
@@ -1085,15 +1110,17 @@ function stream_get_stream_settings($stream, $n) {
 	$key = '';
 	$value = '';
 
+	$vars = trim($field_vars[0]['value']);
 	$vars = explode("\n", $field_vars[0]['value']);
 	$vars = array_map('trim', $vars);
 	$vars = array_filter($vars, 'strlen');
-	$thevars[] = array();
+	$thevars = array();
 	foreach ($vars as $var) {
 		if (strpos($var, '|') !== FALSE) {
 			list($key, $value) = explode('|', $var);
 			$thevars[$key] = (isset($value) && $value !=='') ? $value : $key;
 			$thevars[$key] = token_replace($value, array('node' => $node));
+			$thevars[$key] = str_replace('[stream:channel]', $stream->channel, $thevars[$key]);
 		}
 	}
 
@@ -1189,9 +1216,8 @@ function multistream_node_view($node, $view_mode) {
 	  	   
 	  if($user->uid == $node->uid) {
 	    $settings['multistream']['is_owner'] = true;
-	    $settings['multistream']['nid'] = $node->nid;  
 	  }
-	  
+	     
 	  drupal_add_js($settings, 'setting', 'footer', false, true, false);	  
 	}
 

@@ -13,6 +13,57 @@ function multistream_default_panels_mini() {
   $mini = new stdClass();
   $mini->disabled = FALSE; /* Edit this to true to make a default mini disabled initially */
   $mini->api_version = 1;
+  $mini->name = '200x200_ad';
+  $mini->category = '';
+  $mini->admin_title = '200x200 Ad';
+  $mini->admin_description = '';
+  $mini->requiredcontexts = array();
+  $mini->contexts = array();
+  $mini->relationships = array();
+  $display = new panels_display();
+  $display->layout = 'one_mp';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'default' => NULL,
+      'minipanel_one_main' => NULL,
+    ),
+  );
+  $display->cache = array();
+  $display->title = '';
+  $display->uuid = '5e12db40-d0a5-4a35-8985-aee67e25d2fa';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-f02f7544-17dd-4c42-84ed-b5d39d2f884c';
+    $pane->panel = 'minipanel_one_main';
+    $pane->type = 'block';
+    $pane->subtype = 'simpleads-ad_groups_1073';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = 'f02f7544-17dd-4c42-84ed-b5d39d2f884c';
+    $display->content['new-f02f7544-17dd-4c42-84ed-b5d39d2f884c'] = $pane;
+    $display->panels['minipanel_one_main'][0] = 'new-f02f7544-17dd-4c42-84ed-b5d39d2f884c';
+  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->title_pane = 'new-f02f7544-17dd-4c42-84ed-b5d39d2f884c';
+  $mini->display = $display;
+  $export['200x200_ad'] = $mini;
+
+  $mini = new stdClass();
+  $mini->disabled = FALSE; /* Edit this to true to make a default mini disabled initially */
+  $mini->api_version = 1;
   $mini->name = '300x250_ad';
   $mini->category = '';
   $mini->admin_title = '300x250 Ad';
@@ -35,11 +86,11 @@ function multistream_default_panels_mini() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-a9a81272-7cf4-4077-9851-1ac7b99a5706';
+    $pane->pid = 'new-d5102a89-2008-432f-ae9c-85b3fcfd7acc';
     $pane->panel = 'minipanel_one_main';
     $pane->type = 'block';
-    $pane->subtype = 'block-11';
-    $pane->shown = FALSE;
+    $pane->subtype = 'simpleads-ad_groups_1074';
+    $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
       'override_title' => 1,
@@ -53,33 +104,11 @@ function multistream_default_panels_mini() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = 'a9a81272-7cf4-4077-9851-1ac7b99a5706';
-    $display->content['new-a9a81272-7cf4-4077-9851-1ac7b99a5706'] = $pane;
-    $display->panels['minipanel_one_main'][0] = 'new-a9a81272-7cf4-4077-9851-1ac7b99a5706';
-    $pane = new stdClass();
-    $pane->pid = 'new-79ce0cf3-ce66-4877-8c6f-01a292d4d64f';
-    $pane->panel = 'minipanel_one_main';
-    $pane->type = 'block';
-    $pane->subtype = 'simpleads-ad_groups_318';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'override_title' => 1,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 1;
-    $pane->locks = array();
-    $pane->uuid = '79ce0cf3-ce66-4877-8c6f-01a292d4d64f';
-    $display->content['new-79ce0cf3-ce66-4877-8c6f-01a292d4d64f'] = $pane;
-    $display->panels['minipanel_one_main'][1] = 'new-79ce0cf3-ce66-4877-8c6f-01a292d4d64f';
+    $pane->uuid = 'd5102a89-2008-432f-ae9c-85b3fcfd7acc';
+    $display->content['new-d5102a89-2008-432f-ae9c-85b3fcfd7acc'] = $pane;
+    $display->panels['minipanel_one_main'][0] = 'new-d5102a89-2008-432f-ae9c-85b3fcfd7acc';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-a9a81272-7cf4-4077-9851-1ac7b99a5706';
+  $display->title_pane = '0';
   $mini->display = $display;
   $export['300x250_ad'] = $mini;
 

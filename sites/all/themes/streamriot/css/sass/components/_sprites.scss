@@ -1,0 +1,17 @@
+//
+// Sprites
+// --------------------------------------------------
+@mixin sprite{
+  background-image: url(../img/sprite/sprite.png); background-repeat:none;
+}
+
+$sprite-spacing: 20px;
+//@import sprite;
+[class^="icon-"],ul.quicktabs-tabs.quicktabs-style-sky li.last  a,
+.views-slideshow-controls-bottom .views_slideshow_controls_text span a,.ui-state-default .ui-icon,
+.ui-state-active .ui-icon{
+  @include sprite;
+}
+//@include all-sprite-sprites;
+
+// To use a sprite, use @extend sprite-filename;

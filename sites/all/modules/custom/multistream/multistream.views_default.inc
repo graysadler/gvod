@@ -64,6 +64,7 @@ function multistream_views_default_views() {
   $handler->display->display_options['sorts']['search_api_relevance']['id'] = 'search_api_relevance';
   $handler->display->display_options['sorts']['search_api_relevance']['table'] = 'search_api_index_multistreams';
   $handler->display->display_options['sorts']['search_api_relevance']['field'] = 'search_api_relevance';
+  $handler->display->display_options['sorts']['search_api_relevance']['order'] = 'DESC';
   /* Contextual filter: Search: Fulltext search */
   $handler->display->display_options['arguments']['search_api_views_fulltext']['id'] = 'search_api_views_fulltext';
   $handler->display->display_options['arguments']['search_api_views_fulltext']['table'] = 'search_api_index_multistreams';
@@ -126,6 +127,11 @@ function multistream_views_default_views() {
   $handler->display->display_options['fields']['stream_id']['id'] = 'stream_id';
   $handler->display->display_options['fields']['stream_id']['table'] = 'search_api_index_streams';
   $handler->display->display_options['fields']['stream_id']['field'] = 'stream_id';
+  /* Sort criterion: Indexed Stream: Viewers */
+  $handler->display->display_options['sorts']['viewers']['id'] = 'viewers';
+  $handler->display->display_options['sorts']['viewers']['table'] = 'search_api_index_streams';
+  $handler->display->display_options['sorts']['viewers']['field'] = 'viewers';
+  $handler->display->display_options['sorts']['viewers']['order'] = 'DESC';
   /* Contextual filter: Search: Fulltext search */
   $handler->display->display_options['arguments']['search_api_views_fulltext']['id'] = 'search_api_views_fulltext';
   $handler->display->display_options['arguments']['search_api_views_fulltext']['table'] = 'search_api_index_streams';

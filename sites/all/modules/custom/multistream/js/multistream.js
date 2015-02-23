@@ -343,7 +343,7 @@ var SR = SR || {};
           } 
           SR.moveStream(stream_id, from, 'q', tellFlash);
           SR.moveStream(stream_id, 'q', pos, tellFlash);
-          
+          SR.updateChats();
           return;
           
         },
@@ -519,12 +519,15 @@ var SR = SR || {};
     var stream_id = Drupal.settings.multistream.stream_pos[1];   
     var stream = Drupal.settings.multistream.streams[stream_id];
     $(rooms).hide();
-    $(rooms).append('<div id="chat-room-'+stream.stream_id+'" class="chat-iframe"><iframe width="100%" height="100%" src="'+stream.chat+'" frameborders="0" scrolling="no" id="chat-iframe" class="'+stream.stream_id+'"></div>');    
+    //$(rooms).append('<div id="chat-room-'+stream.stream_id+'" class="chat-iframe"><iframe width="100%" height="100%" src="'+stream.chat+'" frameborders="0" scrolling="no" id="chat-iframe" class="'+stream.stream_id+'"></div>');    
     $(rooms).show();
     
-    $('#chat-open').click(function(){
-      $('#chat-selection').toggle();
+    $('#chat-open').once('click', function(){
+      $(this).click(function(){
+        $('#chat-selection').toggle();
+      });
     });
+    
     $('#chat-selection .stream').click(function(){
       var id = $(this).attr('data-id');
       var title = $(this).html();
@@ -651,4 +654,38 @@ var SR = SR || {};
       $('.confirm-overlay').remove();
     });
   }
+  
+  SR.updateChats = function() {
+    // Loop through streams obj and check if chat exists in selection
+    for(var id in Drupal.settings.multistream.streams) {
+      if($('#chat-selection .stream[data-id="'+id+'"]').length==0) {
+        var channel = Drupal.settings.multistream.streams[id].channel;
+        var viewers = Drupal.settings.multistream.streams[id].num_viewers;
+        
+        var html = '<div class="stream" data-id="'+id+'"><div class="stream-channel">'+channel+'</div><div class="stream-viewers">viewers: '+viewers+'</div></div>'
+        $('#chat-selection').append(html);
+      }
+    }
+    
+    SR.chatInit();
+  }
+  
+  SR.updateQuality = function(q) {
+    $('#riot-player').setQuality(q);
+  }
+  
+  window.onPlayerEvent = function (data) {
+    data.forEach(function(event) {
+      console.log(event);
+    }); 
+  }
+  
+  // Update the Twitter Feed
+  window.setInterval(function () {
+    var nid = Drupal.settings.multistream.nid;
+    
+    $('#twitter-feed').load('/multistream/ajax/twitter-feed/'+nid, function(response, status, xhr) {
+       console.log('twitter feed updated');
+    });
+  }, (60 * 1000));  
 })(jQuery);
