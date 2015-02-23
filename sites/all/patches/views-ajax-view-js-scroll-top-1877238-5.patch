@@ -1,0 +1,17 @@
+diff --git a/js/ajax_view.js b/js/ajax_view.js
+index 780691c..757e7de 100644
+--- a/js/ajax_view.js
++++ b/js/ajax_view.js
+@@ -133,9 +133,9 @@ Drupal.ajax.prototype.commands.viewsScrollTop = function (ajax, response, status
+     scrollTarget = $(scrollTarget).parent();
+   }
+   // Only scroll upward
+-  if (offset.top - 10 < $(scrollTarget).scrollTop()) {
+-    $(scrollTarget).animate({scrollTop: (offset.top - 10)}, 500);
+-  }
++  // if (offset.top - 10 < $(scrollTarget).scrollTop()) {
++  //   $(scrollTarget).animate({scrollTop: (offset.top - 10)}, 500);
++  // }
+ };
+ 
+ })(jQuery);

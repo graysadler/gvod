@@ -1,10 +1,10 @@
 <!doctype html <?php print $rdf_namespaces; ?>>
 <!--[if IEMobile 7]><html class="no-js iem7 oldie"><![endif]-->
-<!--[if lt IE 7]><html class="no-js ie6 oldie" lang="<?php print $language->language; ?>" <?php print $rdf_namespaces; ?>><![endif]-->
-<!--[if (IE 7)&!(IEMobile)]><html class="no-js ie7 oldie" lang="<?php print $language->language; ?>" <?php print $rdf_namespaces; ?>><![endif]-->
-<!--[if (IE 8)&!(IEMobile)]><html class="no-js ie8 oldie" lang="<?php print $language->language; ?>" <?php print $rdf_namespaces; ?>><![endif]-->
-<!--[if gt IE 8]><!--><html class="no-js" lang="<?php print $language->language; ?>" <?php print $rdf_namespaces; ?>><!--<![endif]-->
-<!--[if (gte IE 9)|(gt IEMobile 7)]><!--><html class="no-js" lang="<?php print $language->language; ?>" <?php print $rdf_namespaces; ?>><!--<![endif]-->
+<!--[if lt IE 7]><html class="no-js ie6 oldie" <?php print $rdf_namespaces; ?>><![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js ie7 oldie" <?php print $rdf_namespaces; ?>><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js ie8 oldie" <?php print $rdf_namespaces; ?>><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" <?php print $rdf_namespaces; ?>><!--<![endif]-->
+<!--[if (gte IE 9)|(gt IEMobile 7)]><!--><html class="no-js" <?php print $rdf_namespaces; ?>><!--<![endif]-->
 <?php print $mothership_poorthemers_helper; ?>
 <head>
   <title><?php print $head_title; ?></title>

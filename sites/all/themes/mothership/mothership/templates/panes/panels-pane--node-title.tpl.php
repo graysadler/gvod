@@ -5,7 +5,7 @@
   <?php print $admin_links; ?>
 <?php endif; ?>
 
-<h1><?php print $title; ?></h1>
+<h1><?php print $content; ?></h1>
 </div>
 
 <!-- / panels-pane node title-->

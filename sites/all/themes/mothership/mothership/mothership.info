@@ -37,13 +37,12 @@ regions[highlighted] = Highlighted
 
 ;-------------- P A N E L S -------------
 plugins[panels][layouts] = templates/panels/
-plugins[panels][styles] =  templates/panels/styles
-
+plugins[panels][styles] =  panelsstyles
 api[panels][styles][version] = 2
 
 
 ;-------------- C S S -------------
-;stylesheets[all][] = css/design.css
+stylesheets[all][] = css-drupalcore/contextual.css
 
 ;-------------- JS -------------
 
@@ -167,9 +166,9 @@ settings[mothership_classes_block_freeform] = ''
 settings[mothership_classes_node_freeform] = ''
 settings[mothership_classes_region_freeform] = ''
 
-; Information added by drupal.org packaging script on 2013-07-07
-version = "7.x-2.10"
+; Information added by Drupal.org packaging script on 2014-09-27
+version = "7.x-2.10+21-dev"
 core = "7.x"
 project = "mothership"
-datestamp = "1373241054"
+datestamp = "1411826367"
 

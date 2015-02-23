@@ -98,7 +98,7 @@ function drush_mothership($name = NULL, $machine_name = NULL) {
     '!name' => $name,
     '!path' => $subtheme_path,
   )));
-  drush_print(dt('Visit your themes settings page and configure it to your liking: !path', array(
+  drush_print(dt("Visit your theme's settings page and configure it to your liking: !path", array(
     '!path' => url('admin/appearance/settings/' . $machine_name, array('absolute' => TRUE)),
   )));
 }
